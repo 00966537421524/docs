@@ -9,8 +9,6 @@ import { allVersions } from '../../lib/all-versions.js'
 import processPreviews from './utils/process-previews.js'
 import processUpcomingChanges from './utils/process-upcoming-changes.js'
 import processSchemas from './utils/process-schemas.js'
-import prerenderObjects from './utils/prerender-objects.js'
-import prerenderInputObjects from './utils/prerender-input-objects.js'
 import { prependDatedEntry, createChangelogEntry } from './build-changelog.js'
 import loadData from '../../lib/site-data.js'
 
@@ -34,8 +32,6 @@ main()
 async function main() {
   const previewsJson = {}
   const upcomingChangesJson = {}
-  const prerenderedObjects = {}
-  const prerenderedInputObjects = {}
 
   const siteData = loadData()
 
@@ -81,15 +77,7 @@ async function main() {
     context.graphql = { schemaForCurrentVersion: schemaJsonPerVersion }
     context.currentVersion = version
 
-    // 4. PRERENDER OBJECTS HTML
-    // because the objects page is too big to render on page load
-    prerenderedObjects[graphqlVersion] = await prerenderObjects(context)
-
-    // 5. PRERENDER INPUT OBJECTS HTML
-    // because the objects page is too big to render on page load
-    prerenderedInputObjects[graphqlVersion] = await prerenderInputObjects(context)
-
-    // 6. UPDATE CHANGELOG
+    // 4. UPDATE CHANGELOG
     if (allVersions[version].nonEnterpriseDefault) {
       // The Changelog is only build for free-pro-team@latest
       const changelogEntry = await createChangelogEntry(
@@ -110,14 +98,6 @@ async function main() {
 
   await updateStaticFile(previewsJson, path.join(graphqlStaticDir, 'previews.json'))
   await updateStaticFile(upcomingChangesJson, path.join(graphqlStaticDir, 'upcoming-changes.json'))
-  await updateStaticFile(
-    prerenderedObjects,
-    path.join(graphqlStaticDir, 'prerendered-objects.json')
-  )
-  await updateStaticFile(
-    prerenderedInputObjects,
-    path.join(graphqlStaticDir, 'prerendered-input-objects.json')
-  )
 
   // Ensure the YAML linter runs before checkinging in files
   execSync('npx prettier -w "**/*.{yml,yaml}"')

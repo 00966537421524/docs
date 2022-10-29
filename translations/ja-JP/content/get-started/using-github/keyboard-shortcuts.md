@@ -1,10 +1,10 @@
 ---
-title: キーボードショートカット
-intro: '{% data variables.product.prodname_dotcom %} のほぼすべてのページには、アクションを速く実行するためのキーボードショートカットがあります。'
+title: Keyboard shortcuts
+intro: 'Nearly every page on {% data variables.product.prodname_dotcom %} has a keyboard shortcut to perform actions faster.'
 redirect_from:
-  - /articles/using-keyboard-shortcuts/
-  - /categories/75/articles/
-  - /categories/keyboard-shortcuts/
+  - /articles/using-keyboard-shortcuts
+  - /categories/75/articles
+  - /categories/keyboard-shortcuts
   - /articles/keyboard-shortcuts
   - /github/getting-started-with-github/keyboard-shortcuts
   - /github/getting-started-with-github/using-github/keyboard-shortcuts
@@ -14,211 +14,232 @@ versions:
   ghae: '*'
   ghec: '*'
 ---
+## About keyboard shortcuts
 
-## キーボードショートカットについて
+Typing <kbd>?</kbd> on {% data variables.product.prodname_dotcom %} brings up a dialog box that lists the keyboard shortcuts available for that page. You can use these keyboard shortcuts to perform actions across the site without using your mouse to navigate.
 
-Typing <kbd>?</kbd> on {% data variables.product.prodname_dotcom %} brings up a dialog box that lists the keyboard shortcuts available for that page. マウスを使用して移動しなくても、これらのキーボードショートカットを使用して、サイト全体でアクションを実行できます。
+{% ifversion keyboard-shortcut-accessibility-setting %}
+You can disable character key shortcuts, while still allowing shortcuts that use modifier keys, in your accessibility settings. For more information, see "[Managing accessibility settings](/account-and-profile/setting-up-and-managing-your-personal-account-on-github/managing-personal-account-settings/managing-accessibility-settings)."{% endif %}
 
-以下は利用可能なキーボードショートカットのリストです:
-{% if command-palette %}
+Below is a list of some of the available keyboard shortcuts.
+{% ifversion command-palette %}
 The {% data variables.product.prodname_command_palette %} also gives you quick access to a wide range of actions, without the need to remember keyboard shortcuts. For more information, see "[{% data variables.product.prodname_command_palette %}](/get-started/using-github/github-command-palette)."{% endif %}
 
-## サイト全体のショートカット
+## Site wide shortcuts
 
-| キーボードショートカット                  | 説明                                                                                                                                                                                                                                                                               |
-| ----------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| <kbd>s</kbd> または <kbd>/</kbd> | 検索バーにフォーカスします。 詳細は「[{% data variables.product.company_short %} での検索について](/search-github/getting-started-with-searching-on-github/about-searching-on-github)」を参照してください。                                                                                                           |
-| <kbd>g</kbd> <kbd>n</kbd>     | 通知に移動します。 詳しい情報については、{% ifversion fpt or ghes or ghae or ghec %}「[通知について](/github/managing-subscriptions-and-notifications-on-github/about-notifications){% else %}「[通知について](/github/receiving-notifications-about-activity-on-github/about-notifications){% endif %}」を参照してください。 |
-| <kbd>esc</kbd>                | ユーザ、Issue、またはプルリクエストのホバーカードにフォーカスすると、ホバーカードが閉じ、ホバーカードが含まれている要素に再フォーカスします                                                                                                                                                                                                         |
+| Keyboard shortcut | Description
+|-----------|------------
+|<kbd>S</kbd> or <kbd>/</kbd> | Focus the search bar. For more information, see "[About searching on {% data variables.product.company_short %}](/search-github/getting-started-with-searching-on-github/about-searching-on-github)."
+|<kbd>G</kbd> <kbd>N</kbd> | Go to your notifications. For more information, see "[About notifications](/github/managing-subscriptions-and-notifications-on-github/about-notifications)."
+|<kbd>Esc</kbd> | When focused on a user, issue, or pull request hovercard, closes the hovercard and refocuses on the element the hovercard is in
+{% ifversion command-palette %}|<kbd>Command</kbd>+<kbd>K</kbd> (Mac) or </br> <kbd>Ctrl</kbd>+<kbd>K</kbd> (Windows/Linux) | Opens the {% data variables.product.prodname_command_palette %}. If you are editing Markdown text, open the command palette with <kbd>Command</kbd>+<kbd>Option</kbd>+<kbd>K</kbd> or <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>K</kbd>. For more information, see "[{% data variables.product.prodname_command_palette %}](/get-started/using-github/github-command-palette)."{% endif %}
 
-{% if command-palette %}
+## Repositories
 
-<kbd>control</kbd><kbd>k</kbd> or <kbd>command</kbd><kbd>k</kbd> | Opens the {% data variables.product.prodname_command_palette %}. If you are editing Markdown text, open the command palette with <kbd>Ctl</kbd><kbd>alt</kbd><kbd>k</kbd> or <kbd>⌘</kbd><kbd>option</kbd><kbd>k</kbd>. For more information, see "[{% data variables.product.prodname_command_palette %}](/get-started/using-github/github-command-palette)."{% endif %}
+| Keyboard shortcut | Description
+|-----------|------------
+|<kbd>G</kbd> <kbd>C</kbd> | Go to the **Code** tab
+|<kbd>G</kbd> <kbd>I</kbd> | Go to the **Issues** tab. For more information, see "[About issues](/articles/about-issues)."
+|<kbd>G</kbd> <kbd>P</kbd> | Go to the **Pull requests** tab. For more information, see "[About pull requests](/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests)."{% ifversion fpt or ghes or ghec %}
+|<kbd>G</kbd> <kbd>A</kbd> | Go to the **Actions** tab. For more information, see "[About Actions](/actions/getting-started-with-github-actions/about-github-actions)."{% endif %}
+|<kbd>G</kbd> <kbd>B</kbd> | Go to the **Projects** tab. For more information, see "[About project boards](/articles/about-project-boards)."
+|<kbd>G</kbd> <kbd>W</kbd> | Go to the **Wiki** tab. For more information, see "[About wikis](/communities/documenting-your-project-with-wikis/about-wikis)."{% ifversion discussions %}
+|<kbd>G</kbd> <kbd>G</kbd> | Go to the **Discussions** tab. For more information, see "[About discussions](/discussions/collaborating-with-your-community-using-discussions/about-discussions)."{% endif %}
 
-## リポジトリ
+## Source code editing
 
-| キーボードショートカット              | 説明                                                                                                                                                                             |
-| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| <kbd>g</kbd> <kbd>c</kbd> | [**Code**] タブに移動します                                                                                                                                                            |
-| <kbd>g</kbd> <kbd>i</kbd> | [**Issues**] タブに移動します。 詳細は「[Issue について](/articles/about-issues)」を参照してください。                                                                                                     |
-| <kbd>g</kbd> <kbd>p</kbd> | [**Pull requests**] タブに移動します。 詳しい情報については、「[プルリクエストについて](/articles/about-pull-requests)」を参照してください。"{% ifversion fpt or ghes or ghec %}
-| <kbd>g</kbd> <kbd>a</kbd> | [**Actions**] タブに移動します。 詳しい情報については、「[アクションについて](/actions/getting-started-with-github-actions/about-github-actions)」を参照してください。{% endif %}
-| <kbd>g</kbd> <kbd>b</kbd> | [**Projects**] タブに移動します。 詳細は「[プロジェクトボードについて](/articles/about-project-boards)」を参照してください。                                                                                        |
-| <kbd>g</kbd> <kbd>w</kbd> | [**Wiki**] タブに移動します。 For more information, see "[About wikis](/communities/documenting-your-project-with-wikis/about-wikis)."{% ifversion fpt or ghec %}
-| <kbd>g</kbd> <kbd>g</kbd> | Go to the **Discussions** tab. For more information, see "[About discussions](/discussions/collaborating-with-your-community-using-discussions/about-discussions)."{% endif %}
+| Keyboard shortcut | Description
+|-----------|------------{% ifversion fpt or ghec %}
+|<kbd>.</kbd> | Opens a repository or pull request in the web-based editor in the same browser tab. You must be signed in to use the editor. For more information, see "[Web-based editor](/codespaces/developing-in-codespaces/web-based-editor)."
+|<kbd>></kbd> | Opens a repository or pull request in the web-based editor in a new browser tab. You must be signed in to use the editor. For more information, see "[Web-based editor](/codespaces/developing-in-codespaces/web-based-editor)."{% endif %}
+|<kbd>Command</kbd>+<kbd>B</kbd> (Mac) or </br> <kbd>Ctrl</kbd>+<kbd>B</kbd> (Windows/Linux) | Inserts Markdown formatting for bolding text
+|<kbd>Command</kbd>+<kbd>I</kbd> (Mac) or </br> <kbd>Ctrl</kbd>+<kbd>I</kbd> (Windows/Linux) | Inserts Markdown formatting for italicizing text
+|<kbd>Command</kbd>+<kbd>K</kbd> (Mac) or </br> <kbd>Ctrl</kbd>+<kbd>K</kbd> (Windows/Linux) | Inserts Markdown formatting for creating a link{% ifversion fpt or ghec or ghae or ghes > 3.3 %}
+|<kbd>Command</kbd>+<kbd>Shift</kbd>+<kbd>7</kbd> (Mac) or </br> <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>7</kbd> (Windows/Linux) | Inserts Markdown formatting for an ordered list
+|<kbd>Command</kbd>+<kbd>Shift</kbd>+<kbd>8</kbd> (Mac) or </br> <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>8</kbd> (Windows/Linux) | Inserts Markdown formatting for an unordered list
+|<kbd>Command</kbd>+<kbd>Shift</kbd>+<kbd>.</kbd> (Mac) or </br> <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>.</kbd> (Windows/Linux) | Inserts Markdown formatting for a quote{% endif %}
+|<kbd>E</kbd> | Open source code file in the **Edit file** tab
+|<kbd>Command</kbd>+<kbd>F</kbd> (Mac) or </br> <kbd>Ctrl</kbd>+<kbd>F</kbd> (Windows/Linux) | Start searching in file editor
+|<kbd>Command</kbd>+<kbd>G</kbd> (Mac) or </br> <kbd>Ctrl</kbd>+<kbd>G</kbd> (Windows/Linux) | Find next
+|<kbd>Command</kbd>+<kbd>Shift</kbd>+<kbd>G</kbd> (Mac) or </br> <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>G</kbd> (Windows/Linux) | Find previous
+|<kbd>Command</kbd>+<kbd>Option</kbd>+<kbd>F</kbd> (Mac) or </br> <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>F</kbd> (Windows/Linux) | Replace
+|<kbd>Command</kbd>+<kbd>Shift</kbd>+<kbd>Option</kbd>+<kbd>F</kbd> (Mac) or </br> <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>R</kbd> (Windows/Linux) | Replace all
+|<kbd>Alt</kbd>+<kbd>G</kbd> | Jump to line
+|<kbd>Command</kbd>+<kbd>Z</kbd> (Mac) or </br> <kbd>Ctrl</kbd>+<kbd>Z</kbd> (Windows/Linux) | Undo
+|<kbd>Command</kbd>+<kbd>Y</kbd> (Mac) or </br> <kbd>Ctrl</kbd>+<kbd>Y</kbd> (Windows/Linux) | Redo
+|<kbd>Command</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd> | Toggles between the **Edit file** and **Preview changes** tabs
+|<kbd>Command</kbd>+<kbd>S</kbd> (Mac) or </br> <kbd>Ctrl</kbd>+<kbd>S</kbd> (Windows/Linux) | Write a commit message
 
-## ソースコード編集
+For more keyboard shortcuts, see the [CodeMirror documentation](https://codemirror.net/doc/manual.html#commands).
 
-| キーボードショートカット                                                    | 説明                                                                                                                                                                            |
-| --------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |{% ifversion fpt or ghec %}
-| <kbd>.</kbd>                                                    | Opens a repository or pull request in the web-based editor. For more information, see "[Web-based editor](/codespaces/developing-in-codespaces/web-based-editor)."{% endif %}
-| <kbd>control b</kbd> または <kbd>command b</kbd>                   | 太字テキストの Markdown 書式を挿入します                                                                                                                                                     |
-| <kbd>control i</kbd> または <kbd>command i</kbd>                   | イタリック体のテキストの Markdown 書式を挿入します                                                                                                                                                |
-| <kbd>control k</kbd> または <kbd>command k</kbd>                   | Inserts Markdown formatting for creating a link{% ifversion fpt or ghec or ghae-next or ghes > 3.3 %}
-| <kbd>control shift 7</kbd> or <kbd>command shift 7</kbd>        | Inserts Markdown formatting for an ordered list                                                                                                                               |
-| <kbd>control shift 8</kbd> or <kbd>command shift 8</kbd>        | Inserts Markdown formatting for an unordered list                                                                                                                             |
-| <kbd>control shift .</kbd> or <kbd>command shift.</kbd>         | Inserts Markdown formatting for a quote{% endif %}
-| <kbd>e</kbd>                                                    | [**Edit file**] タブでソースコードファイルを開きます                                                                                                                                            |
-| <kbd>control f</kbd> または <kbd>command f</kbd>                   | ファイルエディタで検索を開始します                                                                                                                                                             |
-| <kbd>control g</kbd> または <kbd>command g</kbd>                   | 次を検索します                                                                                                                                                                       |
-| <kbd>control shift g</kbd> or <kbd>command shift g</kbd>        | 前を検索します                                                                                                                                                                       |
-| <kbd>control shift f</kbd> or <kbd>command option f</kbd>       | 置き換えます                                                                                                                                                                        |
-| <kbd>control shift r</kbd> or <kbd>command shift option f</kbd> | すべてを置き換えます                                                                                                                                                                    |
-| <kbd>alt g</kbd>                                                | 行にジャンプします                                                                                                                                                                     |
-| <kbd>control z</kbd> または <kbd>command z</kbd>                   | 元に戻します                                                                                                                                                                        |
-| <kbd>control y</kbd> または <kbd>command y</kbd>                   | やり直します                                                                                                                                                                        |
-| <kbd>command shift p</kbd>                                      | [**Edit file**] タブと [**Preview changes**] タブを切り替えます                                                                                                                           |
-| <kbd>control s</kbd> or <kbd>command s</kbd>                    | Write a commit message                                                                                                                                                        |
+## Source code browsing
 
-その他のキーボードショートカットについては、[CodeMirror ドキュメント](https://codemirror.net/doc/manual.html#commands)を参照してください。
+| Keyboard shortcut | Description
+|-----------|------------
+|<kbd>T</kbd> | Activates the file finder
+|<kbd>L</kbd> | Jump to a line in your code
+|<kbd>W</kbd> | Switch to a new branch or tag
+|<kbd>Y</kbd> | Expand a URL to its canonical form. For more information, see "[Getting permanent links to files](/articles/getting-permanent-links-to-files)."
+|<kbd>I</kbd> | Show or hide comments on diffs. For more information, see "[Commenting on the diff of a pull request](/articles/commenting-on-the-diff-of-a-pull-request)."
+|<kbd>A</kbd> | Show or hide annotations on diffs
+|<kbd>B</kbd> | Open blame view. For more information, see "[Tracing changes in a file](/articles/tracing-changes-in-a-file)."
 
-## ソースコード閲覧
+## Comments
 
-| キーボードショートカット | 説明                                                                                                                 |
-| ------------ | ------------------------------------------------------------------------------------------------------------------ |
-| <kbd>t</kbd> | ファイルファインダーを起動します                                                                                                   |
-| <kbd>l</kbd> | コード内の行にジャンプします                                                                                                     |
-| <kbd>w</kbd> | 新しいブランチまたはタグに切り替えます                                                                                                |
-| <kbd>y</kbd> | URL を正規の形式に展開します。 詳細は「[ファイルにパーマリンクを張る](/articles/getting-permanent-links-to-files)」を参照してください。                      |
-| <kbd>i</kbd> | 差分に関するコメントを表示または非表示にします。 詳細は「[プルリクエストの差分についてコメントする](/articles/commenting-on-the-diff-of-a-pull-request)」を参照してください。 |
-| <kbd>a</kbd> | diff の注釈を表示または非表示にします                                                                                              |
-| <kbd>b</kbd> | blame ビューを開きます。 詳細は「[ファイル内の変更を追跡する](/articles/tracing-changes-in-a-file)」を参照してください。                                |
+| Keyboard shortcut | Description
+|-----------|------------
+|<kbd>Command</kbd>+<kbd>B</kbd> (Mac) or </br> <kbd>Ctrl</kbd>+<kbd>B</kbd> (Windows/Linux) | Inserts Markdown formatting for bolding text
+|<kbd>Command</kbd>+<kbd>I</kbd> (Mac) or </br> <kbd>Ctrl</kbd>+<kbd>I</kbd> (Windows/Linux) | Inserts Markdown formatting for italicizing text
+|<kbd>Command</kbd>+<kbd>E</kbd> (Mac) or </br> <kbd>Ctrl</kbd>+<kbd>E</kbd> (Windows/Linux) | Inserts Markdown formatting for code or a command within a line{% ifversion fpt or ghae > 3.3 or ghes or ghec %}
+|<kbd>Command</kbd>+<kbd>K</kbd> (Mac) or </br> <kbd>Ctrl</kbd>+<kbd>K</kbd> (Windows/Linux) | Inserts Markdown formatting for creating a link{% endif %}{% ifversion fpt or ghae > 3.5 or ghes > 3.5 or ghec %}
+|<kbd>Command</kbd>+<kbd>V</kbd> (Mac) or </br> <kbd>Ctrl</kbd>+<kbd>V</kbd> (Windows/Linux) | Creates a Markdown link when applied over highlighted text{% endif %}
+|<kbd>Command</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd> (Mac) or </br> <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd> (Windows/Linux) | Toggles between the **Write** and **Preview** comment tabs{% ifversion fpt or ghae or ghes > 3.4 or ghec %}
+|<kbd>Command</kbd>+<kbd>Shift</kbd>+<kbd>V</kbd> (Mac) or </br> <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>V</kbd> (Windows/Linux) | Pastes HTML link as plain text{% endif %}{% ifversion fpt or ghae or ghes > 3.2 or ghec %}
+|<kbd>Command</kbd>+<kbd>Shift</kbd>+<kbd>Option</kbd>+<kbd>V</kbd> (Mac) or </br> <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Alt</kbd>+<kbd>V</kbd> (Windows/Linux) | Pastes HTML link as plain text{% endif %}{% ifversion fpt or ghae or ghes > 3.2 or ghec %}
+|<kbd>Command</kbd>+<kbd>Shift</kbd>+<kbd>7</kbd> (Mac) or </br> <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>7</kbd> (Windows/Linux) | Inserts Markdown formatting for an ordered list
+|<kbd>Command</kbd>+<kbd>Shift</kbd>+<kbd>8</kbd> (Mac) or </br> <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>8</kbd> (Windows/Linux) | Inserts Markdown formatting for an unordered list{% endif %}
+|<kbd>Command</kbd>+<kbd>Enter</kbd> (Mac) or </br> <kbd>Ctrl</kbd>+<kbd>Enter</kbd> (Windows/Linux) | Submits a comment
+|<kbd>Ctrl</kbd>+<kbd>.</kbd> and then <kbd>Ctrl</kbd>+<kbd>[saved reply number]</kbd> | Opens saved replies menu and then autofills comment field with a saved reply. For more information, see "[About saved replies](/articles/about-saved-replies)."{% ifversion fpt or ghae or ghes > 3.2 or ghec %}
+|<kbd>Command</kbd>+<kbd>Shift</kbd>+<kbd>.</kbd> (Mac) or </br> <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>.</kbd> (Windows/Linux) | Inserts Markdown formatting for a quote{% endif %}{% ifversion fpt or ghec %}
+|<kbd>Command</kbd>+<kbd>G</kbd> (Mac) or </br> <kbd>Ctrl</kbd>+<kbd>G</kbd> (Windows/Linux) | Insert a suggestion. For more information, see "[Reviewing proposed changes in a pull request](/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/reviewing-proposed-changes-in-a-pull-request)." |{% endif %}
+|<kbd>R</kbd> | Quote the selected text in your reply. For more information, see "[Basic writing and formatting syntax](/articles/basic-writing-and-formatting-syntax#quoting-text)." |
 
-## コメント
+## Issue and pull request lists
 
-| キーボードショートカット                                              | 説明                                                                                                                                                             |
-| --------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| <kbd>control b</kbd> または <kbd>command b</kbd>             | 太字テキストの Markdown 書式を挿入します                                                                                                                                      |
-| <kbd>control i</kbd> または <kbd>command i</kbd>             | Inserts Markdown formatting for italicizing text{% ifversion fpt or ghae-next or ghes > 3.1 or ghec %}
-| <kbd>control e</kbd> or <kbd>command e</kbd>              | Inserts Markdown formatting for code or a command within a line{% endif %}
-| <kbd>control k</kbd> または <kbd>command k</kbd>             | リンクを作成するための Markdown 書式を挿入します                                                                                                                                  |
-| <kbd>control shift p</kbd> または <kbd>command shift p</kbd> | Toggles between the **Write** and **Preview** comment tabs{% ifversion fpt or ghae-next or ghes > 3.2 or ghec %}
-| <kbd>control shift 7</kbd> or <kbd>command shift 7</kbd>  | Inserts Markdown formatting for an ordered list                                                                                                                |
-| <kbd>control shift 8</kbd> or <kbd>command shift 8</kbd>  | Inserts Markdown formatting for an unordered list{% endif %}
-| <kbd>control enter</kbd>                                  | コメントをサブミットします                                                                                                                                                  |
-| <kbd>control .</kbd>、次に <kbd>control [返信テンプレート番号]</kbd>   | 返信テンプレートメニューを開き、コメントフィールドに返信テンプレートを自動入力します。 詳細は「[返信テンプレートについて](/articles/about-saved-replies)」を参照してください。{% ifversion fpt or ghae-next or ghes > 3.2 or ghec %}
-| <kbd>control shift .</kbd> or <kbd>command shift.</kbd>   | Inserts Markdown formatting for a quote{% endif %}{% ifversion fpt or ghec %}
-| <kbd>control g</kbd> または <kbd>command g</kbd>             | 提案を挿入します。 詳細は「[プルリクエストで提案された変更をレビューする](/articles/reviewing-proposed-changes-in-a-pull-request)」を参照してください。 
+| Keyboard shortcut | Description
+|-----------|------------
+|<kbd>C</kbd> | Create an issue
+|<kbd>Command</kbd>+<kbd>/</kbd> (Mac) or </br> <kbd>Ctrl</kbd>+<kbd>/</kbd> (Windows/Linux) | Focus your cursor on the issues or pull requests search bar. For more information, see "[Filtering and searching issues and pull requests](/issues/tracking-your-work-with-issues/filtering-and-searching-issues-and-pull-requests)."||
+|<kbd>U</kbd> | Filter by author
+|<kbd>L</kbd> | Filter by or edit labels. For more information, see "[Filtering issues and pull requests by labels](/articles/filtering-issues-and-pull-requests-by-labels)."
+|<kbd>Alt</kbd> and click | While filtering by labels, exclude labels. For more information, see "[Filtering issues and pull requests by labels](/articles/filtering-issues-and-pull-requests-by-labels)."
+|<kbd>M</kbd> | Filter by or edit milestones. For more information, see "[Filtering issues and pull requests by milestone](/articles/filtering-issues-and-pull-requests-by-milestone)."
+|<kbd>A</kbd> | Filter by or edit assignee. For more information, see "[Filtering issues and pull requests by assignees](/articles/filtering-issues-and-pull-requests-by-assignees)."
+|<kbd>O</kbd> or <kbd>Enter</kbd> | Open issue
+
+## Issues and pull requests
+| Keyboard shortcut | Description
+|-----------|------------
+|<kbd>Q</kbd> | Request a reviewer. For more information, see "[Requesting a pull request review](/articles/requesting-a-pull-request-review/)."
+|<kbd>M</kbd> | Set a milestone. For more information, see "[Associating milestones with issues and pull requests](/articles/associating-milestones-with-issues-and-pull-requests/)."
+|<kbd>L</kbd> | Apply a label. For more information, see "[Applying labels to issues and pull requests](/articles/applying-labels-to-issues-and-pull-requests/)."
+|<kbd>A</kbd> | Set an assignee. For more information, see "[Assigning issues and pull requests to other {% data variables.product.company_short %} users](/articles/assigning-issues-and-pull-requests-to-other-github-users/)."
+|<kbd>X</kbd> | Link an issue or pull request from the same repository. For more information, see "[Linking a pull request to an issue](/issues/tracking-your-work-with-issues/linking-a-pull-request-to-an-issue/)."
+|<kbd>Command</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd> (Mac) or </br> <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd> (Windows/Linux) | Toggles between the **Write** and **Preview** tabs{% ifversion fpt or ghec %}
+|<kbd>Alt</kbd> and click | When creating an issue from a task list, open the new issue form in the current tab by holding <kbd>Alt</kbd> and clicking the {% octicon "issue-opened" aria-label="The issue opened icon" %} in the upper-right corner of the task. For more information, see "[About task lists](/issues/tracking-your-work-with-issues/creating-issues/about-task-lists)."
+|<kbd>Shift</kbd> and click | When creating an issue from a task list, open the new issue form in a new tab by holding <kbd>Shift</kbd> and clicking the {% octicon "issue-opened" aria-label="The issue opened icon" %} in the upper-right corner of the task. For more information, see "[About task lists](/issues/tracking-your-work-with-issues/creating-issues/about-task-lists)."
+|<kbd>Command</kbd> and click (Mac) or </br> <kbd>Ctrl</kbd>+<kbd>Shift</kbd> and click (Windows/Linux) | When creating an issue from a task list, open the new issue form in the new window by holding <kbd>Command</kbd> or <kbd>Ctrl</kbd>+<kbd>Shift</kbd> and clicking the {% octicon "issue-opened" aria-label="The issue opened icon" %} in the upper-right corner of the task. For more information, see "[About task lists](/issues/tracking-your-work-with-issues/creating-issues/about-task-lists)."{% endif %}
+
+## Changes in pull requests
+
+| Keyboard shortcut | Description
+|-----------|------------
+|<kbd>C</kbd> | Open the list of commits in the pull request
+|<kbd>T</kbd> | Open the list of changed files in the pull request
+|<kbd>J</kbd> | Move selection down in the list
+|<kbd>K</kbd> | Move selection up in the list
+|<kbd>Command</kbd>+<kbd>Shift</kbd>+<kbd>Enter</kbd> | Add a single comment on a pull request diff |
+|<kbd>Alt</kbd> and click | Toggle between collapsing and expanding all outdated review comments in a pull request by holding down <kbd>Alt</kbd> and clicking **Show outdated** or **Hide outdated**.|
+|Click, then <kbd>Shift</kbd> and click | Comment on multiple lines of a pull request by clicking a line number, holding <kbd>Shift</kbd>, then clicking another line number. For more information, see "[Commenting on a pull request](/github/collaborating-with-issues-and-pull-requests/commenting-on-a-pull-request#adding-line-comments-to-a-pull-request)."|
+
+{% ifversion projects-v2 %}
+
+## {% data variables.projects.projects_v2_caps %}
+
+### Navigating a project
+
+| Keyboard shortcut | Description
+|-----------|------------
+|<kbd>Command</kbd>+<kbd>f</kbd> (Mac) or <kbd>Ctrl</kbd>+<kbd>f</kbd> (Windows/Linux) | Focus filter field
+|<kbd>←</kbd> | Move cell focus to the left
+|<kbd>→</kbd> | Move cell focus to the right
+|<kbd>↑</kbd> | Move cell focus up
+|<kbd>↓</kbd> | Move cell focus down
+
+### Manipulating a project
+
+| Keyboard shortcut | Description
+|-----------|------------
+|<kbd>Enter</kbd> | Toggle edit mode for the focused cell
+|<kbd>Escape</kbd> | Cancel editing for the focused cell
+|<kbd>Command</kbd>+<kbd>Shift</kbd>+<kbd>\</kbd> (Mac) or <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>\</kbd> (Windows/Linux) | Open row actions menu
+|<kbd>Shift</kbd>+<kbd>Space</kbd> | Select item
+|<kbd>Space</kbd> | Open selected item
+|<kbd>e</kbd> | Archive selected items
+
 {% endif %}
-| <kbd>r</kbd>                                              | 返信で選択したテキストを引用します。 詳細は「[基本的な書き方とフォーマットの構文](/articles/basic-writing-and-formatting-syntax)」を参照してください。                                                           |
 
-## Issue およびプルリクエストのリスト
+## {% data variables.product.prodname_projects_v1_caps %}
 
-| キーボードショートカット                                  | 説明                                                                                                                                                                                                          |
-| --------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| <kbd>c</kbd>                                  | Issueの作成                                                                                                                                                                                                    |
-| <kbd>control /</kbd> または <kbd>command /</kbd> | Issue またはプルリクエストの検索バーにカーソルを合わせます。 For more information, see "[Filtering and searching issues and pull requests](/issues/tracking-your-work-with-issues/filtering-and-searching-issues-and-pull-requests)."| |
-| <kbd>u</kbd>                                  | 作者によりフィルタリングします                                                                                                                                                                                             |
-| <kbd>l</kbd>                                  | ラベルによりフィルタリグするか、ラベルを編集します。 詳細は「[Issue およびプルリクエストをラベルでフィルタリングする](/articles/filtering-issues-and-pull-requests-by-labels)」を参照してください。                                                                          |
-| <kbd>alt</kbd> およびクリック                        | ラベルによりフィルタリングすると同時に、ラベルを除外します。 詳細は「[Issue およびプルリクエストをラベルでフィルタリングする](/articles/filtering-issues-and-pull-requests-by-labels)」を参照してください。                                                                      |
-| <kbd>m</kbd>                                  | マイルストーンによりフィルタリングするか、 マイルストーンを編集します。 詳細は「[Issue およびプルリクエストをマイルストーンでフィルタリングする](/articles/filtering-issues-and-pull-requests-by-labels)」を参照してください。                                                            |
-| <kbd>a</kbd>                                  | アサインされた人によりフィルタリングするか、 アサインされた人を編集します。 詳細は「[Issue およびプルリクエストをアサインされた人でフィルタリングする](/articles/filtering-issues-and-pull-requests-by-assignees)」を参照してください。                                                      |
-| <kbd>o</kbd> または <kbd>enter</kbd>             | Issue を開きます                                                                                                                                                                                                 |
+### Moving a column
 
-## Issue およびプルリクエスト
-| キーボードショートカット                                                  | 説明                                                                                                                                                                                                                                                                                                                                                                                                         |
-| ------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| <kbd>q</kbd>                                                  | レビュー担当者にリクエストします。 詳細は「[Pull Request レビューをリクエストする](/articles/requesting-a-pull-request-review/)」を参照してください。                                                                                                                                                                                                                                                                                                  |
-| <kbd>m</kbd>                                                  | マイルストーンを設定します。 詳細は「[Issue およびプルリクエストにマイルストーンを関連付ける](/articles/associating-milestones-with-issues-and-pull-requests)」を参照してください。                                                                                                                                                                                                                                                                             |
-| <kbd>l</kbd>                                                  | ラベルを適用します。 詳細は「[Issue およびプルリクエストにラベルを適用する](/articles/applying-labels-to-issues-and-pull-requests)」を参照してください。                                                                                                                                                                                                                                                                                               |
-| <kbd>a</kbd>                                                  | アサインされた人を設定します。 詳細は「[{% data variables.product.company_short %} の他のユーザに Issue およびプルリクエストをアサインする](/articles/assigning-issues-and-pull-requests-to-other-github-users/)」を参照してください。                                                                                                                                                                                                                           |
-| <kbd>cmd + shift + p</kbd> または <kbd>control + shift + p</kbd> | Toggles between the **Write** and **Preview** tabs{% ifversion fpt or ghec %}
-| <kbd>alt</kbd> およびクリック                                        | When creating an issue from a task list, open the new issue form in the current tab by holding <kbd>alt</kbd> and clicking the {% octicon "issue-opened" aria-label="The issue opened icon" %} in the upper-right corner of the task. 詳しい情報については[タスクリストについて](/issues/tracking-your-work-with-issues/creating-issues/about-task-lists)を参照してください。                                                            |
-| <kbd>shift</kbd> and click                                    | When creating an issue from a task list, open the new issue form in a new tab by holding <kbd>shift</kbd> and clicking the {% octicon "issue-opened" aria-label="The issue opened icon" %} in the upper-right corner of the task. 詳しい情報については[タスクリストについて](/issues/tracking-your-work-with-issues/creating-issues/about-task-lists)を参照してください。                                                                |
-| <kbd>command</kbd> or <kbd>control + shift</kbd> and click    | When creating an issue from a task list, open the new issue form in the new window by holding <kbd>command</kbd> or <kbd>control + shift</kbd> and clicking the {% octicon "issue-opened" aria-label="The issue opened icon" %} in the upper-right corner of the task. For more information, see "[About task lists](/issues/tracking-your-work-with-issues/creating-issues/about-task-lists)."{% endif %}
+| Keyboard shortcut | Description
+|-----------|------------
+|<kbd>Enter</kbd> or <kbd>Space</kbd> | Start moving the focused column
+|<kbd>Esc</kbd> | Cancel the move in progress
+|<kbd>Enter</kbd> | Complete the move in progress
+|<kbd>←</kbd> or <kbd>H</kbd> | Move column to the left
+|<kbd>Command</kbd>+<kbd>←</kbd> or <kbd>Command</kbd>+<kbd>H</kbd> (Mac) or </br> <kbd>Ctrl</kbd>+<kbd>←</kbd> or <kbd>Ctrl</kbd>+<kbd>H</kbd> (Windows/Linux) | Move column to the leftmost position
+|<kbd>→</kbd> or <kbd>L</kbd> | Move column to the right
+|<kbd>Command</kbd>+<kbd>→</kbd> or <kbd>Command</kbd>+<kbd>L</kbd> (Mac) or </br> <kbd>Ctrl</kbd>+<kbd>→</kbd> or <kbd>Ctrl</kbd>+<kbd>L</kbd> (Windows/Linux) | Move column to the rightmost position
 
-## プルリクエストの変更
+### Moving a card
 
-| キーボードショートカット                    | 説明                                                                                                                                                                                                                                                 |
-| ------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| <kbd>c</kbd>                    | プルリクエスト内のコミットのリストを開きます                                                                                                                                                                                                                             |
-| <kbd>t</kbd>                    | プルリクエストで変更されたファイルのリストを開きます                                                                                                                                                                                                                         |
-| <kbd>j</kbd>                    | リストで選択を下に移動します                                                                                                                                                                                                                                     |
-| <kbd>k</kbd>                    | リストで選択を上に移動します                                                                                                                                                                                                                                     |
-| <kbd>cmd + shift + enter </kbd> | プルリクエストの差分にコメントを 1 つ追加します                                                                                                                                                                                                                          |
-| <kbd>alt</kbd> およびクリック          | `alt` を押しながら、[**Show outdated**] または [**Hide outdated**] をクリックして、期限切れのレビューコメントをすべて折りたたむか展開するかを切り替えます。|{% ifversion fpt or ghes or ghae or ghec %}
-| クリック後、<kbd>shift</kbd> およびクリック  | プルリクエストの複数行にコメントするには、行番号をクリックし、<kbd>shift</kbd> を押したまま、別の行番号をクリックします。 詳しい情報については、「[プルリクエストへコメントする](/github/collaborating-with-issues-and-pull-requests/commenting-on-a-pull-request#adding-line-comments-to-a-pull-request)」を参照してください。
-{% endif %}
+| Keyboard shortcut | Description
+|-----------|------------
+|<kbd>Enter</kbd> or <kbd>Space</kbd> | Start moving the focused card
+|<kbd>Esc</kbd> | Cancel the move in progress
+|<kbd>Enter</kbd> | Complete the move in progress
+|<kbd>↓</kbd> or <kbd>J</kbd> | Move card down
+|<kbd>Command</kbd>+<kbd>↓</kbd> or <kbd>Command</kbd>+<kbd>J</kbd> (Mac) or </br> <kbd>Ctrl</kbd>+<kbd>↓</kbd> or <kbd>Ctrl</kbd>+<kbd>J</kbd> (Windows/Linux) | Move card to the bottom of the column
+|<kbd>↑</kbd> or <kbd>K</kbd> | Move card up
+|<kbd>Command</kbd>+<kbd>↑</kbd> or <kbd>Command</kbd>+<kbd>K</kbd> (Mac) or </br> <kbd>Ctrl</kbd>+<kbd>↑</kbd> or <kbd>Ctrl</kbd>+<kbd>K</kbd> (Windows/Linux) | Move card to the top of the column
+|<kbd>←</kbd> or <kbd>H</kbd> | Move card to the bottom of the column on the left
+|<kbd>Shift</kbd>+<kbd>←</kbd> or <kbd>Shift</kbd>+<kbd>H</kbd> | Move card to the top of the column on the left
+|<kbd>Command</kbd>+<kbd>←</kbd> or <kbd>Command</kbd>+<kbd>H</kbd> (Mac) or </br> <kbd>Ctrl</kbd>+<kbd>←</kbd> or <kbd>Ctrl</kbd>+<kbd>H</kbd> (Windows/Linux) | Move card to the bottom of the leftmost column
+|<kbd>Command</kbd>+<kbd>Shift</kbd>+<kbd>←</kbd> or <kbd>Command</kbd>+<kbd>Shift</kbd>+<kbd>H</kbd> (Mac) or </br> <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>←</kbd> or <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>H</kbd> (Windows/Linux) | Move card to the top of the leftmost column
+|<kbd>→</kbd> | Move card to the bottom of the column on the right
+|<kbd>Shift</kbd>+<kbd>→</kbd> or <kbd>Shift</kbd>+<kbd>L</kbd> | Move card to the top of the column on the right
+|<kbd>Command</kbd>+<kbd>→</kbd> or <kbd>Command</kbd>+<kbd>L</kbd> (Mac) or </br> <kbd>Ctrl</kbd>+<kbd>→</kbd> or <kbd>Ctrl</kbd>+<kbd>L</kbd> (Windows/Linux) | Move card to the bottom of the rightmost column
+|<kbd>Command</kbd>+<kbd>Shift</kbd>+<kbd>→</kbd> or <kbd>Command</kbd>+<kbd>Shift</kbd>+<kbd>L</kbd> (Mac) or </br> <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>→</kbd> or <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>L</kbd> (Windows/Linux) | Move card to the bottom of the rightmost column
 
-## プロジェクトボード
+### Previewing a card
 
-### 列を移動する
-
-| キーボードショートカット                                                                                            | 説明                |
-| ------------------------------------------------------------------------------------------------------- | ----------------- |
-| <kbd>enter</kbd> または <kbd>space</kbd>                                                                   | フォーカスされた列を動かし始めます |
-| <kbd>escape</kbd>                                                                                       | 進行中の移動をキャンセルします   |
-| <kbd>enter</kbd>                                                                                        | 進行中の移動を完了します      |
-| <kbd>←</kbd> または <kbd>h</kbd>                                                                           | 左に列を移動します         |
-| <kbd>command + ←</kbd> または <kbd>command + h</kbd> または <kbd>control + ←</kbd> または <kbd>control + h</kbd> | 左端に列を移動します        |
-| <kbd>→</kbd> または <kbd>l</kbd>                                                                           | 右に列を移動します         |
-| <kbd>command + →</kbd> または <kbd>command + l</kbd> または <kbd>control + →</kbd> または <kbd>control + l</kbd> | 右端に列を移動します        |
-
-### カードを移動する
-
-| キーボードショートカット                                                                                                                            | 説明                  |
-| --------------------------------------------------------------------------------------------------------------------------------------- | ------------------- |
-| <kbd>enter</kbd> または <kbd>space</kbd>                                                                                                   | フォーカスされたカードを動かし始めます |
-| <kbd>escape</kbd>                                                                                                                       | 進行中の移動をキャンセルします     |
-| <kbd>enter</kbd>                                                                                                                        | 進行中の移動を完了します        |
-| <kbd>↓</kbd> または <kbd>j</kbd>                                                                                                           | カードを下に移動します         |
-| <kbd>command + ↓</kbd> または <kbd>command + j</kbd> または <kbd>control + ↓</kbd> または <kbd>control + j</kbd>                                 | カードを列の一番下に移動します     |
-| <kbd>↑</kbd> または <kbd>k</kbd>                                                                                                           | カードを上に移動します         |
-| <kbd>command + ↑</kbd> または <kbd>command + k</kbd> または <kbd>control + ↑</kbd> または <kbd>control + k</kbd>                                 | カードを列の一番上に移動します     |
-| <kbd>←</kbd> または <kbd>h</kbd>                                                                                                           | カードを左側の列の一番下に移動します  |
-| <kbd>shift + ←</kbd> または <kbd>shift + h</kbd>                                                                                           | カードを左側の列の一番上に移動します  |
-| <kbd>command + ←</kbd> または <kbd>command + h</kbd> または <kbd>control + ←</kbd> または <kbd>control + h</kbd>                                 | カードを一番左の列の一番下に移動します |
-| <kbd>command + shift + ←</kbd> または <kbd>command + shift + h</kbd> または <kbd>control + shift + ←</kbd> または <kbd>control + shift + h</kbd> | カードを一番左の列の一番上に移動します |
-| <kbd>→</kbd>                                                                                                                            | カードを右側の列の一番下に移動します  |
-| <kbd>shift + →</kbd> または <kbd>shift + l</kbd>                                                                                           | カードを右側の列の一番上に移動します  |
-| <kbd>command + →</kbd> または <kbd>command + l</kbd> または <kbd>control + →</kbd> または <kbd>control + l</kbd>                                 | カードを一番右の列の一番下に移動します |
-| <kbd>command + shift + →</kbd> または <kbd>command + shift + l</kbd> または <kbd>control + shift + →</kbd> または <kbd>control + shift + l</kbd> | カードを一番右の列の一番下に移動します |
-
-### カードをプレビューする
-
-| キーボードショートカット   | 説明               |
-| -------------- | ---------------- |
-| <kbd>esc</kbd> | カードのプレビューペインを閉じる |
+| Keyboard shortcut | Description
+|-----------|------------
+|<kbd>Esc</kbd> | Close the card preview pane
 
 {% ifversion fpt or ghec %}
 ## {% data variables.product.prodname_actions %}
 
-| キーボードショートカット                                               | 説明                                   |
-| ---------------------------------------------------------- | ------------------------------------ |
-| <kbd>command + space </kbd> または <kbd>control + space</kbd> | ワークフローエディターで、ワークフローファイルに対する提案を取得します。 |
-| <kbd>g</kbd> <kbd>f</kbd>                                  | ワークフローファイルに移動します                     |
-| <kbd>shift + t</kbd> または <kbd>T</kbd>                      | ログのタイムスタンプを切り替えます                    |
-| <kbd>shift + f</kbd> または <kbd>F</kbd>                      | フルスクリーン表示を切り替えます                     |
-| <kbd>esc</kbd>                                             | フルスクリーン表示を終了します                      |
+| Keyboard shortcut | Description
+|-----------|------------
+|<kbd>Command</kbd>+<kbd>Space </kbd> (Mac) or </br> <kbd>Ctrl</kbd>+<kbd>Space</kbd> (Windows/Linux) | In the workflow editor, get suggestions for your workflow file.
+|<kbd>G</kbd> <kbd>F</kbd> | Go to the workflow file
+|<kbd>Shift</kbd>+<kbd>T</kbd> or <kbd>T</kbd> | Toggle timestamps in logs
+|<kbd>Shift</kbd>+<kbd>F</kbd> or <kbd>F</kbd> | Toggle full-screen logs
+|<kbd>Esc</kbd> | Exit full-screen logs
 
 {% endif %}
 
-## 通知
-{% ifversion fpt or ghes or ghae or ghec %}
-| キーボードショートカット         | 説明           |
-| -------------------- | ------------ |
-| <kbd>e</kbd>         | 完了済としてマークします |
-| <kbd>shift + u</kbd> | 未読としてマークします  |
-| <kbd>shift + i</kbd> | 既読としてマークします  |
-| <kbd>shift + m</kbd> | サブスクライブ解除します |
+## Notifications
 
-{% else %}
+| Keyboard shortcut | Description
+|-----------|------------
+|<kbd>E</kbd> | Mark as done
+|<kbd>Shift</kbd>+<kbd>U</kbd>| Mark as unread
+|<kbd>Shift</kbd>+<kbd>I</kbd>| Mark as read
+|<kbd>Shift</kbd>+<kbd>M</kbd> | Unsubscribe
 
-| キーボードショートカット                                   | 説明           |
-| ---------------------------------------------- | ------------ |
-| <kbd>e</kbd> または <kbd>I</kbd> または <kbd>y</kbd> | 既読としてマークします  |
-| <kbd>shift + m</kbd>                           | スレッドをミュートします |
-{% endif %}
+## Network graph
 
-## ネットワークグラフ
-
-| キーボードショートカット                                  | 説明           |
-| --------------------------------------------- | ------------ |
-| <kbd>←</kbd> または <kbd>h</kbd>                 | 左にスクロールします   |
-| <kbd>→</kbd> または <kbd>l</kbd>                 | 右にスクロールします   |
-| <kbd>↑</kbd> または <kbd>k</kbd>                 | 上にスクロールします   |
-| <kbd>↓</kbd> または <kbd>j</kbd>                 | 下にスクロールします   |
-| <kbd>shift + ←</kbd> または <kbd>shift + h</kbd> | 左端までスクロールします |
-| <kbd>shift + →</kbd> または <kbd>shift + l</kbd> | 右端までスクロールします |
-| <kbd>shift + ↑</kbd> または <kbd>shift + k</kbd> | 上端までスクロールします |
-| <kbd>shift + ↓</kbd> または <kbd>shift + j</kbd> | 下端までスクロールします |
+| Keyboard shortcut | Description
+|-----------|------------
+|<kbd>←</kbd> or <kbd>H</kbd> | Scroll left
+|<kbd>→</kbd> or <kbd>L</kbd> | Scroll right
+|<kbd>↑</kbd> or <kbd>K</kbd> | Scroll up
+|<kbd>↓</kbd> or <kbd>J</kbd> | Scroll down
+|<kbd>Shift</kbd>+<kbd>←</kbd> (Mac) or </br> <kbd>Shift</kbd>+<kbd>H</kbd> (Windows/Linux) | Scroll all the way left
+|<kbd>Shift</kbd>+<kbd>→</kbd> (Mac) or </br> <kbd>Shift</kbd>+<kbd>L</kbd> (Windows/Linux) | Scroll all the way right
+|<kbd>Shift</kbd>+<kbd>↑</kbd> (Mac) or </br> <kbd>Shift</kbd>+<kbd>K</kbd> (Windows/Linux) | Scroll all the way up
+|<kbd>Shift</kbd>+<kbd>↓</kbd> (Mac) or </br> <kbd>Shift</kbd>+<kbd>J</kbd> (Windows/Linux) | Scroll all the way down

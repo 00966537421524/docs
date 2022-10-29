@@ -2,7 +2,7 @@
 title: Traversing with pagination
 intro: Explore how to use pagination to manage your responses with some examples using the Search API.
 redirect_from:
-  - /guides/traversing-with-pagination/
+  - /guides/traversing-with-pagination
   - /v3/guides/traversing-with-pagination
 versions:
   fpt: '*'
@@ -16,7 +16,7 @@ shortTitle: Traverse with pagination
 
 The {% ifversion fpt or ghec %}{% data variables.product.prodname_dotcom %}{% else %}{% data variables.product.product_name %}{% endif %} API provides a vast wealth of information for developers to consume.
 Most of the time, you might even find that you're asking for _too much_ information,
-and in order to keep our servers happy, the API will automatically [paginate the requested items][pagination].
+and in order to keep our servers happy, the API will automatically [paginate the requested items](/rest/overview/resources-in-the-rest-api#pagination).
 
 In this guide, we'll make some calls to the Search API, and iterate over
 the results using pagination. You can find the complete source code for this project
@@ -109,7 +109,7 @@ pagination, so let's write a little Ruby script that does everything we've
 just described above.
 
 As always, first we'll require [GitHub's Octokit.rb][octokit.rb] Ruby library, and
-pass in our [personal access token][personal token]:
+pass in our [{% data variables.product.pat_generic %}][personal token]:
 
 ``` ruby
 require 'octokit'
@@ -263,4 +263,4 @@ puts "The next page link is #{next_page_href}"
 [octokit.rb]: https://github.com/octokit/octokit.rb
 [personal token]: /articles/creating-an-access-token-for-command-line-use
 [hypermedia-relations]: https://github.com/octokit/octokit.rb#pagination
-[listing commits]: /rest/reference/repos#list-commits
+[listing commits]: /rest/reference/commits#list-commits

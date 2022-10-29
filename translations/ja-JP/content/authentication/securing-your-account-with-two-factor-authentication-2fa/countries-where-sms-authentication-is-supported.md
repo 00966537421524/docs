@@ -11,9 +11,14 @@ versions:
 topics:
   - 2FA
 shortTitle: Countries supporting SMS
+ms.openlocfilehash: bfd2ae699b2ac36d0d56deb43d892192441d2fe3
+ms.sourcegitcommit: fb047f9450b41b24afc43d9512a5db2a2b750a2a
+ms.translationtype: HT
+ms.contentlocale: ja-JP
+ms.lasthandoff: 09/11/2022
+ms.locfileid: '145088277'
 ---
-
-お住まいの国でテキストメッセージによる 2 要素認証がサポートされていない場合、TOTP モバイルアプリケーションにより認証を設定できます。 詳しい情報については「[2 要素認証の設定](/articles/configuring-two-factor-authentication)」を参照してください。
+お住まいの国でテキストメッセージによる 2 要素認証がサポートされていない場合、TOTP モバイルアプリケーションにより認証を設定できます。 詳細については、「[2 要素認証の構成](/articles/configuring-two-factor-authentication)」を参照してください。
 
 ## SMS 認証がサポートされている国
 
@@ -42,13 +47,13 @@ shortTitle: Countries supporting SMS
 <li>カーボベルデ</li>
 <li>ケイマン諸島</li>
 <li>クリスマス島</li>
-<li>ココス</li>
+<li>Cocos</li>
 <li>コンゴ民主共和国</li>
 <li>クロアチア</li>
 <li>キプロス</li>
 <li>チェコ共和国</li>
 <li>デンマーク</li>
-<li>ドミニカ国</li>
+<li>ドミニカ</li>
 <li>ドミニカ共和国</li>
 <li>エクアドル</li>
 <li>赤道ギニア</li>
@@ -67,7 +72,6 @@ shortTitle: Countries supporting SMS
 <li>アイスランド</li>
 <li>インド</li>
 <li>インドネシア</li>
-<li>イラン</li>
 <li>アイルランド</li>
 <li>イスラエル</li>
 <li>イタリア</li>
@@ -81,11 +85,11 @@ shortTitle: Countries supporting SMS
 <li>リビア</li>
 <li>リヒテンシュタイン</li>
 <li>リトアニア</li>
-<li>ルクセンブルグ</li>
+<li>ルクセンブルク</li>
 <li>マダガスカル</li>
 <li>マラウイ</li>
 <li>マレーシア</li>
-<li>モルディヴ</li>
+<li>モルディブ</li>
 <li>マリ</li>
 <li>マルタ</li>
 <li>モーリシャス</li>
@@ -105,11 +109,10 @@ shortTitle: Countries supporting SMS
 <li>ポルトガル</li>
 <li>カタール</li>
 <li>ルーマニア</li>
-<li>ロシア</li>
 <li>ルワンダ</li>
 <li>セネガル</li>
 <li>セルビア</li>
-<li>セイシェル</li>
+<li>セーシェル</li>
 <li>シンガポール</li>
 <li>スロバキア</li>
 <li>スロベニア</li>
@@ -125,17 +128,15 @@ shortTitle: Countries supporting SMS
 <li>タンザニア</li>
 <li>トーゴ</li>
 <li>トリニダード・トバゴ</li>
-<li>Turkey</li>
 <li>タークス・カイコス諸島</li>
 <li>ウガンダ</li>
-<li>ウクライナ</li>
 <li>アラブ首長国連邦</li>
-<li>英国</li>
-<li>米国</li>
+<li>イギリス</li>
+<li>アメリカ合衆国</li>
 <li>ウズベキスタン</li>
 <li>ベネズエラ</li>
 </ul>
 
-## 参考リンク
+## 参考資料
 
-- [2 要素認証について](/articles/about-two-factor-authentication)
+- "[2 要素認証について](/articles/about-two-factor-authentication)"

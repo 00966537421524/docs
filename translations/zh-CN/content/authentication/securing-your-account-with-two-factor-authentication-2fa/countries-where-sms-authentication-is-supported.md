@@ -10,10 +10,15 @@ versions:
   ghec: '*'
 topics:
   - 2FA
-shortTitle: 支持短信的国家/地区
+shortTitle: Countries supporting SMS
+ms.openlocfilehash: bfd2ae699b2ac36d0d56deb43d892192441d2fe3
+ms.sourcegitcommit: fb047f9450b41b24afc43d9512a5db2a2b750a2a
+ms.translationtype: HT
+ms.contentlocale: zh-CN
+ms.lasthandoff: 09/11/2022
+ms.locfileid: '145084597'
 ---
-
-如果我们不支持在您所在的国家/地区通过短信进行双重身份验证，您可以设置通过 TOTP 移动应用程序进行身份验证。 更多信息请参阅“[配置双重身份验证](/articles/configuring-two-factor-authentication)”。
+如果我们不支持在您所在的国家/地区通过短信进行双重身份验证，您可以设置通过 TOTP 移动应用程序进行身份验证。 有关详细信息，请参阅“[配置双因素身份验证](/articles/configuring-two-factor-authentication)”。
 
 ## 支持 SMS 身份验证的国家/地区
 
@@ -42,14 +47,14 @@ shortTitle: 支持短信的国家/地区
 <li>佛得角</li>
 <li>开曼群岛</li>
 <li>圣诞岛</li>
-<li>科科斯</li>
+<li>Cocos</li>
 <li>刚果民主共和国</li>
 <li>克罗地亚</li>
 <li>塞浦路斯</li>
 <li>捷克共和国</li>
 <li>丹麦</li>
-<li>多米尼加</li>
-<li>多明尼加共和国</li>
+<li>多米尼克</li>
+<li>多米尼加共和国</li>
 <li>厄瓜多尔</li>
 <li>赤道几内亚</li>
 <li>爱沙尼亚</li>
@@ -67,7 +72,6 @@ shortTitle: 支持短信的国家/地区
 <li>冰岛</li>
 <li>印度</li>
 <li>印度尼西亚</li>
-<li>伊朗</li>
 <li>爱尔兰</li>
 <li>以色列</li>
 <li>意大利</li>
@@ -96,7 +100,7 @@ shortTitle: 支持短信的国家/地区
 <li>莫桑比克</li>
 <li>纳米比亚</li>
 <li>荷兰</li>
-<li>荷属安的列斯</li>
+<li>荷属安列</li>
 <li>新西兰</li>
 <li>尼日利亚</li>
 <li>挪威</li>
@@ -105,7 +109,6 @@ shortTitle: 支持短信的国家/地区
 <li>葡萄牙</li>
 <li>卡塔尔</li>
 <li>罗马尼亚</li>
-<li>俄罗斯</li>
 <li>卢旺达</li>
 <li>塞内加尔</li>
 <li>塞尔维亚</li>
@@ -117,7 +120,7 @@ shortTitle: 支持短信的国家/地区
 <li>韩国</li>
 <li>西班牙</li>
 <li>斯里兰卡</li>
-<li>圣露西亚</li>
+<li>圣卢西亚</li>
 <li>苏丹</li>
 <li>瑞典</li>
 <li>瑞士</li>
@@ -125,10 +128,8 @@ shortTitle: 支持短信的国家/地区
 <li>坦桑尼亚</li>
 <li>多哥</li>
 <li>特立尼达和多巴哥</li>
-<li>土耳其</li>
 <li>特克斯和凯科斯群岛</li>
 <li>乌干达</li>
-<li>乌克兰</li>
 <li>阿拉伯联合酋长国</li>
 <li>英国</li>
 <li>美国</li>
@@ -138,4 +139,4 @@ shortTitle: 支持短信的国家/地区
 
 ## 延伸阅读
 
-- "[关于双重身份验证](/articles/about-two-factor-authentication)"
+- “[关于双因素身份验证](/articles/about-two-factor-authentication)”

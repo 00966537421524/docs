@@ -1,7 +1,7 @@
 ---
-title: Using environments for deployment
+title: Utilizar ambientes para el despliegue
 shortTitle: Use environments for deployment
-intro: Puedes configurr ambientes con reglas de protección y secretos. A workflow job that references an environment must follow any protection rules for the environment before running or accessing the environment's secrets.
+intro: Puedes configurr ambientes con reglas de protección y secretos. Un job de flujo de trabajo que referencie a un ambiente debe seguir cualquier regla de protección para el ambiente antes de ejecutar o acceder a los secretos de dicho ambiente.
 product: '{% data reusables.gated-features.environments %}'
 miniTocMaxHeadingLevel: 3
 redirect_from:
@@ -10,120 +10,121 @@ redirect_from:
   - /actions/deployment/using-environments-for-deployment
 versions:
   fpt: '*'
-  ghes: '>=3.1'
+  ghes: '*'
   ghae: '*'
   ghec: '*'
+ms.openlocfilehash: 21163a759cfd7eab3b197aeb4bb9283e1ccb90a2
+ms.sourcegitcommit: fb047f9450b41b24afc43d9512a5db2a2b750a2a
+ms.translationtype: HT
+ms.contentlocale: es-ES
+ms.lasthandoff: 09/10/2022
+ms.locfileid: '147572307'
 ---
-
-{% data reusables.actions.ae-beta %}
-
 ## Acerca de los ambientes
 
-Los ambientes se utilizan para describir un objetivo de despliegue general como `production`, `staging` o `development`. Cuando se despliega un flujo de trabajo de {% data variables.product.prodname_actions %} en un ambiente, dicho ambiente se desplegará en la página principal del repositorio. Para obtener más información sobre cómo visualizar los despliegues hacia los ambientes, consulta la sección "[Ver el historial de despliegue](/developers/overview/viewing-deployment-history)".
+Los entornos se usan para describir un destino de implementación general como `production`, `staging` o `development`. Cuando se despliega un flujo de trabajo de {% data variables.product.prodname_actions %} en un ambiente, dicho ambiente se desplegará en la página principal del repositorio. Para más información sobre cómo ver las implementaciones en los entornos, vea "[Visualización del historial de implementación](/developers/overview/viewing-deployment-history)".
 
 Puedes configurr ambientes con reglas de protección y secretos. Cuando un job de un flujo de trabajo referencia un ambiente, el job no comenzará hasta que todas las reglas de protección del ambiente pasen. Un job tampoco puede acceder a los secretos que se definen en un ambiente sino hasta que todas las reglas de protección de dicho ambiente pasen.
 
-{% ifversion fpt %}
-{% note %}
+{% ifversion fpt %} {% note %}
 
-**Note:** If you don't use {% data variables.product.prodname_ghe_cloud %} and convert a repository from public to private, any configured protection rules or environment secrets will be ignored, and you will not be able to configure any environments. Si conviertes tu repositorio en público nuevamente, tendrás acceso a cualquier regla de protección y secreto de ambiente que hubieras configurado previamente. {% data reusables.enterprise.link-to-ghec-trial %}
+**Nota:** Solo puede configurar entornos para repositorios públicos. Si conviertes un repositorio de público a privado, cualquier regla de protección o secretos de ambiente que hubieses configurado se ingorarán y no podrás configurar ningún ambiente. Si conviertes tu repositorio en público nuevamente, tendrás acceso a cualquier regla de protección y secreto de ambiente que hubieras configurado previamente.
 
-{% endnote %}
-{% endif %}
+Las organizaciones con datos {% data variables.product.prodname_team %} y los usuarios con {% data variables.product.prodname_pro %} pueden configurar entornos para repositorios privados. Para más información, vea "[Productos de {% data variables.product.prodname_dotcom %}](/get-started/learning-about-github/githubs-products)".
 
-## Reglas de protección de ambiente
+{% endnote %} {% endif %}
 
-Las reglas de protección de ambiente requieren que pasen condiciones específicas antes de que un job que referencia al ambiente pueda proceder. {% ifversion fpt or ghae-next or ghes > 3.1 or ghec %}Puedes utilizar las reglas de protección de ambiente para requerir una aprobación manual, retrasar un job, o restringir el ambiente a ramas específicas.{% else %}Puedes utilizar la protección de ambiente para requerir una aprobación manual o retrasar un job.{% endif %}
+## Reglas de protección del entorno
+
+Las reglas de protección de ambiente requieren que pasen condiciones específicas antes de que un job que referencia al ambiente pueda proceder. Puedes utilizar reglas de protección de ambiente para requerir una aprobación manual, retrasar un job o restringir el ambiente a ramas específicas.
 
 ### Revisores requeridos
 
 Utiliza los revisores requeridos para requerir que una persona o equipo específicos aprueben los jobs del flujo de trabajo que referencian el ambiente. Puedes listar hasta seis usuarios o equipos como revisores. Los revisores deben tener acceso de lectura en el repositorio como mínimo. Solo uno de los revisores requeridos necesita aprobar el job para que éste pueda proceder.
 
-Para obtener más información sobre cómo revisar jobs que referencian un ambiente con revisores requeridos, consulta la sección "[revisar los despliegues](/actions/managing-workflow-runs/reviewing-deployments)".
+Para obtener más información sobre cómo revisar los trabajos que hacen referencia a un entorno con los revisores necesarios, consulte "[Revisión de implementaciones](/actions/managing-workflow-runs/reviewing-deployments)".
 
 ### Temporizador de espera
 
 Utiliza un temporizador de espera para retrasar un job durante una cantidad de tiempo específica después de que el job se active inicialmente. El tiempo (en minutos) debe ser un número entero entre 0 y 43,200 (30 días).
 
-{% ifversion fpt or ghae-next or ghes > 3.1 or ghec %}
 ### Ramas de despliegue
 
 Utiliza ramas de despliegue para restringir las ramas que pueden hacer despliegues en el ambiente. A continuación encnotrarás las opciones para las ramas de despliegue de un ambiente:
 
-* **Todas las ramas**: Todas las ramas del repositorio pueden hacer despliegues en el ambiente.
-* **Ramas protegidas**: Solo las ramas que tengan reglas de protección de rama habilitadas podrán hacer despliegues en el ambiente. Si no se han definido reglas de protección de ramas en ninguna de las ramas del repositorio, entonces todas las ramas podrán hacer despliegues. Para obtener más iformación acerca de las reglas de protección de rama, consulta la sección "[Acerca de las ramas protegidas](/github/administering-a-repository/about-protected-branches)".
-* **Ramas selectas**: Solo las ramas que coincidan con tus patrones específicos de nombre podrán hacer despliegues en el ambiente.
+* **All branches**: todas las ramas del repositorio pueden implementarse en el entorno.
+* **Protected branches**: solo las ramas con reglas de protección de rama habilitadas pueden implementarse en el entorno. Si no se han definido reglas de protección de ramas en ninguna de las ramas del repositorio, entonces todas las ramas podrán hacer despliegues. Para obtener más información sobre las reglas de protección de ramas, consulte "[Acerca de las ramas protegidas](/github/administering-a-repository/about-protected-branches)".
+* **Selected branches**: solo las ramas que coinciden con los patrones de nombre especificados se pueden implementar en el entorno.
 
-  Por ejemplo, si especificas `releases/*` como una regla de rama de despliegue, solo aquellas ramas cuyo nombre inicie con `releases/` podrán hacer despliegues en el ambiente. (Los caracteres de comodín no coincidirán con `/`. Para hacer coincidir las ramas que inicien con `release/` y contengan una diagonal sencilla adicional utiliza `release/*/*`.) Si agregas `main` como regla de rama de despliegue, la rama que se llame `main` también podrá hacer despliegues en el ambiente. Para obtener más información sobre las opciones de sintaxis para las ramas de despliegue, consulta la [documentación de File.fnmatch de Ruby](https://ruby-doc.org/core-2.5.1/File.html#method-c-fnmatch).
-{% endif %}
-## Secretos de ambiente
+  Por ejemplo, si especifica `releases/*` como una regla de rama de implementación, solo las ramas cuyo nombre comience por `releases/` podrán implementarse en el entorno. (Los caracteres comodín no coincidirán con `/`. Para buscar coincidencias con ramas que comienzan por `release/` y contienen una barra diagonal única adicional, use `release/*/*`). Si agrega `main` como regla de rama de implementación, una rama denominada `main` también se podrá implementar en el entorno. Para obtener más información sobre las opciones de sintaxis para las ramas de implementación, consulte la [documentación de Ruby File.fnmatch](https://ruby-doc.org/core-2.5.1/File.html#method-c-fnmatch).
+## Secretos de entorno
 
-Los secretos que se almacenan en un ambiente sólo se encuentran disponibles para los jobs de flujo de trabajo que referencien el ambiente. Si el ambiente requiere aprobación, un job no puede acceder a secretos de ambiente hasta que uno de los revisores requeridos lo apruebe. Para obtener más información sobre los secretos, consulta la sección "[Secretos cifrados](/actions/reference/encrypted-secrets)".
+Los secretos que se almacenan en un ambiente sólo se encuentran disponibles para los jobs de flujo de trabajo que referencien el ambiente. Si el ambiente requiere aprobación, un job no puede acceder a secretos de ambiente hasta que uno de los revisores requeridos lo apruebe. Para obtener más información sobre los secretos, consulte "[Secretos cifrados](/actions/reference/encrypted-secrets)".
 
 {% note %}
 
-**Nota:** Los flujos de trabajo que se ejecutan en ejecutores auto-hospedados no se ejecutan en un contenedor aislado, incluso si utilizan ambientes. Environment secrets should be treated with the same level of security as repository and organization secrets. Para obtener más información, consulta la sección "[Fortalecimiento de la seguridad para las GitHub Actions](/actions/learn-github-actions/security-hardening-for-github-actions#hardening-for-self-hosted-runners)".
+**Nota:** Los flujos de trabajo que se ejecutan en ejecutores autohospedados no lo hacen en un contenedor aislado, aunque se utilicen entornos. Los secretos de ambiente deberían tratarse con el mismo nivel de seguridad que los secretos de repositorio y de organización. Para obtener más información, consulte [Fortalecimiento de seguridad para GitHub Actions](/actions/learn-github-actions/security-hardening-for-github-actions#hardening-for-self-hosted-runners).
 
 {% endnote %}
 
-## Crear un ambiente
+## Creación de un entorno
 
-{% data reusables.github-actions.permissions-statement-environment %}
+{% data reusables.actions.permissions-statement-environment %}
 
-{% data reusables.repositories.navigate-to-repo %}
-{% data reusables.repositories.sidebar-settings %}
-{% data reusables.github-actions.sidebar-environment %}
-{% data reusables.github-actions.new-environment %}
-{% data reusables.github-actions.name-environment %}
-1. Optionally, specify people or teams that must approve workflow jobs that use this environment.
-   1. Select **Required reviewers**.
-   1. Enter up to 6 people or teams. Solo uno de los revisores requeridos necesita aprobar el job para que éste pueda proceder.
-   1. Click **Save protection rules**.
-2. Optionally, specify the amount of time to wait before allowing workflow jobs that use this environment to proceed.
-   1. Select **Wait timer**.
-   1. Enter the number of minutes to wait.
-   1. Click **Save protection rules**.
-3. Optionally, specify what branches can deploy to this environment. For more information about the possible values, see "[Deployment branches](#deployment-branches)."
-   1. Select the desired option in the **Deployment branches** dropdown.
-   1. If you chose **Selected branches**, enter the branch name patterns that you want to allow.
-4. Optionally, add environment secrets. These secrets are only available to workflow jobs that use the environment. Additionally, workflow jobs that use this environment can only access these secrets after any configured rules (for example, required reviewers) pass. Para obtener más información sobre los secretos, consulta la sección "[Secretos cifrados](/actions/reference/encrypted-secrets)".
-   1. Under **Environment secrets**, click **Add Secret**.
-   1. Enter the secret name.
-   1. Enter the secret value.
-   1. Haz clic en **Agregar secreto** (Agregar secreto).
+{% ifversion fpt or ghec %} {% note %}
 
-{% ifversion fpt or ghae-next or ghes > 3.1 or ghec %}También puedes crear y configurar ambientes a través de la API de REST. Para obtener más información, consulta las secciones de "[Ambientes](/rest/reference/repos#environments)" y "[Secretos](/rest/reference/actions#secrets)".{% endif %}
+**Nota:** La creación de un entorno en un repositorio privado está disponible para las organizaciones con datos {% data variables.product.prodname_team %} y usuarios con datos {% data variables.product.prodname_pro %}.
+
+{% endnote %} {% endif %}
+
+{% data reusables.repositories.navigate-to-repo %} {% data reusables.repositories.sidebar-settings %} {% data reusables.actions.sidebar-environment %} {% data reusables.actions.new-environment %} {% data reusables.actions.name-environment %}
+1. Opcionalmente, personas o equipos específicos deben aprobar los jobs de flujo de trabajo que utilicen este ambiente.
+   1. Seleccione **Revisores obligatorios**.
+   1. Ingresa hasta 6 personas o equipos. Solo uno de los revisores requeridos necesita aprobar el job para que éste pueda proceder.
+   1. Haga clic en **Save protection rules**.
+2. Opcionalmente, especifica la cantidad de tiempo a esperar antes de permitir los jobs de flujo de trabajo que utilizan este ambiente para proceder.
+   1. Seleccione **Wait timer**.
+   1. Ingresa la cantidad de minutos a esperar.
+   1. Haga clic en **Save protection rules**.
+3. Opcionalmente, especifica qué ramas pueden desplegarse en este ambiente. Para obtener más información sobre los posibles valores, consulte "[Ramas de implementación](#deployment-branches)".
+   1. Seleccione la opción deseada en la lista desplegable **Deployment branches**.
+   1. Si eligió **Selected branches**, escriba los patrones de nombre de rama que desea permitir.
+4. Opcionalmente, agrega secretos de ambiente. Estos secretos solo están disponibles para los jobs de flujos de trabajo que utilicen el ambiente. Adicionalmente, los jobs de flujo de trabajo que utilicen este ambiente solo pueden acceder a estos secretos después de que pase cualquier regla configurada (por ejemplo, los revisores requeridos). Para obtener más información sobre los secretos, consulte "[Secretos cifrados](/actions/reference/encrypted-secrets)".
+   1. En **Environment secrets**, haga clic en **Add Secret**.
+   1. Ingresa el nombre del secreto.
+   1. Ingresa el valor del secreto.
+   1. Haga clic en **Add Secret**.
+
+También puedes crear y configurar ambientes a través de la API de REST. Para obtener más información, consulta «[Entornos de implementación](/rest/deployments/environments)», «[Secretos de Acciones de GitHub](/rest/actions/secrets)» y «[Directivas de rama de implementación](/rest/deployments/branch-policies)».
 
 El ejecutar un flujo de trabajo que referencie un ambiente que no existe creará un ambiente con el nombre referenciado. El ambiente recién creado no tendrá configurada ninguna regla de protección o secreto. Cualquiera que pueda editar flujos de trabajo en el repositorio podrá crear ambientes a través de un archivo de flujo de trabajo, pero solo los administradoresd e repositorio pueden configurar el ambiente.
 
-## Using an environment
+## Utilizar un ambiente
 
-Cad job en un flujo de trabajo puede referenciar un solo ambiente. Cualquier regla de protección que se configure para el ambiente debe pasar antes de que un job que referencia al ambiente se envíe a un ejecutor. The job can access the environment's secrets only after the job is sent to a runner.
+Cad job en un flujo de trabajo puede referenciar un solo ambiente. Cualquier regla de protección que se configure para el ambiente debe pasar antes de que un job que referencia al ambiente se envíe a un ejecutor. El job puede acceder a los secretos de ambiente únicamente después de que se envía a un ejecutor.
 
-Cuando un flujo de trabajo referencia un ambiente, éste aparecerá en los despliegues del repositorio. Para obtener más información acerca de visualizar los despliegues actuales y previos, consulta la sección "[Visualizar el historial de despliegues](/developers/overview/viewing-deployment-history)".
+Cuando un flujo de trabajo referencia un ambiente, éste aparecerá en los despliegues del repositorio. Para obtener más información sobre cómo ver las implementaciones actuales y anteriores, consulte "[Visualización del historial de implementación](/developers/overview/viewing-deployment-history)".
 
 {% data reusables.actions.environment-example %}
 
 ## Borrar un ambiente
 
-{% data reusables.github-actions.permissions-statement-environment %}
+{% data reusables.actions.permissions-statement-environment %}
 
 El borrar un ambiente borrará todos los secretos y reglas de protección asociadas con éste. Cualquier job que esté actualmente en espera porque depende de las reglas de protección del ambiente que se borró, fallará automáticamente.
 
-{% data reusables.repositories.navigate-to-repo %}
-{% data reusables.repositories.sidebar-settings %}
-{% data reusables.github-actions.sidebar-environment %}
+{% data reusables.repositories.navigate-to-repo %} {% data reusables.repositories.sidebar-settings %} {% data reusables.actions.sidebar-environment %}
 1. Junto al ambiente que quieres borrar, haz clic en {% octicon "trash" aria-label="The trash icon" %}.
-2. Da clic en **Entiendo, borra este ambiente**.
+2. Haga clic en **I understand, delete this environment**.
 
-{% ifversion fpt or ghae-next or ghes > 3.1 or ghec %}También puedes borrar los ambientes a través de la API de REST Para obtener más información, consulta la sección "[Ambientes](/rest/reference/repos#environments)".{% endif %}
+También puyedes borrar ambientes a través de la API de REST. Para más información, consulta la sección sobre los "[Entornos](/rest/reference/repos#environments)".
 
-## How environments relate to deployments
+## Cómo se relacionan los ambientes con los desplilegues
 
 {% data reusables.actions.environment-deployment-event %}
 
-You can access these objects through the REST API or GraphQL API. You can also subscribe to these webhook events. For more information, see "[Repositories](/rest/reference/repos#deployments)" (REST API), "[Objects]({% ifversion ghec %}/free-pro-team@latest{% endif %}/graphql/reference/objects#deployment)" (GraphQL API), or "[Webhook events and payloads](/developers/webhooks-and-events/webhooks/webhook-events-and-payloads#deployment)."
+Puedes acceder a estos objetos a través de la API de REST o la API de GraphQL. También puedes suscribirte a estos eventos de webhook. Para obtener más información, consulte "[Repositorios](/rest/reference/repos#deployments)" (API de REST), "[Objetos](/graphql/reference/objects#deployment)" (GraphQL API) o "[Eventos y cargas de webhook](/developers/webhooks-and-events/webhooks/webhook-events-and-payloads#deployment)".
 
 ## Pasos siguientes
 
-{% data variables.product.prodname_actions %} provides several features for managing your deployments. For more information, see "[Deploying with GitHub Actions](/actions/deployment/deploying-with-github-actions)."
+{% data variables.product.prodname_actions %} proporciona varias características para administrar tus despliegues. Para obtener más información, consulte "[Implementación con Acciones de GitHub](/actions/deployment/deploying-with-github-actions)".

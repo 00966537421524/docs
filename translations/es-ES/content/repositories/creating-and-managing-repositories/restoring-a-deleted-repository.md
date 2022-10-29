@@ -1,6 +1,7 @@
 ---
 title: Restaurando un repositorio eliminado
-intro: Puede restaurar algunos de los repositorios eliminados para recuperar su contenido.
+intro: '{% ifversion ghes or ghae %}Un propietario de la empresa puede{% elsif fpt or ghec %}Puedes{% endif %} restaurar algunos repositorios eliminados para recuperar su contenido.'
+permissions: '{% ifversion ghes or ghae %}{% elsif fpt or ghec %}Anyone can restore deleted repositories that were owned by their own personal account. Organization owners can restore deleted repositories that were owned by the organization.{% endif %}'
 redirect_from:
   - /articles/restoring-a-deleted-repository
   - /github/administering-a-repository/restoring-a-deleted-repository
@@ -12,15 +13,23 @@ versions:
   ghae: '*'
 topics:
   - Repositories
-shortTitle: Restablecer el repositorio borrado
+shortTitle: Restore deleted repository
+ms.openlocfilehash: 233785cc42ac6dd97a35d042186ae198dd69502a
+ms.sourcegitcommit: 47bd0e48c7dba1dde49baff60bc1eddc91ab10c5
+ms.translationtype: HT
+ms.contentlocale: es-ES
+ms.lasthandoff: 09/05/2022
+ms.locfileid: '146200102'
 ---
+{% ifversion ghes or ghae %}
 
-{% ifversion fpt or ghec %}
-Cualquier usuario puede restaurar repositorios eliminados que le pertenecieron a su propia cuenta de usuario. Los propietarios de la organización pueden restaurar repositorios eliminados que le pertenecieron a la organización.
+Normalmente, un propietario de la empresa puede restaurar los repositorios eliminados en un plazo de 90 días{% ifversion ghes %} en {% data variables.product.product_location %}{% endif %}. Para obtener más información, consulte "[Restauración de un repositorio eliminado](/admin/user-management/managing-repositories-in-your-enterprise/restoring-a-deleted-repository)". 
+
+{% else %}
 
 ## Acerca de la restauración de repositorios
 
-Un repositorio eliminado se puede restaurar en un plazo de 90 días, a menos que el repositorio haya sido parte de una red de bifurcaciones que actualmente no está vacía. Una red de bifurcaciones consiste en un repositorio padre, las bifurcaciones del repositorio y las bifurcaciones de las bifurcaciones del repositorio. Si tu repositorio forma parte de una red de bifurcaciones, no se puede restaurar a menos que se elimine cualquier otro repositorio de la red o que se haya separado de la red. Para obtener más información acerca de las bifurcaciones, consulta "[Acerca de las bifurcaciones](/articles/about-forks)".
+Un repositorio eliminado se puede restaurar en un plazo de 90 días, a menos que el repositorio haya sido parte de una red de bifurcaciones que actualmente no está vacía. Una red de bifurcaciones consiste en un repositorio padre, las bifurcaciones del repositorio y las bifurcaciones de las bifurcaciones del repositorio. Si tu repositorio forma parte de una red de bifurcaciones, no se puede restaurar a menos que se elimine cualquier otro repositorio de la red o que se haya separado de la red. Para obtener más información sobre las bifurcaciones, consulta "[Acerca de las bifurcaciones](/pull-requests/collaborating-with-pull-requests/working-with-forks/about-forks)".
 
 Si quieres restaurar un repositorio que era parte de una red de bifurcaciones que actualmente no está vacía, te puedes contactar con {% data variables.contact.contact_support %}.
 
@@ -28,27 +37,17 @@ Puede tardar hasta una hora después de que se elimine un repositorio antes de q
 
 Restaurar un repositorio no restaurará los archivos adjuntos de lanzamiento o los permisos de equipo. Las propuestas que se restablezcan no se etiquetarán.
 
-## Restaurar un repositorio eliminado que le pertenecía a una cuenta de usuario
+## Restauración de un repositorio eliminado que le pertenecía a una cuenta personal
 
-{% data reusables.user_settings.access_settings %}
-{% data reusables.user_settings.repo-tab %}
-{% data reusables.user_settings.deleted-repos %}
-{% data reusables.user_settings.restore-repo %}
-{% data reusables.user_settings.restore-confirmation %}
+{% data reusables.user-settings.access_settings %} {% data reusables.user-settings.repo-tab %} {% data reusables.user-settings.deleted-repos %} {% data reusables.user-settings.restore-repo %} {% data reusables.user-settings.restore-confirmation %}
 
 ## Restaurar un repositorio eliminado que le pertenecía a una organización
 
 
-{% data reusables.profile.access_org %}
-{% data reusables.profile.org_settings %}
-{% data reusables.organizations.deleted-repos %}
-{% data reusables.user_settings.restore-repo %}
-{% data reusables.user_settings.restore-confirmation %}
+{% data reusables.profile.access_org %} {% data reusables.profile.org_settings %} {% data reusables.organizations.deleted-repos %} {% data reusables.user-settings.restore-repo %} {% data reusables.user-settings.restore-confirmation %}
 
-## Leer más
+## Información adicional
 
-- "[Borrar un repositorio](/articles/deleting-a-repository)"
+- "[Eliminación de un repositorio](/articles/deleting-a-repository)"
 
-{% else %}
-Usually, deleted repositories can be restored within 90 days by a {% data variables.product.prodname_enterprise %} site administrator. Para obtener más información, consulta "[Restaurar un repositorio eliminado](/admin/user-management/managing-repositories-in-your-enterprise/restoring-a-deleted-repository)".
 {% endif %}

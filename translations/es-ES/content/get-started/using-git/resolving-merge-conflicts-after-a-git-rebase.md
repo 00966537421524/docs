@@ -11,24 +11,29 @@ versions:
   ghes: '*'
   ghae: '*'
   ghec: '*'
-shortTitle: Resolver conflictos después de rebasar
+shortTitle: Resolve conflicts after rebase
+ms.openlocfilehash: 8798282fb804f7b2389d98f69ba2b0e855a2289a
+ms.sourcegitcommit: fcf3546b7cc208155fb8acdf68b81be28afc3d2d
+ms.translationtype: HT
+ms.contentlocale: es-ES
+ms.lasthandoff: 09/10/2022
+ms.locfileid: '145115970'
 ---
-
-Después de reordenar y manipular confirmaciones utilizando `git rebase`, si ocurre un conflicto de fusión, Git te lo informará con el siguiente mensaje impreso en el terminal:
+Después de reordenar y manipular las confirmaciones mediante `git rebase`, si se produce un conflicto de confirmación, Git se lo indicará con el siguiente mensaje impreso en el terminal:
 
 ```shell
-error: no se pudo aplicar fa39187... algo para agregar al parte A
+error: could not apply fa39187... something to add to patch A
 
-Cuando hayas resuelto este problema, ejecuta "git rebase --continue".
-Si prefieres saltear este parche, ejecuta "git rebase --skip".
-Para revisar la rama original y detener el proceso de rebase, ejecuta "git rebase --abort".
-No se pudo aplicar fa39187f3c3dfd2ab5faa38ac01cf3de7ce2e841... Cambia el archivo falso
+When you have resolved this problem, run "git rebase --continue".
+If you prefer to skip this patch, run "git rebase --skip" instead.
+To check out the original branch and stop rebasing, run "git rebase --abort".
+Could not apply fa39187f3c3dfd2ab5faa38ac01cf3de7ce2e841... Change fake file
 ```
 
-Aquí Git te está diciendo qué confirmación está causando el conflicto (`fa39187`). Se te ofrecen tres opciones:
+Aquí, Git le indica qué confirmación causa el conflicto (`fa39187`). Se te ofrecen tres opciones:
 
-* Puedes ejecutar `git rebase --abort` para deshacer por completo la rebase. Git te regresará al estado de tu rama tal como estaba antes de haber pedido `git rebase`.
-* Puedes ejecutar `git rebase --skip` para saltear por completo la confirmación. Esto significa que no se incluirá ninguno de los cambios introducidos por la confirmación problemática. Es muy poco común que elijas esta opción.
+* Puede ejecutar `git rebase --abort` para deshacer completamente la fusión mediante cambio de base. Git le devolverá el estado de la rama tal y como estaba antes de llamar a `git rebase`.
+* Puede ejecutar `git rebase --skip` para omitir completamente la confirmación. Esto significa que no se incluirá ninguno de los cambios introducidos por la confirmación problemática. Es muy poco común que elijas esta opción.
 * Puedes corregir el conflicto.
 
-Para corregir el conflicto, puedes seguir [los procedimientos estándar para resolver conflictos de fusión desde la línea de comando](/articles/resolving-a-merge-conflict-using-the-command-line). Cuando termines, tendrás que pedir `git rebase --continue` para que Git continúe procesando el resto de la rebase.
+Para corregir el conflicto, puede seguir [los procedimientos estándar de resolución de conflictos de combinación desde la línea de comandos](/github/collaborating-with-pull-requests/addressing-merge-conflicts/resolving-a-merge-conflict-using-the-command-line). Cuando haya terminado, tendrá que llamar a `git rebase --continue` para que Git siga procesando el resto de la fusión mediante cambio de base.

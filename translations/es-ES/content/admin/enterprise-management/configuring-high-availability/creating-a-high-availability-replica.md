@@ -12,53 +12,48 @@ topics:
   - Enterprise
   - High availability
   - Infrastructure
-shortTitle: Crear una réplica de HA
+shortTitle: Create HA replica
+ms.openlocfilehash: 0b838049fe0d520be8cb88382314b25c5bba2b28
+ms.sourcegitcommit: dc42bb4a4826b414751ffa9eed38962c3e3fea8e
+ms.translationtype: HT
+ms.contentlocale: es-ES
+ms.lasthandoff: 07/13/2022
+ms.locfileid: '146332764'
 ---
-
 {% data reusables.enterprise_installation.replica-limit %}
 
-## Crear una réplica de alta disponibilidad
+## <a name="creating-a-high-availability-replica"></a>Crear una réplica de alta disponibilidad
 
-1. Configurar un aparato {% data variables.product.prodname_ghe_server %} nuevo en la plataforma que desees. El aparato réplica debe espejar la CPU, la RAM y los ajustes de almacenamiento del aparato principal. Recomendamos que instales el aparato réplica en un entorno separado. El hardward subyacente, el software y los componentes de red deben estar aislados de los del aparato principal. Si estás usando un proveedor de nube, utiliza una región o zona separada. Para obtener más información, consulta ["Configurar una instancia {% data variables.product.prodname_ghe_server %}"](/enterprise/{{ currentVersion }}/admin/guides/installation/setting-up-a-github-enterprise-server-instance).
-2. Desde un navegador, dirígete a la nueva dirección IP del aparato réplica y carga tu licencia de {% data variables.product.prodname_enterprise %}.
-3. Establece una contraseña de administrador que coincida con la contraseña del aparato principal y continúa.
-4. Haz clic en **Configure as Replica** (Configurar como réplica). ![Opciones de instalación con enlace para configurar tu nueva instancia como una réplica](/assets/images/enterprise/management-console/configure-as-replica.png)
-5. En "Agregar nueva clave SSH", escribe tu clave SSH. ![Agrega la clave SSH](/assets/images/enterprise/management-console/add-ssh-key.png)
-6. Haz clic en **Add key** (Agregar clave), luego haz clic en **Continue** (Continuar).
-6. Conectarse a la dirección IP del aparato réplica usando SSH.
+1. Configurar un aparato {% data variables.product.prodname_ghe_server %} nuevo en la plataforma que desees. El aparato réplica debe espejar la CPU, la RAM y los ajustes de almacenamiento del aparato principal. Recomendamos que instales el aparato réplica en un entorno separado. El hardward subyacente, el software y los componentes de red deben estar aislados de los del aparato principal. Si estás usando un proveedor de nube, utiliza una región o zona separada. Para más información, vea "[Configuración de una instancia de {% data variables.product.prodname_ghe_server %}](/enterprise/admin/guides/installation/setting-up-a-github-enterprise-server-instance)".
+1. Asegúrate de que tanto el aplicativo primario como el de la réplica nueva puedan comunicarse el uno con el otro a través de los puertos 122/TCP y 1194/UDP. Para más información, vea "[Puertos de red](/admin/configuration/configuring-network-settings/network-ports#administrative-ports)".
+1. Desde un navegador, dirígete a la nueva dirección IP del aparato réplica y carga tu licencia {% data variables.product.prodname_enterprise %}.
+{% data reusables.enterprise_installation.replica-steps %}
+1. Conectarse a la dirección IP del aparato réplica usando SSH.
   ```shell
   $ ssh -p 122 admin@<em>REPLICA IP</em>
   ```
-7. Para generar un par de claves para la replicación, usa el comando `ghe-repl-setup` con la dirección IP del aparato principal y copia la clave pública que este devuelve.
+{% data reusables.enterprise_installation.generate-replication-key-pair %} {% data reusables.enterprise_installation.add-ssh-key-to-primary %}
+1. Para comprobar la conexión al dispositivo principal y habilitar el modo de réplica para la réplica nueva, vuelva a ejecutar `ghe-repl-setup`.
   ```shell
   $ ghe-repl-setup <em>PRIMARY IP</em>
   ```
-{% data reusables.enterprise_installation.add-ssh-key-to-primary %}
-9. Para verificar la conexión con la primaria y habilitar el modo de réplica para una nueva réplica, ejecuta nuevamente `ghe-repl-setup`.
-  ```shell
-  $ ghe-repl-setup <em>PRIMARY IP</em>
-  ```
-{% data reusables.enterprise_installation.replication-command %}
-11. Para verificar el estado de cada canal de replicación del almacén de datos, utiliza el comando `ghe-repl-status`.
-  ```shell
-  $ ghe-repl-status
-  ```
+{% data reusables.enterprise_installation.replication-command %} {% data reusables.enterprise_installation.verify-replication-channel %}
 
-## Crear réplicas de replicación geográfica
+## <a name="creating-geo-replication-replicas"></a>Crear réplicas de replicación geográfica
 
-Esta configuración de ejemplo utiliza una réplica primaria y dos réplicas, que se encuentran en tres regiones geográficas diferentes. Aunque los tres nodos pueden estar en redes diferentes, se necesitan todos los nodos para que sean accesibles desde todos los demás nodos. Como mínimo, los puertos administrativos requeridos deben estar abiertos para todos los demás nodos. Para obtener más información acerca de los requisitos de puerto, consulta "[Puertos de red](/enterprise/{{ currentVersion }}/admin/guides/installation/network-ports/#administrative-ports)."
+Esta configuración de ejemplo utiliza una réplica primaria y dos réplicas, que se encuentran en tres regiones geográficas diferentes. Aunque los tres nodos pueden estar en redes diferentes, se necesitan todos los nodos para que sean accesibles desde todos los demás nodos. Como mínimo, los puertos administrativos requeridos deben estar abiertos para todos los demás nodos. Para más información sobre los requisitos de puerto, vea "[Puertos de red](/enterprise/admin/guides/installation/network-ports/#administrative-ports)".
 
-1. Crea la primera réplica de la misma manera en que lo harías para una configuración de dos nodos estándar ejecutando `ghe-repl-setup` en la primera réplica.
+1. Crea la primera réplica de la misma manera que una configuración de dos nodos estándar, mediante la ejecución de `ghe-repl-setup` en la primera réplica.
   ```shell
   (replica1)$ ghe-repl-setup <em>PRIMARY IP</em>
   (replica1)$ ghe-repl-start
   ```
-2. Crea una segunda réplica y utiliza el comando `ghe-repl-setup --add`. La marca `--add` evita que sobrescriba la configuración de la replicación existente y agrega la nueva réplica a la configuración.
+2. Cree una segunda réplica y use el comando `ghe-repl-setup --add`. La marca `--add` evita que sobrescriba la configuración de replicación existente y agrega la nueva réplica a la configuración.
   ```shell
   (replica2)$ ghe-repl-setup --add <em>PRIMARY IP</em>
   (replica2)$ ghe-repl-start
   ```
-3. Predeterminadamente, las replicas se configuran en el mismo centro de datos, y ahora intentarán poblar los datos desde un nodo existente en el mismo centro de datos. Configura las réplicas para diferentes centros de datos estableciendo un valor diferente para la opción de centro de datos. Los valores específicos pueden ser los que tú quieras, siempre que sean diferentes entre sí. Ejecuta el comando `ghe-repl-node` en cada nodo y especifica el centro de datos.
+3. Predeterminadamente, las replicas se configuran en el mismo centro de datos, y ahora intentarán poblar los datos desde un nodo existente en el mismo centro de datos. Configura las réplicas para diferentes centros de datos estableciendo un valor diferente para la opción de centro de datos. Los valores específicos pueden ser los que tú quieras, siempre que sean diferentes entre sí. Ejecute el comando `ghe-repl-node` en cada nodo y especifique el centro de datos.
 
   En la primaria:
   ```shell
@@ -74,10 +69,10 @@ Esta configuración de ejemplo utiliza una réplica primaria y dos réplicas, qu
   ```
   {% tip %}
 
-  **Consejo:** puedes establecer las opciones `--datacenter` y `--active` al mismo tiempo.
+  **Sugerencia:** Puede establecer las opciones `--datacenter` y `--active` al mismo tiempo.
 
   {% endtip %}
-4. Un nodo de réplica activo almacenará copias de los datos del aparato y responderá las solicitudes de usuario final. Un nodo inactivo almacenará copias de los datos del aparato, pero no podrá atender las solicitudes de usuario final. Habilita el modo activo usando la marca `--active` o el modo inactivo usando la marca `--inactive`.
+4. Un nodo de réplica activo almacenará copias de los datos del aparato y responderá las solicitudes de usuario final. Un nodo inactivo almacenará copias de los datos del aparato, pero no podrá atender las solicitudes de usuario final. Habilite el modo activo mediante la marca `--active`, o bien el modo inactivo con la marca `--inactive`.
 
   En la primera réplica:
   ```shell
@@ -87,16 +82,16 @@ Esta configuración de ejemplo utiliza una réplica primaria y dos réplicas, qu
   ```shell
   (replica2)$ ghe-repl-node --active
   ```
-5. Para aplicar la configuración, usa el comando `ghe-config-apply` en el principal.
+5. Para aplicar la configuración, use el comando `ghe-config-apply` en la réplica principal.
   ```shell
   (primary)$ ghe-config-apply
   ```
 
-## Configurar el DNS para replicación geográfica
+## <a name="configuring-dns-for-geo-replication"></a>Configurar el DNS para replicación geográfica
 
-Configurar Geo DNS usando las direcciones IP de los nodos primarios y réplica. También puedes crear un DNS CNAME para el nodo principal (p. ej., `primary.github.example.com`) para acceder al nodo principal a través de SSH o hacerle una copia de seguridad a través de `backup-utils`.
+Configurar Geo DNS usando las direcciones IP de los nodos primarios y réplica. También puede crear un CNAME DNS para el nodo principal (por ejemplo, `primary.github.example.com`) para acceder al nodo principal mediante SSH o para realizar una copia de seguridad con `backup-utils`.
 
-Para probarlo, puedes agregar entradas al archivo de `hosts` de la estación de trabajo local (por ejemplo, `/etc/hosts`). Estas entradas de ejemplo resolverán las solicitudes de `HOSTNAME` para `replica2`. Puedes apuntar a hosts específicos comentando en diferentes líneas.
+Para las pruebas, puede agregar entradas al archivo `hosts` de la estación de trabajo local (por ejemplo, `/etc/hosts`). Estas entradas de ejemplo resolverán las solicitudes de `HOSTNAME` en `replica2`. Puedes apuntar a hosts específicos comentando en diferentes líneas.
 
 ```
 # <primary IP>     <em>HOSTNAME</em>
@@ -104,8 +99,8 @@ Para probarlo, puedes agregar entradas al archivo de `hosts` de la estación de 
 <replica2 IP>    <em>HOSTNAME</em>
 ```
 
-## Leer más
+## <a name="further-reading"></a>Información adicional
 
-- "[Acerca de la configuración de alta disponibilidad](/enterprise/{{ currentVersion }}/admin/guides/installation/about-high-availability-configuration)"
-- "[Utilidades para la gestión de replicaciones](/enterprise/{{ currentVersion }}/admin/guides/installation/about-high-availability-configuration/#utilities-for-replication-management)"
-- "[Acerca de la replicación geográfica](/enterprise/{{ currentVersion }}/admin/guides/installation/about-geo-replication/)"
+- "[Acerca de la configuración de alta disponibilidad](/enterprise/admin/guides/installation/about-high-availability-configuration)"
+- "[Utilidades para la administración de la replicación](/enterprise/admin/guides/installation/about-high-availability-configuration/#utilities-for-replication-management)"
+- "[Acerca de la replicación geográfica](/enterprise/admin/guides/installation/about-geo-replication/)"

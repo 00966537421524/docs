@@ -1,14 +1,15 @@
 import { fileURLToPath } from 'url'
 import path from 'path'
 import cheerio from 'cheerio'
+import { describe, expect } from '@jest/globals'
+
 import Page from '../../lib/page.js'
-import readJsonFile from '../../lib/read-json-file.js'
 import { allVersions } from '../../lib/all-versions.js'
 import enterpriseServerReleases, { latest } from '../../lib/enterprise-server-releases.js'
 import nonEnterpriseDefaultVersion from '../../lib/non-enterprise-default-version.js'
-// import getLinkData from '../../lib/get-link-data.js'
+import loadSiteData from '../../lib/site-data.js'
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
-const prerenderedObjects = readJsonFile('./lib/graphql/static/prerendered-objects.json')
 const enterpriseServerVersions = Object.keys(allVersions).filter((v) =>
   v.startsWith('enterprise-server@')
 )
@@ -28,15 +29,6 @@ describe('Page class', () => {
     const page = await Page.init(opts)
     expect(page.relativePath).toBe(opts.relativePath)
     expect(page.fullPath.includes(page.relativePath)).toBe(true)
-  })
-
-  test('does not error out on translated TOC with no links', async () => {
-    const page = await Page.init({
-      relativePath: 'translated-toc-with-no-links-index.md',
-      basePath: path.join(__dirname, '../fixtures'),
-      languageCode: 'ja',
-    })
-    expect(typeof page.title).toBe('string')
   })
 
   describe('showMiniToc page property', () => {
@@ -78,6 +70,8 @@ describe('Page class', () => {
   })
 
   describe('page.render(context)', () => {
+    const siteData = loadSiteData()
+
     test('rewrites links to include the current language prefix and version', async () => {
       const page = await Page.init(opts)
       const context = {
@@ -86,6 +80,7 @@ describe('Page class', () => {
         currentPath:
           '/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-branches',
         currentLanguage: 'en',
+        site: siteData.en.site,
       }
       const rendered = await page.render(context)
       const $ = cheerio.load(rendered)
@@ -111,16 +106,31 @@ describe('Page class', () => {
       ).toBeGreaterThan(0)
     })
 
-    test('rewrites links on prerendered GraphQL page include the current language prefix and version', async () => {
-      const graphqlVersion =
-        allVersions[`enterprise-server@${enterpriseServerReleases.latest}`].miscVersionName
-      const $ = cheerio.load(prerenderedObjects[graphqlVersion].html)
-      expect($('a[href^="/graphql/reference/input-objects"]').length).toBe(0)
-      expect(
-        $(
-          `a[href^="/en/enterprise-server@${enterpriseServerReleases.latest}/graphql/reference/input-objects"]`
-        ).length
-      ).toBeGreaterThan(0)
+    // Much of this test is based on making sure we don't
+    // repeat the bug introduced in issue 1545.
+    test('rewrites links correctly for unsupported enterprise-server links', async () => {
+      const page = await Page.init({
+        relativePath: 'page-with-deprecated-enterprise-links.md',
+        basePath: path.join(__dirname, '../fixtures'),
+        languageCode: 'en',
+      })
+      const context = {
+        page: { version: `enterprise-server@${enterpriseServerReleases.latest}` },
+        currentVersion: `enterprise-server@${enterpriseServerReleases.latest}`,
+        currentPath: '/en/page-with-deprecated-enterprise-links',
+        currentLanguage: 'en',
+        site: siteData.en.site,
+      }
+      const rendered = await page.render(context)
+      // That page only contains exactly 2 links. And we can know
+      // exactly what we expect each one to be.
+      const $ = cheerio.load(rendered)
+      const first = $('a[href]').first()
+      expect(first.text()).toBe('Version 2.22')
+      expect(first.attr('href')).toBe('/en/enterprise-server@2.22')
+      const last = $('a[href]').last()
+      expect(last.text()).toBe('Version 3.2')
+      expect(last.attr('href')).toBe('/en/enterprise-server@3.2')
     })
 
     test('rewrites links in the intro to include the current language prefix and version', async () => {
@@ -133,7 +143,12 @@ describe('Page class', () => {
         currentPath:
           '/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-branches',
         currentLanguage: 'en',
+        site: siteData.en.site,
       }
+      // This is needed because unit tests are weird. The page.render()
+      // method is dependent on module global cache.
+      // We need to fudge the `currentPath` so it appears to be different.
+      context.currentPath += Math.random()
       await page.render(context)
       const $ = cheerio.load(page.intro)
       expect(
@@ -160,6 +175,7 @@ describe('Page class', () => {
         currentVersion: `enterprise-server@${enterpriseServerReleases.latest}`,
         currentPath: `/en/enterprise-server@${enterpriseServerReleases.latest}/admin/enterprise-management/migrating-from-github-enterprise-1110x-to-2123`,
         currentLanguage: 'en',
+        site: siteData.en.site,
       }
       const rendered = await page.render(context)
       const $ = cheerio.load(rendered)
@@ -187,6 +203,7 @@ describe('Page class', () => {
         currentVersion: nonEnterpriseDefaultVersion,
         currentPath: `/en/${nonEnterpriseDefaultVersion}/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-branches`,
         currentLanguage: 'en',
+        site: siteData.en.site,
       }
       const rendered = await page.render(context)
       const $ = cheerio.load(rendered)
@@ -207,7 +224,9 @@ describe('Page class', () => {
         currentVersion: `enterprise-server@${enterpriseServerReleases.latest}`,
         currentLanguage: 'en',
         enterpriseServerVersions,
+        site: siteData.en.site,
       }
+      context.currentPath = `/${context.currentLanguage}/${context.currentVersion}/${page.relativePath}`
       let rendered = await page.render(context)
       let $ = cheerio.load(rendered)
       expect($.text()).toBe(
@@ -218,6 +237,7 @@ describe('Page class', () => {
       // change version to the oldest enterprise version, re-render, and test again;
       // the results should be the same
       context.currentVersion = `enterprise-server@${enterpriseServerReleases.oldestSupported}`
+      context.currentPath = `/${context.currentLanguage}/${context.currentVersion}/${page.relativePath}`
       rendered = await page.render(context)
       $ = cheerio.load(rendered)
       expect($.text()).toBe(
@@ -228,6 +248,7 @@ describe('Page class', () => {
       // change version to non-enterprise, re-render, and test again;
       // the results should be the opposite
       context.currentVersion = nonEnterpriseDefaultVersion
+      context.currentPath = `/${context.currentLanguage}/${context.currentVersion}/${page.relativePath}`
       rendered = await page.render(context)
       $ = cheerio.load(rendered)
       expect($.text()).not.toBe(
@@ -247,23 +268,7 @@ describe('Page class', () => {
       const context = {
         currentVersion: 'enterprise-server@3.0',
         currentLanguage: 'en',
-      }
-      await expect(() => {
-        return page.render(context)
-      }).not.toThrow()
-    })
-
-    test('support next GitHub AE version in frontmatter', async () => {
-      // This fixture has `github-ae: 'next'` hardcoded in the frontmatter
-      const page = await Page.init({
-        relativePath: 'page-versioned-for-ghae-next.md',
-        basePath: path.join(__dirname, '../fixtures'),
-        languageCode: 'en',
-      })
-      // set version to @latest
-      const context = {
-        currentVersion: 'github-ae@latest',
-        currentLanguage: 'en',
+        site: siteData.en.site,
       }
       await expect(() => {
         return page.render(context)
@@ -532,6 +537,52 @@ describe('Page class', () => {
     })
   })
 
+  describe('videos', () => {
+    let page
+
+    beforeEach(async () => {
+      page = await Page.init({
+        relativePath: 'article-with-videos.md',
+        basePath: path.join(__dirname, '../fixtures'),
+        languageCode: 'en',
+      })
+    })
+
+    it('includes videos specified in the featuredLinks frontmatter', async () => {
+      expect(page.featuredLinks.videos).toStrictEqual([
+        {
+          title: 'codespaces',
+          href: 'https://www.youtube-nocookie.com/embed/cP0I9w2coGU',
+        },
+        {
+          title: 'more codespaces',
+          href: 'https://www.youtube-nocookie.com/embed/cP0I9w2coGU',
+        },
+        {
+          title: 'even more codespaces',
+          href: 'https://www.youtube-nocookie.com/embed/cP0I9w2coGU',
+        },
+      ])
+
+      expect(page.featuredLinks.videosHeading).toBe('Custom Videos heading')
+    })
+  })
+
+  describe('introLinks', () => {
+    it('includes the links specified in the introLinks frontmatter', async () => {
+      const page = await Page.init({
+        relativePath: 'article-with-introLinks.md',
+        basePath: path.join(__dirname, '../fixtures'),
+        languageCode: 'en',
+      })
+
+      expect(page.introLinks).toStrictEqual({
+        overview: 'https://github.com',
+        'custom link!': 'https://github.com/features',
+      })
+    })
+  })
+
   describe('Page.parseFrontmatter()', () => {
     it('throws an error on bad input', () => {
       const markdown = null
@@ -552,27 +603,7 @@ describe('Page class', () => {
     it('works for the homepage', () => {
       const variants = Page.getLanguageVariants('/en')
       expect(variants.find(({ code }) => code === 'en').href).toBe('/en')
-      // expect(variants.find(({ code }) => code === 'ja').href).toBe('/ja')
     })
-
-    it('works for enterprise URLs', () => {
-      const variants = Page.getLanguageVariants(
-        `/ja/enterprise/${enterpriseServerReleases.oldestSupported}/user/articles/github-glossary`
-      )
-      expect(variants.find(({ code }) => code === 'en').href).toBe(
-        `/en/enterprise/${enterpriseServerReleases.oldestSupported}/user/articles/github-glossary`
-      )
-      // expect(variants.find(({ code }) => code === 'ja').href).toBe('/ja/enterprise/2.14/user/articles/github-glossary')
-    })
-  })
-
-  test('fixes translated frontmatter that includes verdadero', async () => {
-    const page = await Page.init({
-      relativePath: 'article-with-mislocalized-frontmatter.md',
-      basePath: path.join(__dirname, '../fixtures'),
-      languageCode: 'ja',
-    })
-    expect(page.mapTopic).toBe(true)
   })
 
   describe('page.versions frontmatter', () => {
@@ -644,8 +675,6 @@ describe('Page class', () => {
       expect(page.versions.fpt).toBe('*')
       expect(page.versions.ghes).toBe('>2.21')
       expect(page.versions.ghae).toBeUndefined()
-      // The `feature` prop gets deleted by lib/get-applicable-versions, so it's undefined.
-      expect(page.versions.feature).toBeUndefined()
 
       // Test the resolved versioning, where GHES releases specified in frontmatter and in
       // feature versions are combined (i.e., one doesn't overwrite the other).
@@ -713,6 +742,19 @@ describe('catches errors thrown in Page class', () => {
     await expect(getPage).rejects.toThrowError('versions')
   })
 
+  // TODO - UNSKIP WHEN GHAE IS UPDATED WITH SEMVER VERSIONING
+  test.skip('invalid versions frontmatter', async () => {
+    async function getPage() {
+      return await Page.init({
+        relativePath: 'page-with-invalid-product-version.md',
+        basePath: path.join(__dirname, '../fixtures'),
+        languageCode: 'en',
+      })
+    }
+
+    await expect(getPage).rejects.toThrowError('versions')
+  })
+
   test('English page with a version in frontmatter that its parent product is not available in', async () => {
     async function getPage() {
       return await Page.init({
@@ -725,17 +767,34 @@ describe('catches errors thrown in Page class', () => {
     expect(getPage).rejects.toThrowError(/`versions` frontmatter.*? product is not available in/)
   })
 
-  test('non-English page with a version in frontmatter that its parent product is not available in', async () => {
-    async function getPage() {
-      return await Page.init({
-        relativePath: 'admin/some-category/some-article-with-mismatched-versions-frontmatter.md',
-        basePath: path.join(__dirname, '../fixtures/products'),
-        languageCode: 'es',
+  describe('versionining optional attributes', () => {
+    test("re-rendering set appropriate 'product', 'permissions', 'learningTracks'", async () => {
+      const page = await Page.init({
+        relativePath: 'page-with-optional-attributes.md',
+        basePath: path.join(__dirname, '../fixtures'),
+        languageCode: 'en',
       })
-    }
+      const context = {
+        page: { version: `enterprise-server@3.2` },
+        currentVersion: `enterprise-server@3.2`,
+        currentProduct: 'snowbird',
+        currentLanguage: 'en',
+        currentPath: '/en/enterprise-server@3.2/optional/attributes',
+        fpt: false, // what the shortVersions contextualizer does
+      }
 
-    await expect(getPage).rejects.toThrowError(
-      /`versions` frontmatter.*? product is not available in/
-    )
+      await page.render(context)
+      expect(page.product).toBe('')
+      expect(page.permissions).toBe('')
+
+      // Change to FPT
+      context.page.version = nonEnterpriseDefaultVersion
+      context.version = nonEnterpriseDefaultVersion
+      context.currentPath = '/en/optional/attributes'
+      context.fpt = true
+      await page.render(context)
+      expect(page.product).toContain('FPT rulez!')
+      expect(page.permissions).toContain('FPT only!')
+    })
   })
 })

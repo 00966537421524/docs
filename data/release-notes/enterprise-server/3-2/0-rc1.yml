@@ -1,7 +1,7 @@
 date: '2021-09-09'
 release_candidate: true
 deprecated: true
-intro: If {% data variables.product.product_location %} is running a release candidate build, you can't upgrade with a hotpatch. We recommend only running release candidates on test environments.
+intro: If {% data variables.location.product_location %} is running a release candidate build, you can't upgrade with a hotpatch. We recommend only running release candidates on test environments.
 sections:
   features:
     - heading: Custom patterns for secret scanning
@@ -59,9 +59,9 @@ sections:
       notes:
         # https://github.com/github/releases/issues/1406
         - |
-          Git Credential Manager (GCM) Core versions 2.0.452 and later now provide security-hardened credential storage and multi-factor authentication support for {% data variables.product.product_name %}.
+          Git Credential Manager (GCM) versions 2.0.452 and later now provide security-hardened credential storage and multi-factor authentication support for {% data variables.product.product_name %}.
 
-          GCM Core with support for {% data variables.product.product_name %} is included with [Git for Windows](https://gitforwindows.org) versions 2.32 and later. GCM Core is not included with Git for macOS or Linux, but can be installed separately. For more information, see the [latest release](https://github.com/microsoft/Git-Credential-Manager-Core/releases/) and [installation instructions](https://github.com/microsoft/Git-Credential-Manager-Core/releases/) in the `microsoft/Git-Credential-Manager-Core` repository.
+          GCM with support for {% data variables.product.product_name %} is included with [Git for Windows](https://gitforwindows.org) versions 2.32 and later. GCM is not included with Git for macOS or Linux, but can be installed separately. For more information, see the [latest release](https://github.com/GitCredentialManager/git-credential-manager/releases/) and [installation instructions](https://github.com/GitCredentialManager/git-credential-manager/releases/) in the `GitCredentialManager/git-credential-manager` repository.
 
   changes:
     - heading: Administration Changes
@@ -92,7 +92,7 @@ sections:
         - When viewing the commit history of a single file, you can now click {% octicon "file-code" aria-label="The code icon" %} to view that file at the selected point in history.
 
         # https://github.com/github/releases/issues/1254
-        - When a submodule is defined with a relative path in {% data variables.product.product_location %}, the submodule is now clickable in the web UI. Clicking the submodule in the web UI will take you to the linked repository. Previously, only submodules with absolute URLs were clickable. This is supported for relative paths for repositories with the same owner that follow the pattern <code>../<em>REPOSITORY</em></code> or relative paths for repositories with a different owner that follow the pattern <code>../<em>OWNER</em>/<em>REPOSITORY</em></code>. For more information about working with submodules, see [Working with submodules](https://github.blog/2016-02-01-working-with-submodules/) on {% data variables.product.prodname_blog %}.
+        - When a submodule is defined with a relative path in {% data variables.location.product_location %}, the submodule is now clickable in the web UI. Clicking the submodule in the web UI will take you to the linked repository. Previously, only submodules with absolute URLs were clickable. This is supported for relative paths for repositories with the same owner that follow the pattern <code>../<em>REPOSITORY</em></code> or relative paths for repositories with a different owner that follow the pattern <code>../<em>OWNER</em>/<em>REPOSITORY</em></code>. For more information about working with submodules, see [Working with submodules](https://github.blog/2016-02-01-working-with-submodules/) on {% data variables.product.prodname_blog %}.
 
         # https://github.com/github/releases/issues/1250
         - The web UI can now be used to synchronize an out-of-date branch of a fork with the fork's upstream branch. If there are no merge conflicts between the branches, the branch is updated either by fast-forwarding or by merging from upstream. If there are conflicts, you will be prompted to create a pull request to resolve the conflicts. For more information, see "[Syncing a fork](/github/collaborating-with-pull-requests/working-with-forks/syncing-a-fork#syncing-a-fork-from-the-web-ui)."
@@ -194,7 +194,7 @@ sections:
         - Dependency graph and {% data variables.product.prodname_dependabot_alerts %} now support Go modules. {% data variables.product.prodname_ghe_server %} analyzes a repository's `go.mod` files to understand the repository’s dependencies. Along with security advisories, the dependency graph provides the information needed to alert developers to vulnerable dependencies. For more information about enabling the dependency graph on private repositories, see "[Securing your repository](/code-security/getting-started/securing-your-repository#managing-the-dependency-graph)."
 
         # https://github.com/github/releases/issues/1538
-        - The default notification settings for security alerts have changed. Previously, if you had permission to view security alerts in a repository, you would receive notifications for that repository as long as your settings allowed for security alert notifications. Now, you must opt in to security alert notifications by watching the repository. You will be notified if you select `All Activity` or configure `Custom` to include `Security alerts`. All existing repositories will be automatically migrated to these new settings and you will continue to receive notifications; however, any new repositories will require opting-in by watching the repository. For more information see "[Configuring notifications for vulnerable dependencies](/code-security/supply-chain-security/managing-vulnerabilities-in-your-projects-dependencies/configuring-notifications-for-vulnerable-dependencies)" and "[Managing alerts from secret scanning](/code-security/secret-security/managing-alerts-from-secret-scanning)."
+        - The default notification settings for security alerts have changed. Previously, if you had permission to view security alerts in a repository, you would receive notifications for that repository as long as your settings allowed for security alert notifications. Now, you must opt in to security alert notifications by watching the repository. You will be notified if you select `All Activity` or configure `Custom` to include `Security alerts`. All existing repositories will be automatically migrated to these new settings and you will continue to receive notifications; however, any new repositories will require opting-in by watching the repository. For more information see "[Configuring notifications for {% data variables.product.prodname_dependabot_alerts %}](/code-security/dependabot/dependabot-alerts/configuring-notifications-for-dependabot-alerts)" and "[Managing alerts from secret scanning](/code-security/secret-security/managing-alerts-from-secret-scanning)."
 
     - heading: 'Code scanning and secret scanning changes'
       notes:
@@ -244,10 +244,10 @@ sections:
     - heading: API Changes
       notes:
         # https://github.com/github/releases/issues/1253
-        - Pagination support has been added to the Repositories REST API's "compare two commits" endpoint, which returns a list of commits reachable from one commit or branch, but unreachable from another. The API can also now return the results for comparisons over 250 commits. For more information, see the "[Repositories](/rest/reference/repos#compare-two-commits)" REST API documentation and "[Traversing with pagination](/rest/guides/traversing-with-pagination)."
+        - Pagination support has been added to the Repositories REST API's "compare two commits" endpoint, which returns a list of commits reachable from one commit or branch, but unreachable from another. The API can also now return the results for comparisons over 250 commits. For more information, see the "[Commits](/rest/reference/commits#compare-two-commits)" REST API documentation and "[Traversing with pagination](/rest/guides/traversing-with-pagination)."
 
         # https://github.com/github/releases/issues/969
-        - The REST API can now be used to programmatically resend or check the status of webhooks. For more information, see "[Repositories](/rest/reference/repos#webhooks)," "[Organizations](/rest/reference/orgs#webhooks)," and "[Apps](/rest/reference/apps#webhooks)" in the REST API documentation.
+        - The REST API can now be used to programmatically resend or check the status of webhooks. For more information, see "[Webhooks](/rest/reference/webhooks)," "[Organizations](/rest/reference/orgs#webhooks)," and "[Apps](/rest/reference/apps#webhooks)" in the REST API documentation.
 
         # https://github.com/github/releases/issues/1349
         - |

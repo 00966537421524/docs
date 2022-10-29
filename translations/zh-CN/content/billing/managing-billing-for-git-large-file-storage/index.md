@@ -4,9 +4,9 @@ shortTitle: Git Large File Storage
 intro: '您可以查看使用情况、升级和降级 {% data variables.large_files.product_name_long %}。'
 redirect_from:
   - /github/setting-up-and-managing-billing-and-payments-on-github/managing-billing-for-git-large-file-storage
-  - /articles/managing-large-file-storage-and-bandwidth-for-your-personal-account/
-  - /articles/managing-large-file-storage-and-bandwidth-for-your-organization/
-  - /articles/managing-storage-and-bandwidth-usage/
+  - /articles/managing-large-file-storage-and-bandwidth-for-your-personal-account
+  - /articles/managing-large-file-storage-and-bandwidth-for-your-organization
+  - /articles/managing-storage-and-bandwidth-usage
   - /articles/managing-billing-for-git-large-file-storage
 versions:
   fpt: '*'
@@ -16,5 +16,11 @@ children:
   - /viewing-your-git-large-file-storage-usage
   - /upgrading-git-large-file-storage
   - /downgrading-git-large-file-storage
+ms.openlocfilehash: 6691e8291de4dc3dc7962bc4e202122438de9ec5
+ms.sourcegitcommit: fcf3546b7cc208155fb8acdf68b81be28afc3d2d
+ms.translationtype: HT
+ms.contentlocale: zh-CN
+ms.lasthandoff: 09/10/2022
+ms.locfileid: '145084552'
 ---
 

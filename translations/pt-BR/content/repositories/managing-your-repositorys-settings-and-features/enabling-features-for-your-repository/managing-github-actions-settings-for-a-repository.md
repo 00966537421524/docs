@@ -1,6 +1,6 @@
 ---
-title: Gerenciando as configurações do GitHub Actions para um repositório
-intro: 'Você pode desabilitar ou configurar {% data variables.product.prodname_actions %} para um repositório específico.'
+title: Managing GitHub Actions settings for a repository
+intro: 'You can disable or configure {% data variables.product.prodname_actions %} for a specific repository.'
 redirect_from:
   - /github/administering-a-repository/configuring-the-retention-period-for-github-actions-artifacts-and-logs-in-your-repository
   - /github/administering-a-repository/managing-repository-settings/configuring-the-retention-period-for-github-actions-artifacts-and-logs-in-your-repository
@@ -16,161 +16,182 @@ topics:
   - Actions
   - Permissions
   - Pull requests
-shortTitle: Gerenciar configurações do GitHub Actions
+shortTitle: Manage GitHub Actions settings
+miniTocMaxHeadingLevel: 3
 ---
 
 {% data reusables.actions.enterprise-beta %}
 {% data reusables.actions.enterprise-github-hosted-runners %}
 
-## Sobre as permissões do {% data variables.product.prodname_actions %} para o seu repositório
+## About {% data variables.product.prodname_actions %} permissions for your repository
 
-{% data reusables.github-actions.disabling-github-actions %} Para mais informações sobre {% data variables.product.prodname_actions %}, consulte "[Sobre {% data variables.product.prodname_actions %}](/actions/getting-started-with-github-actions/about-github-actions)."
+{% data reusables.actions.disabling-github-actions %} For more information about {% data variables.product.prodname_actions %}, see "[About {% data variables.product.prodname_actions %}](/actions/getting-started-with-github-actions/about-github-actions)."
 
-É possível habilitar o {% data variables.product.prodname_actions %} para seu repositório. {% data reusables.github-actions.enabled-actions-description %} Você pode desabilitar {% data variables.product.prodname_actions %} para o seu repositório completamente. {% data reusables.github-actions.disabled-actions-description %}
+You can enable {% data variables.product.prodname_actions %} for your repository. {% data reusables.actions.enabled-actions-description %} You can disable {% data variables.product.prodname_actions %} for your repository altogether. {% data reusables.actions.disabled-actions-description %}
 
-Como alternativa, você pode habilitar o {% data variables.product.prodname_actions %} em seu repositório, mas limitar as ações que um fluxo de trabalho pode ser executado. {% data reusables.github-actions.enabled-local-github-actions %}
+Alternatively, you can enable {% data variables.product.prodname_actions %} in your repository but limit the actions {% ifversion actions-workflow-policy %}and reusable workflows{% endif %} a workflow can run.
 
-## Gerenciando as permissões do {% data variables.product.prodname_actions %} para o seu repositório
+## Managing {% data variables.product.prodname_actions %} permissions for your repository
 
-É possível desabilitar todos os fluxos de trabalho para um repositório ou definir uma política que configura quais ações podem ser usadas em um repositório.
-
-{% data reusables.actions.actions-use-policy-settings %}
+You can disable {% data variables.product.prodname_actions %} for a repository, or set a policy that configures which actions{% ifversion actions-workflow-policy %} and reusable workflows{% endif %} can be used in the repository.
 
 {% note %}
 
-**Nota:** Talvez você não seja capaz de gerenciar essas configurações se sua organização tem uma política de substituição ou é gerenciada por uma conta corporativa que tem uma política de substituição. For more information, see "[Disabling or limiting {% data variables.product.prodname_actions %} for your organization](/organizations/managing-organization-settings/disabling-or-limiting-github-actions-for-your-organization)" or "[Enforcing policies for {% data variables.product.prodname_actions %} in your enterprise](/admin/policies/enforcing-policies-for-your-enterprise/enforcing-github-actions-policies-for-your-enterprise)."
+**Note:** You might not be able to manage these settings if your organization has an overriding policy or is managed by an enterprise that has overriding policy. For more information, see "[Disabling or limiting {% data variables.product.prodname_actions %} for your organization](/organizations/managing-organization-settings/disabling-or-limiting-github-actions-for-your-organization)" or "[Enforcing policies for {% data variables.product.prodname_actions %} in your enterprise](/admin/policies/enforcing-policies-for-your-enterprise/enforcing-github-actions-policies-for-your-enterprise)."
 
 {% endnote %}
 
 {% data reusables.repositories.navigate-to-repo %}
 {% data reusables.repositories.sidebar-settings %}
-{% data reusables.repositories.settings-sidebar-actions %}
-1. Em **Permissões de ações**, selecione uma opção. ![Definir política de ações para esta organização](/assets/images/help/repository/actions-policy.png)
-1. Clique em **Salvar**.
+{% data reusables.repositories.settings-sidebar-actions-general %}
+1. Under "Actions permissions", select an option.
 
-## Permitir a execução de ações específicas
+   {% indented_data_reference reusables.actions.actions-use-policy-settings spaces=3 %}
+
+   {% ifversion actions-workflow-policy %}
+   ![Set actions policy for this repository](/assets/images/help/repository/actions-policy-with-workflows.png)
+   {%- else %}
+   ![Set actions policy for this repository](/assets/images/help/repository/actions-policy.png)
+   {%- endif %}
+1. Click **Save**.
 
 {% data reusables.actions.allow-specific-actions-intro %}
 
 {% data reusables.repositories.navigate-to-repo %}
 {% data reusables.repositories.sidebar-settings %}
-{% data reusables.repositories.settings-sidebar-actions %}
-1. Em **Permissões de ações**, selecione **Permitir ações específicas** e adicione as suas ações necessárias à lista.
-   {%- ifversion ghes %}
-   ![Adicionar ações para permitir lista](/assets/images/help/repository/actions-policy-allow-list.png)
+{% data reusables.repositories.settings-sidebar-actions-general %}
+1. Under "Actions permissions", select {% data reusables.actions.policy-label-for-select-actions-workflows %} and add your required actions to the list.
+
+   {% ifversion actions-workflow-policy%}
+   ![Add actions and reusable workflows to the allow list](/assets/images/help/repository/actions-policy-allow-list-with-workflows.png)
+   {%- elsif ghes %}
+   ![Add actions to the allow list](/assets/images/help/repository/actions-policy-allow-list.png)
    {%- else %}
-   ![Adicionar ações para permitir lista](/assets/images/enterprise/github-ae/repository/actions-policy-allow-list.png)
+   ![Add actions to the allow list](/assets/images/enterprise/github-ae/repository/actions-policy-allow-list.png)
    {%- endif %}
-2. Clique em **Salvar**.
+1. Click **Save**.
 
 {% ifversion fpt or ghec %}
-## Configurar a aprovação necessária para fluxos de trabalho de bifurcações públicas
+## Controlling changes from forks to workflows in public repositories
 
 {% data reusables.actions.workflow-run-approve-public-fork %}
 
-Você pode configurar esse comportamento para um repositório seguindo o procedimento abaixo. A modificação desta configuração substitui a configuração definida no nível da organização ou empresa.
+You can configure this behavior for a repository using the procedure below. Modifying this setting overrides the configuration set at the organization or enterprise level.
 
 {% data reusables.repositories.navigate-to-repo %}
 {% data reusables.repositories.sidebar-settings %}
-{% data reusables.repositories.settings-sidebar-actions %}
-{% data reusables.github-actions.workflows-from-public-fork-setting %}
+{% data reusables.repositories.settings-sidebar-actions-general %}
+{% data reusables.actions.workflows-from-public-fork-setting %}
 
 {% data reusables.actions.workflow-run-approve-link %}
 {% endif %}
 
-## Habilitar fluxos de trabalho para bifurcações privadas do repositório
+## Enabling workflows for forks of private repositories
 
-{% data reusables.github-actions.private-repository-forks-overview %}
+{% data reusables.actions.private-repository-forks-overview %}
 
-### Configurar a política de bifurcação privada para um repositório
+If a policy is disabled for an {% ifversion ghec or ghae or ghes %}enterprise or{% endif %} organization, it cannot be enabled for a repository.
 
-{% data reusables.repositories.navigate-to-repo %}
-{% data reusables.repositories.sidebar-settings %}
-{% data reusables.repositories.settings-sidebar-actions %}
-{% data reusables.github-actions.private-repository-forks-configure %}
+{% data reusables.actions.private-repository-forks-options %}
 
-{% ifversion fpt or ghes > 3.1 or ghae-next or ghec %}
-## Definir as permissões do `GITHUB_TOKEN` para o seu repositório
-
-{% data reusables.github-actions.workflow-permissions-intro %}
-
-As permissões padrão também podem ser configuradas nas configurações da organização. Se o padrão mais restrito foi selecionado nas configurações da organização, a mesma opção será selecionada automaticamente nas configurações do repositório e a opção permissiva estará desabilitada.
-
-{% data reusables.github-actions.workflow-permissions-modifying %}
-
-### Configurar as permissões padrão do `GITHUB_TOKEN`
+### Configuring the fork policy for a private repository
 
 {% data reusables.repositories.navigate-to-repo %}
 {% data reusables.repositories.sidebar-settings %}
-{% data reusables.repositories.settings-sidebar-actions %}
-1. Em **permissões do fluxo de trabalho**, escolha se você quer que o `GITHUB_TOKEN` tenha acesso de leitura e gravação para todos os escopos, ou apenas acesso de leitura para o escopo do </code>conteúdo.
-<img src="/assets/images/help/settings/actions-workflow-permissions-repository.png" alt="Definir permissões do GITHUB_TOKEN para este repositório" /></p></li>
-<li><p spaces-before="0">Clique em <strong x-id="1">Salvar</strong> para aplicar as configurações.
-</p>
+{% data reusables.repositories.settings-sidebar-actions-general %}
+{% data reusables.actions.private-repository-forks-configure %}
 
-<p spaces-before="0">{% endif %}</p></li>
-</ol>
+## Setting the permissions of the `GITHUB_TOKEN` for your repository
 
-<p spaces-before="0">{% ifversion fpt or ghes &#062; 3.3 or ghae-issue-4757 or ghec %}</p>
+{% data reusables.actions.workflow-permissions-intro %}
 
-<h2 spaces-before="0">Permitindo o acesso a componentes em um repositório interno</h2>
+The default permissions can also be configured in the organization settings. If your repository belongs to an organization and a more restrictive default has been selected in the organization settings, the same option is selected in your repository settings and the permissive option is disabled.
 
-<p spaces-before="0">{% note %}</p>
+{% data reusables.actions.workflow-permissions-modifying %}
 
-<p spaces-before="0"><strong x-id="1">Observação:</strong> {% data reusables.gated-features.internal-repos %}</p>
+### Configuring the default `GITHUB_TOKEN` permissions
 
-<p spaces-before="0">{% endnote %}</p>
+{% ifversion allow-actions-to-approve-pr-with-ent-repo %}
+By default, when you create a new repository in your personal account, `GITHUB_TOKEN` only has read access for the `contents` scope. If you create a new repository in an organization, the setting is inherited from what is configured in the organization settings.
+{% endif %}
 
-<p spaces-before="0">Os integrantes da sua empresa podem usar repositórios internos para trabalhar em projetos sem compartilhar informações publicamente. Para obter informações, consulte "<a href="/repositories/creating-and-managing-repositories/about-repositories#about-internal-repositories">Sobre repositórios</a>". </p>
+{% data reusables.repositories.navigate-to-repo %}
+{% data reusables.repositories.sidebar-settings %}
+{% data reusables.repositories.settings-sidebar-actions-general %}
+1. Under "Workflow permissions", choose whether you want the `GITHUB_TOKEN` to have read and write access for all scopes, or just read access for the `contents` scope.
 
-<p spaces-before="0">Para configurar se os fluxos de trabalho em um repositório interno podem ser acessados de fora do repositório:</p>
+   {% ifversion allow-actions-to-approve-pr-with-ent-repo %}
+   ![Set GITHUB_TOKEN permissions for this repository](/assets/images/help/settings/actions-workflow-permissions-repository-with-pr-approval.png)
+   {% else %}
+   ![Set GITHUB_TOKEN permissions for this repository](/assets/images/help/settings/actions-workflow-permissions-repository.png)
+   {% endif %}
 
-<ol start="1">
-<li>No {% data variables.product.prodname_dotcom %}, acesse a página principal do repositório interno.</li>
-<li><p spaces-before="0">No nome do repositório, clique em {% octicon "gear" aria-label="The gear icon" %} <strong x-id="1">Configurações</strong>.
-</p>
+1. Click **Save** to apply the settings.
 
-<p spaces-before="0">{% data reusables.repositories.settings-sidebar-actions %}</p></li>
-<li><p spaces-before="0">Em <strong x-id="1">Acesso</strong>, escolha uma das configurações de acesso:
-<img src="/assets/images/help/settings/actions-access-settings.png" alt="Defina o acesso aos componentes das Ações" /></p></li>
-</ol>
+{% ifversion allow-actions-to-approve-pr-with-ent-repo %}
+### Preventing {% data variables.product.prodname_actions %} from creating or approving pull requests
 
-<ul>
-<li><strong x-id="1">Não acessível</strong> - Os fluxos de trabalho em outros repositórios não podem usar fluxos de trabalho neste repositório.</li>
-<li><strong x-id="1">Acessível por qualquer repositório na organização</strong> - Fluxos de trabalho em outros repositórios podem usar fluxos de trabalho neste repositório, desde que façam parte da mesma organização.</li>
-<li><strong x-id="1">Acessível por qualquer repositório na empresa</strong> - Os luxos de trabalho em outros repositórios podem usar fluxos de trabalho nesse repositório, desde que façam parte da mesma empresa.
+{% data reusables.actions.workflow-pr-approval-permissions-intro %}
 
-<ol start="1">
-<li><p spaces-before="0">Clique em <strong x-id="1">Salvar</strong> para aplicar as configurações.
-</p>
+By default, when you create a new repository in your personal account, workflows are not allowed to create or approve pull requests. If you create a new repository in an organization, the setting is inherited from what is configured in the organization settings.
 
-<p spaces-before="0">{% endif %}</p></li>
-</ol></li>
-</ul>
+{% data reusables.repositories.navigate-to-repo %}
+{% data reusables.repositories.sidebar-settings %}
+{% data reusables.repositories.settings-sidebar-actions-general %}
+1. Under "Workflow permissions", use the **Allow GitHub Actions to create and approve pull requests** setting to configure whether `GITHUB_TOKEN` can create and approve pull requests.
 
-<h2 spaces-before="0">Configurar o período de retenção para artefatos e registros de{% data variables.product.prodname_actions %} no seu repositório</h2>
+   ![Set GITHUB_TOKEN permissions for this repository](/assets/images/help/settings/actions-workflow-permissions-repository-with-pr-approval.png)
+1. Click **Save** to apply the settings.
+{% endif %}
 
-<p spaces-before="0">Você pode configurar o período de retenção para artefatos e registros de {% data variables.product.prodname_actions %} no seu repositório.</p>
+{% ifversion ghes > 3.3 or ghae > 3.3 or ghec %}
+## Allowing access to components in an internal repository
 
-<p spaces-before="0">{% data reusables.actions.about-artifact-log-retention %}</p>
+Members of your enterprise can use internal repositories to work on projects without sharing information publicly. For information, see "[About repositories](/repositories/creating-and-managing-repositories/about-repositories#about-internal-repositories)."
 
-<p spaces-before="0">Você também pode definir um período de retenção personalizado para um artefato específico criado por um fluxo de trabalho. Para obter mais informações, consulte "<a href="/actions/managing-workflow-runs/removing-workflow-artifacts#setting-the-retention-period-for-an-artifact">Definir o período de retenção para um artefato</a>".</p>
+You can use the steps below to configure whether {% ifversion internal-actions%}actions and {% endif %}workflows in an internal repository can be accessed from outside the repository.{% ifversion internal-actions %} For more information, see "[Sharing actions and workflows with your enterprise](/actions/creating-actions/sharing-actions-and-workflows-with-your-enterprise)." Alternatively, you can use the REST API to set, or get details of, the level of access. For more information, see "[Get the level of access for workflows outside of the repository](/rest/reference/actions#get-the-level-of-access-for-workflows-outside-of-the-repository#get-the-level-of-access-for-workflows-outside-of-the-repository)" and "[Set the level of access for workflows outside of the repository](/rest/reference/actions#get-the-level-of-access-for-workflows-outside-of-the-repository#set-the-level-of-access-for-workflows-outside-of-the-repository)."{% endif %}
 
-<h2 spaces-before="0">Definir o período de retenção para um repositório</h2>
+1. On {% data variables.product.prodname_dotcom %}, navigate to the main page of the internal repository.
+1. Under your repository name, click {% octicon "gear" aria-label="The gear icon" %} **Settings**.
+{% data reusables.repositories.settings-sidebar-actions-general %}
+1. Under **Access**, choose one of the access settings:
 
-<p spaces-before="0">{% data reusables.repositories.navigate-to-repo %}</p>
+   {% ifversion ghes > 3.4 or ghae > 3.4 or ghec %}![Set the access to Actions components](/assets/images/help/settings/actions-access-settings.png){% else %}![Set the access to Actions components](/assets/images/enterprise/3.4/actions-access-settings.png){% endif %}
 
-<p spaces-before="0">
-</p>
+   * **Not accessible** - Workflows in other repositories cannot access this repository.
+   * **Accessible from repositories in the 'ORGANIZATION NAME' organization** - {% ifversion ghes > 3.4 or ghae > 3.4 or ghec %}Workflows in other repositories that are part of the 'ORGANIZATION NAME' organization can access the actions and workflows in this repository. Access is allowed only from private or internal repositories.{% else %}Workflows in other repositories can use workflows in this repository if they are part of the same organization and their visibility is private or internal.{% endif %}
+   * **Accessible from repositories in the 'ENTERPRISE NAME' enterprise** - {% ifversion ghes > 3.4 or ghae > 3.4 or ghec %}Workflows in other repositories that are part of the 'ENTERPRISE NAME' enterprise can access the actions and workflows in this repository. Access is allowed only from private or internal repositories.{% else %}Workflows in other repositories can use workflows in this repository if they are part of the same enterprise and their visibility is private or internal.{% endif %}
+1. Click **Save** to apply the settings.
+{% endif %}
 
-<p spaces-before="0">{% data reusables.repositories.sidebar-settings %}</p>
+## Configuring the retention period for {% data variables.product.prodname_actions %} artifacts and logs in your repository
 
-<p spaces-before="0">
-</p>
+You can configure the retention period for {% data variables.product.prodname_actions %} artifacts and logs in your repository.
 
-<p spaces-before="0">{% data reusables.repositories.settings-sidebar-actions %}</p>
+{% data reusables.actions.about-artifact-log-retention %}
 
-<p spaces-before="0">
-</p>
+You can also define a custom retention period for a specific artifact created by a workflow. For more information, see "[Setting the retention period for an artifact](/actions/managing-workflow-runs/removing-workflow-artifacts#setting-the-retention-period-for-an-artifact)."
 
-<p spaces-before="0">{% data reusables.github-actions.change-retention-period-for-artifacts-logs  %}</p>
+## Setting the retention period for a repository
+
+{% data reusables.repositories.navigate-to-repo %}
+{% data reusables.repositories.sidebar-settings %}
+{% data reusables.repositories.settings-sidebar-actions-general %}
+{% data reusables.actions.change-retention-period-for-artifacts-logs  %}
+
+{% ifversion actions-cache-policy-apis %}
+
+## Configuring cache storage for a repository
+
+{% data reusables.actions.cache-default-size %} However, these default sizes might be different if an enterprise owner has changed them. {% data reusables.actions.cache-eviction-process %}
+
+You can set a total cache storage size for your repository up to the maximum size allowed by the enterprise policy setting.
+
+The repository settings for {% data variables.product.prodname_actions %} cache storage can currently only be modified using the REST API:
+
+* To view the current cache storage limit for a repository, see "[Get GitHub Actions cache usage policy for a repository](/rest/actions/cache#get-github-actions-cache-usage-policy-for-a-repository)."
+* To change the cache storage limit for a repository, see "[Set GitHub Actions cache usage policy for a repository](/rest/actions/cache#set-github-actions-cache-usage-policy-for-a-repository)."
+
+{% data reusables.actions.cache-no-org-policy %}
+
+{% endif %}

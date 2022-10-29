@@ -1,21 +1,20 @@
----
 date: '2021-08-10'
 sections:
   bugs:
-    - 'bashのサブシェルを使うカスタムのpre-receive フックは、`No such file or directory`というエラーを返します。'
-    - 定期的なMSSQLのトランザクションログのスケジュールバックアップを実行することなくGitHub Actionsを有効化すると、ログが無制限に拡大し、アプライアンスのデータディスクの利用可能な領域をすべて消費し、障害につながる可能性があります。
-    - LFSの利用度が高いインスタンスにおいて、不要なデータベースのロギングが大量のディスク領域を消費しました。
-    - '"Repository creation" Organizationの設定に対する変更の監査ログエントリが不正確でした。'
-    - '`ActionController::UnknownFormat`例外の過剰なロギングが、不要なディスク消費を招いていました。'
-    - "255文字以上のLDAP `group_dn`値によって、`Data truncated for column 'group_dn' at row 1`というエラーが記録されます。"
+    - 'bash のサブシェルを使うカスタム pre-receive フックが、`No such file or directory` というエラーを返します。'
+    - 定期的なスケジュール バックアップを実行することなく GitHub Actions を有効にすると、MSSQL のトランザクション ログが無制限に拡大し、アプライアンスのデータ ディスクの利用可能な領域をすべて消費し、停止につながる可能性があります。
+    - LFS の使用量が多いインスタンスで、不要なデータベース ログが大量にディスク領域を消費しました。
+    - "\"リポジトリ作成\" の組織設定に加えられた変更に対する監査ログのエントリが不正確でした。"
+    - "`ActionController::UnknownFormat` 例外の過剰なログ記録により、不必要にディスクを消費していました。"
+    - "LDAP の `group_dn` の値が 255 文字より長いと、\"行 1 の列 `group_dn` でデータが切り詰められました\" というエラーが記録されました。"
   changes:
-    - 不正利用レート制限は、セカンダリレート制限と呼ばれるようになりました。これは、これによって制限されるのが必ずしも不正利用とは限らないためです。
+    - 不正利用レート制限は、動作制限が必ずしも不正利用に限らないため、セカンダリ レート制限というようになりました。
   known_issues:
-    - '{% data variables.product.prodname_registry %}のnpmレジストリは、メタデータのレスポンス中で時間の値を返さなくなります。これは、大きなパフォーマンス改善のために行われました。メタデータレスポンスの一部として時間の値を返すために必要なすべてのデータは保持し続け、既存のパフォーマンスの問題を解決した将来に、この値を返すことを再開します。'
-    - 新しくセットアップされたユーザを持たない{% data variables.product.prodname_ghe_server %}で、攻撃者が最初の管理ユーザを作成できました。
-    - アップグレードの過程で、カスタムのファイアウォールのルールが削除されます。
-    - Git LFSが追跡するファイル[Webインターフェースからアップロードされたもの](https://github.com/blog/2105-upload-files-to-your-repositories)が、不正にリポジトリに直接追加されてしまいます。
-    - 同じリポジトリ内のファイルパスが255文字を超えるblobへのパーマリンクを含むIssueをクローズできませんでした。
-    - GitHub Connectで"Users can search GitHub.com"が有効化されている場合、GitHub.comの検索結果にプライベート及びインターナルリポジトリのIssueが含まれません。
-    - '{% data variables.product.prodname_ghe_server %}で{% data variables.product.prodname_actions %}が有効化されていると、`ghe-repl-teardown`でのレプリカノードの解体は成功しますが、`ERROR:Running migrations`が返されることがあります。'
-    - pre-receive フックの処理に固有のリソース制限によって、pre-receive フックに失敗するものが生じることがあります。
+    - "{% data variables.product.prodname_registry %} npm レジストリが、メタデータ応答で時刻値を返さなくなります。これは、パフォーマンスの大幅な向上を可能にするために行われました。メタデータ応答の一部として時刻値を返すために必要なすべてのデータを保持し続け、既存のパフォーマンスの問題を解決したら、将来的にこの値を返すことを再開します。"
+    - "{% data variables.product.prodname_ghe_server %} をセットアップしたばかりでユーザーがいない場合、攻撃者が最初の管理者ユーザーを作成できました。"
+    - カスタムのファイアウォール規則は、アップグレード プロセス中に削除されます。
+    - "[Web インターフェイスからアップロードされた](https://github.com/blog/2105-upload-files-to-your-repositories) Git LFS 追跡ファイルが誤ってリポジトリに直接追加されます。"
+    - issue に同じリポジトリ内の BLOB への固定リンクが含まれ、その BLOB のファイル パスが 255 文字を超える場合、その issue をクローズできません。
+    - "GitHub Connect で [Users can search GitHub.com]\\(ユーザーが GitHub.com を検索できる\\) が有効になっている場合、プライベートと内部リポジトリの issue は GitHub.com の検索結果に含まれません。"
+    - "{% data variables.product.prodname_ghe_server %} で {% data variables.product.prodname_actions %} が有効にされていると、`ghe-repl-teardown` でのレプリカ ノードの破棄は成功しますが、`ERROR:Running migrations` が返されることがあります。"
+    - pre-receive フックの処理に固有のリソース制限により、一部の pre-receive フックが失敗する場合があります。

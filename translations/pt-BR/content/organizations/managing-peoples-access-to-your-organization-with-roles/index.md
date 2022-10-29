@@ -1,6 +1,6 @@
 ---
-title: Gerenciar o acesso de pessoas à organização com funções
-intro: 'You can control access to your organizations''s settings and repositories by giving people organization, repository, and team roles.'
+title: Gerenciando o acesso das pessoas à sua organização com funções
+intro: 'É possível controlar o acesso às configurações e repositórios da organização, dando às pessoas funções de organização, repositório e equipe.'
 redirect_from:
   - /articles/managing-people-s-access-to-your-organization-with-roles
   - /articles/managing-peoples-access-to-your-organization-with-roles
@@ -20,6 +20,13 @@ children:
   - /adding-a-billing-manager-to-your-organization
   - /removing-a-billing-manager-from-your-organization
   - /managing-security-managers-in-your-organization
-shortTitle: Gerenciar acesso com funções
+  - /managing-moderators-in-your-organization
+shortTitle: Manage access with roles
+ms.openlocfilehash: 4e020ec73b09e5144be57c4efdc47f19a3b8b557
+ms.sourcegitcommit: 47bd0e48c7dba1dde49baff60bc1eddc91ab10c5
+ms.translationtype: HT
+ms.contentlocale: pt-BR
+ms.lasthandoff: 09/05/2022
+ms.locfileid: '145065454'
 ---
 

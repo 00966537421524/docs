@@ -14,12 +14,17 @@ topics:
   - Organizations
   - Upgrades
   - User account
-shortTitle: 支払いのプロセス
+shortTitle: Billing process
+ms.openlocfilehash: 9908e230f5b34b00ee7e62865a26a4796632c329
+ms.sourcegitcommit: fcf3546b7cc208155fb8acdf68b81be28afc3d2d
+ms.translationtype: HT
+ms.contentlocale: ja-JP
+ms.lasthandoff: 09/11/2022
+ms.locfileid: '145087929'
 ---
+有料個人アカウントまたは組織のプランを変更しても、{% data variables.large_files.product_name_long %} など他の有料 {% data variables.product.prodname_dotcom %} 機能や、{% data variables.product.prodname_marketplace %} で購入した有料アプリケーションには影響しません。
 
-有料ユーザアカウントまたは Organization のプランを変更しても、{% data variables.large_files.product_name_long %} など他の有料 {% data variables.product.prodname_dotcom %} 機能や、{% data variables.product.prodname_marketplace %} で購入した有料アプリケーションには影響しません。
-
-詳細は「[{% data variables.product.prodname_dotcom %} の製品](/articles/github-s-products)」および「[{% data variables.product.prodname_dotcom %} の支払いについて](/articles/about-billing-on-github)」を参照してください。
+詳細については、「[{% data variables.product.prodname_dotcom %} の製品](/articles/github-s-products)」および「[{% data variables.product.prodname_dotcom %} の支払いについて](/articles/about-billing-on-github)」を参照してください。
 
 ## 個人アカウントまたは Organization の有償プランのキャンセル例
 
@@ -37,9 +42,9 @@ shortTitle: 支払いのプロセス
 
 ステファンさんの Organization は毎年 5 月 20 日に 50 シート分の支払いを行っています。 ステファンさんが 9 月 30 日に 20 シートを削除し、合計で 30 シートに減らした場合、彼の Organization は現在の支払いサイクルが終了する 5 月 19 日までは 50 の有料シートにアクセスすることができます。 ダウングレード (シートの削除) は、5 月 20 日をもって有効になります。つまり、ステファンさんの Organization は 30 シート分のみに対して支払いを行い、30 の有料シートにアクセスできます。
 
-## 参考リンク
+## 参考資料
 
 - 「[{% data variables.product.prodname_dotcom %} アカウントの支払いを管理する](/articles/managing-billing-for-your-github-account)」
-- [{% data variables.product.prodname_marketplace %} アプリの支払いを管理する](/articles/managing-billing-for-github-marketplace-apps)
+- 「[{% data variables.product.prodname_marketplace %} アプリの課金を管理する](/articles/managing-billing-for-github-marketplace-apps)」
 - 「[{% data variables.large_files.product_name_long %} の支払いを管理する](/articles/managing-billing-for-git-large-file-storage)」
-- [ユーザごとの価格付けについて](/articles/about-per-user-pricing)
+- 「[ユーザーごとの価格付けについて](/articles/about-per-user-pricing)」

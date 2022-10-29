@@ -8,14 +8,26 @@ versions:
 topics:
   - Codespaces
 children:
-  - /creating-a-codespace
+  - /codespaces-lifecycle
   - /developing-in-a-codespace
-  - /using-source-control-in-your-codespace
-  - /using-codespaces-for-pull-requests
+  - /creating-a-codespace
   - /deleting-a-codespace
+  - /opening-an-existing-codespace
+  - /using-source-control-in-your-codespace
+  - /using-github-codespaces-for-pull-requests
+  - /stopping-and-starting-a-codespace
+  - /renaming-a-codespace
   - /forwarding-ports-in-your-codespace
-  - /changing-the-machine-type-for-your-codespace
-  - /using-codespaces-in-visual-studio-code
-  - /using-codespaces-with-github-cli
+  - /default-environment-variables-for-your-codespace
+  - /connecting-to-a-private-network
+  - /getting-started-with-github-codespaces-for-machine-learning
+  - /using-github-codespaces-in-visual-studio-code
+  - /using-github-codespaces-with-github-cli
+ms.openlocfilehash: 32f6b6c874d4a117928e8766ded4a8c02f027c8e
+ms.sourcegitcommit: 478f2931167988096ae6478a257f492ecaa11794
+ms.translationtype: HT
+ms.contentlocale: pt-BR
+ms.lasthandoff: 09/09/2022
+ms.locfileid: '147763617'
 ---
 

@@ -15,16 +15,19 @@ versions:
 type: overview
 topics:
   - CI
-shortTitle: Integración continua
+shortTitle: Continuous integration
+ms.openlocfilehash: 26b9088133ad561900d06a0c885d6b06b9b55861
+ms.sourcegitcommit: fcf3546b7cc208155fb8acdf68b81be28afc3d2d
+ms.translationtype: HT
+ms.contentlocale: es-ES
+ms.lasthandoff: 09/10/2022
+ms.locfileid: '147880665'
 ---
-
-{% data reusables.actions.enterprise-beta %}
-{% data reusables.actions.enterprise-github-hosted-runners %}
-{% data reusables.actions.ae-beta %}
+{% data reusables.actions.enterprise-beta %} {% data reusables.actions.enterprise-github-hosted-runners %}
 
 ## Acerca de la integración continua
 
-La integración continua (CI) es una práctica de software que requiere la confirmación de código de forma periódica en un repositorio compartido. La confirmación de código con mayor frecuencia detecta errores más rápido y reduce la cantidad de código que un desarrollador necesita depurar al encontrar la fuente de un error. Las actualizaciones frecuentes de código facilitan también la fusión de cambios de diferentes miembros de un equipo de desarrollo de software. Esto es excelente para los desarrolladores, que pueden dedicar más tiempo a escribir código y menos tiempo a depurar errores o resolver conflictos de fusión.
+La integración continua (CI) es una práctica de software que requiere la confirmación de código de forma periódica en un repositorio compartido. La confirmación de código con mayor frecuencia detecta errores más rápido y reduce la cantidad de código que un desarrollador necesita depurar al encontrar la fuente de un error. Las actualizaciones frecuentes de código facilitan también la fusión de cambios de diferentes miembros de un equipo de desarrollo de software. Esto es excelente para los desarrolladores, que pueden dedicar más tiempo a escribir el código y menos tiempo a depurar errores o resolver conflictos de fusión.
 
 Al confirmar el código en tu repositorio, puedes crear y probar el código continuamente para asegurarte de que la confirmación no introduzca errores. Tus pruebas pueden incluir limpiadores de código (que verifican el formato de estilo), verificaciones de seguridad, cobertura de código, pruebas funcionales y otras verificaciones personalizadas.
 
@@ -32,30 +35,29 @@ Para crear y probar tu código es necesario un servidor. Puedes crear y probar l
 
 ## Acerca de la integración continua utilizando {% data variables.product.prodname_actions %}
 
-{% ifversion ghae %}Tener una IC utilizando {% data variables.product.prodname_actions %} ofrece flujos de trabajo que pueden compilar el código en tu repositorio y ejecutar tus pruebas. Los flujos de trabajo pueden ejecutarse en máquinas virtuales que hospede {% data variables.product.prodname_dotcom %}. Para obtener más información, consulta la sección "[Acerca de los {% data variables.actions.hosted_runner %}](/actions/using-github-hosted-runners/about-ae-hosted-runners)".
-{% else %} Tener una IC utilizando {% data variables.product.prodname_actions %} ofrece flujos de trabajo que pueden compilar el código de tu repositorio y ejecutar tus pruebas. Los flujos de trabajo pueden ejecutarse en máquinas virtuales hospedadas en {% data variables.product.prodname_dotcom %}, o en máquinas que hospedes tú mismo. Para obtener más información, consulta las secciones "[Ambientes virtuales para los ejecutores hospedados en {% data variables.product.prodname_dotcom %}](/actions/automating-your-workflow-with-github-actions/virtual-environments-for-github-hosted-runners)" y "[Acerca de los ejecutores auto-hospedados](/actions/automating-your-workflow-with-github-actions/about-self-hosted-runners)".
+{% ifversion ghae %}La CI con {% data variables.product.prodname_actions %} ofrece flujos de trabajo que pueden compilar el código del repositorio y ejecutar las pruebas. Los flujos de trabajo pueden ejecutarse en sistemas de ejecutores que almacenes. Para más información, consulte [Seguridad del ejecutor autohospedado con repositorios públicos](/actions/hosting-your-own-runners/about-self-hosted-runners).
+{% else %} Tener una IC utilizando {% data variables.product.prodname_actions %} ofrece flujos de trabajo que pueden compilar el código de tu repositorio y ejecutar tus pruebas. Los flujos de trabajo pueden ejecutarse en máquinas virtuales hospedadas en {% data variables.product.prodname_dotcom %}, o en máquinas que hospedes tú mismo. Para obtener más información, consulta "[Acerca de los ejecutores hospedados en {% data variables.product.prodname_dotcom %}](/actions/using-github-hosted-runners/about-github-hosted-runners)" y "[Acerca de los ejecutores autohospedados](/actions/automating-your-workflow-with-github-actions/about-self-hosted-runners)".
 {% endif %}
 
-Puedes configurar tu flujo de trabajo de CI para que se ejecute cuando ocurre un evento {% data variables.product.prodname_dotcom %} (por ejemplo, cuando se sube un nuevo código a tu repositorio), en un horario establecido o cuando se produce un evento externo utilizando el webhook de despacho de repositorio.
+Puede configurar el flujo de trabajo de CI para que se ejecute cuando se produzca un evento de {% data variables.product.prodname_dotcom %} (por ejemplo, cuando se inserta código nuevo en el repositorio), en una programación establecida o cuando se produce un evento externo mediante el webhook de envío de un repositorio.
 
-{% data variables.product.product_name %} ejecuta tus pruebas de IC y proporciona los resultados de cada prueba en la solicitud de extracción para que puedas ver si el cambio en tu rama introduce un error. Cuando se superan todas las pruebas de CI en un flujo de trabajo, los cambios que subiste están listos para su revisión por parte de un miembro del equipo o para su fusión. Cuando una prueba falla, es posible que uno de tus cambios haya causado la falla.
+{% data variables.product.product_name %} ejecuta tus pruebas de CI y entrega los resultados de cada prueba en la solicitud de extracción, de modo que puedas ver si el cambio en tu rama introduce un error. Cuando se superan todas las pruebas de CI en un flujo de trabajo, los cambios que subiste están listos para su revisión por parte de un miembro del equipo o para su fusión. Cuando una prueba falla, es posible que uno de tus cambios haya causado la falla.
 
-Cuando configuras la IC en tu repositorio, {% data variables.product.product_name %} analiza el código en el mismo y recomienda flujos de trabajo de IC con base en el lenguaje y marco de trabajo de tu repositorio. Por ejemplo, si utilizas [Node.js](https://nodejs.org/en/), {% data variables.product.product_name %} te sugerirá un archivo de plantilla que instala tus paquetes de Node.js y ejecuta tus pruebas. Puedes utilizar la plantilla de flujo de trabajo de IC que {% data variables.product.product_name %} te sugiere, personalizarla, o crear tu propio archivo de flujo de trabajo personalizado para que ejecute tus pruebas de IC.
+Al configurar la CI en tu repositorio, {% data variables.product.product_name %} analiza el código en tu repositorio y recomienda flujos de trabajo de CI n función del lenguaje y el encuadre en tu repositorio. Por ejemplo, si usa [Node.js](https://nodejs.org/en/), {% data variables.product.product_name %} sugerirá un flujo de trabajo inicial que instala los paquetes de Node.js y ejecuta las pruebas. Puedes utilizar el flujo de trabajo inicial de IC que sugiere {% data variables.product.product_name %}, personalizarlo o crear tu propio archivo de flujo de trabajo para ejecutar tus pruebas de IC.
 
-![Captura de pantalla de plantillas de integración continua sugeridas](/assets/images/help/repository/ci-with-actions-template-picker.png)
+![Captura de pantalla de los flujos de trabajo iniciales de integración continua sugeridos](/assets/images/help/repository/ci-with-actions-template-picker.png)
 
-Adicionalmente a ayudarte a configurar los flujos de trabajo de IC para tu proyecto, puedes utilizar las {% data variables.product.prodname_actions %} para crear flujos de trabajo através de todo el ciclo de vida de desarrollo de software. Por ejemplo, puedes usar acciones para implementar, empaquetar o lanzar tu proyecto. Para obtener más información, consulta la sección "[Acerca de las {% data variables.product.prodname_actions %}](/articles/about-github-actions)".
+Además de ayudarte a configurar flujos de trabajo de CI para tu proyecto, puedes usar {% data variables.product.prodname_actions %} para crear flujos de trabajo durante todo el ciclo de vida de desarrollo de software. Por ejemplo, puedes usar acciones para implementar, empaquetar o lanzar tu proyecto. Para más información, vea "[Acerca de {% data variables.product.prodname_actions %}](/articles/about-github-actions)".
 
-Para obtener una definición de términos comunes, consulta "[Conceptos básicos para {% data variables.product.prodname_actions %}](/github/automating-your-workflow-with-github-actions/core-concepts-for-github-actions)."
+Para obtener una definición de términos comunes, vea "[Conceptos básicos para {% data variables.product.prodname_actions %}](/github/automating-your-workflow-with-github-actions/core-concepts-for-github-actions)".
 
-## Plantillas de flujo de trabajo
+## Flujo de trabajo inicial
 
-{% data variables.product.product_name %} ofrece plantillas de flujo de trabajo de IC para varios lenguajes y marcos de trabajo.
+{% data variables.product.product_name %} ofrece un flujo inicial de IC para diversos lenguajes y marcos de trabajo.
 
-Busca en la lista completa de plantillas de flujo de trabajo para IC que ofrece {% data variables.product.company_short %} en el repositorio [actions/starter-workflows](https://github.com/actions/starter-workflows/tree/main/ci) de {% ifversion fpt or ghec %}{% else %} repositorio `actions/starter-workflows` en {% data variables.product.product_location %}{% endif %}.
+Examine la lista completa del flujo de trabajo de inicio de CI ofrecido por {% data variables.product.company_short %} en el repositorio {% ifversion fpt or ghec %}[actions/starter-workflows](https://github.com/actions/starter-workflows/tree/main/ci) repository{% else %} `actions/starter-workflows` en {% data variables.product.product_location %}{% endif %}.
 
-## Leer más
+## Lecturas adicionales
 
 {% ifversion fpt or ghec %}
-- "[Administrar la facturación de {% data variables.product.prodname_actions %}](/billing/managing-billing-for-github-actions)"
-{% endif %}
+- "[Administración de la facturación para {% data variables.product.prodname_actions %}](/billing/managing-billing-for-github-actions)" {% endif %}

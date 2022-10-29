@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import cx from 'classnames'
 import { useRouter } from 'next/router'
-import { useMainContext } from 'components/context/MainContext'
+import { LinkExternalIcon } from '@primer/octicons-react'
 
 import { Link } from 'components/Link'
 import { useProductLandingContext } from 'components/context/ProductLandingContext'
@@ -10,8 +10,8 @@ import { useVersion } from 'components/hooks/useVersion'
 import { Lead } from 'components/ui/Lead'
 
 export const LandingHero = () => {
-  const { airGap } = useMainContext()
-  const { product_video, shortTitle, beta_product, intro, introLinks } = useProductLandingContext()
+  const { product_video, shortTitle, title, beta_product, intro, introLinks } =
+    useProductLandingContext()
   const { t } = useTranslation('product_landing')
   const [renderIFrame, setRenderIFrame] = useState(false)
 
@@ -22,9 +22,9 @@ export const LandingHero = () => {
 
   return (
     <header className="d-lg-flex gutter-lg mb-6">
-      <div className={cx(product_video && 'col-12 col-lg-6 mb-3 mb-lg-0')}>
-        <h1 className="mb-3">
-          {shortTitle}{' '}
+      <div className={cx('col-12 mb-3 mb-lg-0', product_video && 'col-lg-6')}>
+        <h1>
+          {shortTitle || title}{' '}
           {beta_product && <span className="Label Label--success v-align-middle">Beta</span>}
         </h1>
 
@@ -45,7 +45,7 @@ export const LandingHero = () => {
                   href={link}
                   className={cx('btn btn-large f4 mt-3 mr-3 ', i === 0 && 'btn-primary')}
                 >
-                  {t(key)}
+                  {t(key) || key}
                 </FullLink>
               )
             })}
@@ -54,16 +54,14 @@ export const LandingHero = () => {
       {product_video && (
         <div className="col-12 col-lg-6">
           <div className="position-relative" style={{ paddingBottom: '56.25%' }}>
-            {!airGap && (
-              <iframe
-                title={`${shortTitle} Video`}
-                className="top-0 left-0 position-absolute color-shadow-large rounded-1 width-full height-full"
-                src={renderIFrame ? product_video : ''}
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              ></iframe>
-            )}
+            <iframe
+              title={`${shortTitle} Video`}
+              className="top-0 left-0 position-absolute color-shadow-large rounded-1 width-full height-full"
+              src={renderIFrame ? product_video : ''}
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
           </div>
         </div>
       )}
@@ -71,7 +69,8 @@ export const LandingHero = () => {
   )
 }
 
-// Fully Qualified Link - it includes the version and locale in the path
+// Fully Qualified Link - it includes the version and locale in the path if
+// the href is not an external link.
 type Props = {
   href: string
   children: React.ReactNode
@@ -80,13 +79,24 @@ type Props = {
 export const FullLink = ({ href, children, className }: Props) => {
   const router = useRouter()
   const { currentVersion } = useVersion()
-  const locale = router.locale || 'en'
-  const fullyQualifiedHref = `/${locale}${
-    currentVersion !== 'free-pro-team@latest' ? `/${currentVersion}` : ''
-  }${href}`
+
+  const isExternal = href.startsWith('https')
+  let linkHref = href
+  if (!isExternal) {
+    const locale = router.locale || 'en'
+    linkHref = `/${locale}${
+      currentVersion !== 'free-pro-team@latest' ? `/${currentVersion}` : ''
+    }${href}`
+  }
+
   return (
-    <Link href={fullyQualifiedHref} className={className}>
-      {children}
+    <Link href={linkHref} className={className}>
+      {children}{' '}
+      {isExternal && (
+        <span className="ml-1">
+          <LinkExternalIcon size="small" />
+        </span>
+      )}
     </Link>
   )
 }

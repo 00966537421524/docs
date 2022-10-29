@@ -1,7 +1,7 @@
 ---
-title: Paying for GitHub Sponsors by invoice
+title: 按发票支付 GitHub Sponsors
 shortTitle: Paying by invoice
-intro: 'If your company pays {% data variables.product.company_short %} by invoice, you can join the Sponsors for Companies service.'
+intro: '如果您的公司通过发票支付 {% data variables.product.company_short %} ，您可以加入公司赞助商服务。'
 versions:
   fpt: '*'
   ghec: '*'
@@ -11,12 +11,16 @@ topics:
   - Open Source
 redirect_from:
   - /sponsors/sponsoring-open-source-contributors/paying-for-github-sponsors-via-invoice
+ms.openlocfilehash: d2040d1a06c2d1610b79dfd43ce362939554d822
+ms.sourcegitcommit: fb047f9450b41b24afc43d9512a5db2a2b750a2a
+ms.translationtype: HT
+ms.contentlocale: zh-CN
+ms.lasthandoff: 09/10/2022
+ms.locfileid: '145130233'
 ---
-
 {% data reusables.sponsors.beta-note-sponsors-for-companies %}
 
-Companies can use an invoice method to participate in the {% data variables.product.prodname_sponsors %} program. This can be particularly convenient if your company has an existing invoiced billing relationship with {% data variables.product.company_short %}. Companies paying by invoice get access to a {% data variables.product.product_name %} dashboard that measures open source contributions and activity across the public projects on {% data variables.product.prodname_dotcom_the_website %} they're interested in.
+公司可以使用发票方法参与 {% data variables.product.prodname_sponsors %} 计划。 如果您的公司与 {% data variables.product.company_short %} 存在发票计费关系，这可能特别方便。 按发票付款的公司可以访问 {% data variables.product.product_name %} 仪表板，该仪表板根据他们感兴趣的 {% data variables.product.prodname_dotcom_the_website %} 衡量公共项目中的开源贡献和活动。
 
-You can join this beta program by talking to your sales representative, or by [contacting us](https://support.github.com/contact/org-sponsors-waitlist).
+可以联系销售代表或[联系我们](https://support.github.com/contact/org-sponsors-waitlist)来加入这项 beta 版本计划。
 
-For information about receiving payments from the Sponsors for Companies service, see "[Receiving payments from Sponsors for Companies](/sponsors/receiving-sponsorships-through-github-sponsors/sponsors-for-companies)."

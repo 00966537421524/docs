@@ -39,13 +39,6 @@ Usage: script/anonymize-branch.js <new-commit-message> [base-branch] Example: sc
 ---
 
 
-### [`backfill-missing-localizations.js`](backfill-missing-localizations.js)
-
-This script copies any English files that are missing from the translations directory into the translations directory. We only need to run this if problems occur with Crowdin's automatic sync.
-
----
-
-
 ### [`check-english-links.js`](check-english-links.js)
 
 This script runs once per day via a scheduled GitHub Action to check all links in English content, not including deprecated Enterprise Server content. It opens an issue if it finds broken links. To exclude a link path, add it to `lib/excluded-links.js`.
@@ -55,14 +48,7 @@ This script runs once per day via a scheduled GitHub Action to check all links i
 
 ### [`check-for-node`](check-for-node)
 
-This script is run automatically when you run the server locally. It checks whether Node.js is installed.
-
----
-
-
-### [`check-internal-links.js`](check-internal-links.js)
-
-This script runs in CI via GitHub Action to check all *internal* links in English content, not including deprecated Enterprise Server content. This is different from script/check-english-links.js, which checks *all* links in the site, both internal and external, and is much slower.
+This script is run automatically when you run the server locally. It checks whether or not Node.js is installed.
 
 ---
 
@@ -106,14 +92,6 @@ This script runs in CI via GitHub Action to check all *internal* links in Englis
 
 This script turns a Google Sheets CSV spreadsheet into a YAML file.
 
----
-
-
-### [`deploy.js`](deploy.js)
-
-This script enables us to execute both staging and production deployments from our local machine (in case GitHub Actions is unavailable). :rocket:
-
-:warning: Deploy to production only with maximum caution!
 
 ---
 
@@ -328,7 +306,7 @@ This script is intended to be used as a git "prepush" hook. If the current branc
 
 ### [`prevent-translation-commits.js`](prevent-translation-commits.js)
 
-This script is run as a git precommit hook (installed by husky after npm install). It detects changes to files the in the translations folder and prevents the commit if any changes exist.
+This script is run as a git precommit hook (installed by husky after npm install). It detects changes to the files in the translations folder and prevents the commit if any changes exist.
 
 ---
 
@@ -384,8 +362,6 @@ Run this script to remove reusables and image files that exist in the repo but a
 ### [`reset-translated-file.js`](reset-translated-file.js)
 
 This is a convenience script for replacing the contents of translated files with the English content from their corresponding source file.
-
-It's intended to be a workaround to temporarily bypass Crowdin parser bugs while we wait for translators to fix them.
 
 Usage: script/i18n/reset-translated-file.js <filename>
 
@@ -460,7 +436,7 @@ Run this script to standardize frontmatter fields in all content files, per the 
 
 ### [`sync-search-indices.js`](sync-search-indices.js)
 
-This script is run on a schedule very four hours to generate searchable data. It can also be run manually. To run it manually, click "Run workflow" button in the [Actions tab](https://github.com/github/docs-internal/actions/workflows/sync-search-indices.yml). For more info see [contributing/search.md](contributing/search.md)
+This script is run on a schedule every four hours to generate searchable data. It can also be run manually. To run it manually, click "Run workflow" button in the [Actions tab](https://github.com/github/docs-internal/actions/workflows/sync-search-indices.yml). For more info see [contributing/search.md](contributing/search.md)
 
 ---
 

@@ -1,100 +1,89 @@
 ---
-title: Configuring OpenID Connect in Azure
+title: Azure での OpenID Connect の構成
 shortTitle: Configuring OpenID Connect in Azure
-intro: Use OpenID Connect within your workflows to authenticate with Azure.
+intro: ワークフロー内で OpenID Connect を使用して、Azure で認証を行います。
 miniTocMaxHeadingLevel: 3
 versions:
   fpt: '*'
-  ghae: issue-4856
   ghec: '*'
+  ghes: '>=3.5'
 type: tutorial
 topics:
   - Security
+ms.openlocfilehash: 64c7371eec248c7ebeb45a50091b9ef5dbed645e
+ms.sourcegitcommit: fcf3546b7cc208155fb8acdf68b81be28afc3d2d
+ms.translationtype: HT
+ms.contentlocale: ja-JP
+ms.lasthandoff: 09/10/2022
+ms.locfileid: '145117230'
 ---
-
-{% data reusables.actions.enterprise-beta %}
-{% data reusables.actions.enterprise-github-hosted-runners %}
+{% data reusables.actions.enterprise-beta %} {% data reusables.actions.enterprise-github-hosted-runners %}
 
 ## 概要
 
-OpenID Connect (OIDC) allows your {% data variables.product.prodname_actions %} workflows to access resources in Azure, without needing to store the Azure credentials as long-lived {% data variables.product.prodname_dotcom %} secrets.
+OpenID Connect (OIDC) を使用すると、{% data variables.product.prodname_actions %} ワークフローでは、有効期間の長い {% data variables.product.prodname_dotcom %} シークレットとして Azure 資格情報を格納しなくても、Azure 内のリソースにアクセスできます。 
 
-This guide gives an overview of how to configure Azure to trust {% data variables.product.prodname_dotcom %}'s OIDC as a federated identity, and includes a workflow example for the [`azure/login`](https://github.com/Azure/login) action that uses tokens to authenticate to Azure and access resources.
+このガイドでは、{% data variables.product.prodname_dotcom %} の OIDC をフェデレーション ID として信頼するように Azure を構成する方法の概要と、トークンを使用して Azure に対する認証とリソースへのアクセスを行う [`azure/login`](https://github.com/Azure/login) アクションのワークフロー例を示します。
 
-## 必要な環境
+## 前提条件
 
 {% data reusables.actions.oidc-link-to-intro %}
 
 {% data reusables.actions.oidc-security-notice %}
 
-## Adding the Federated Credentials to Azure
+## フェデレーション資格情報を Azure に追加する
 
-{% data variables.product.prodname_dotcom %}'s OIDC provider works with Azure's workload identity federation. For an overview, see Microsoft's documentation at "[Workload identity federation](https://docs.microsoft.com/en-us/azure/active-directory/develop/workload-identity-federation)."
+{% data variables.product.prodname_dotcom %}の OIDC プロバイダーは、Azure のワークロード ID フェデレーションと連携します。 概要については、「[ワークロード ID フェデレーション](https://docs.microsoft.com/en-us/azure/active-directory/develop/workload-identity-federation)」の Microsoft のドキュメントを参照してください。
 
-To configure the OIDC identity provider in Azure, you will need to perform the following configuration. For instructions on making these changes, refer to [the Azure documentation](https://docs.microsoft.com/en-us/azure/developer/github/connect-from-azure).
+Azure で OIDC ID プロバイダーを構成するには、次の構成を実行する必要があります。 これらの変更を行う手順については、[Azure のドキュメント](https://docs.microsoft.com/en-us/azure/developer/github/connect-from-azure)を参照してください。
 
-1. Create an Active Directory application and a service principal.
-2. Add federated credentials for the Active Directory application.
-3. Create {% data variables.product.prodname_dotcom %} secrets for storing Azure configuration.
+1. Azure Active Directory のアプリケーションおよびサービス プリンシパルを作成します。
+2. Azure Active Directory アプリケーションのフェデレーション資格情報を追加します。
+3. Azure 構成を格納するための {% data variables.product.prodname_dotcom %} シークレットを作成します。
 
-Additional guidance for configuring the identity provider:
+ID プロバイダーを構成するための追加のガイダンス:
 
-- For security hardening, make sure you've reviewed ["Configuring the OIDC trust with the cloud"](/actions/deployment/security-hardening-your-deployments/about-security-hardening-with-openid-connect#configuring-the-oidc-trust-with-the-cloud). For an example, see ["Configuring the subject in your cloud provider"](/actions/deployment/security-hardening-your-deployments/about-security-hardening-with-openid-connect#configuring-the-subject-in-your-cloud-provider).
-- For the `audience` setting,  `api://AzureADTokenExchange` is the recommended value, but you can also specify other values here.
+- セキュリティ強化については、「[クラウドとの OIDC 信頼の構成](/actions/deployment/security-hardening-your-deployments/about-security-hardening-with-openid-connect#configuring-the-oidc-trust-with-the-cloud)」を確認してください。 例については、「[クラウド プロバイダーでのサブジェクトの構成](/actions/deployment/security-hardening-your-deployments/about-security-hardening-with-openid-connect#configuring-the-subject-in-your-cloud-provider)」を参照してください。
+- この `audience` 設定では、推奨される値は `api://AzureADTokenExchange` ですが、ここで他の値を指定することもできます。
 
 ## {% data variables.product.prodname_actions %} ワークフローを更新する
 
-To update your workflows for OIDC, you will need to make two changes to your YAML:
-1. Add permissions settings for the token.
-2. Use the [`azure/login`](https://github.com/Azure/login) action to exchange the OIDC token (JWT) for a cloud access token.
+OIDC のワークフローを更新するには、YAML に 2 つの変更を行う必要があります。
+1. トークンのアクセス許可設定を追加します。
+2. この [`azure/login`](https://github.com/Azure/login) アクションを使用して、OIDC トークン (JWT) をクラウド アクセス トークンと交換します。
 
-### Adding permissions settings
+### アクセス許可設定の追加
 
-The workflow will require a `permissions` setting with a defined [`id-token`](/actions/security-guides/automatic-token-authentication#permissions-for-the-github_token) value. If you only need to fetch an OIDC token for a single job, then this permission can be set within that job. 例:
+ {% data reusables.actions.oidc-permissions-token %}
 
+### アクセス トークンの要求
+
+この [`azure/login`](https://github.com/Azure/login) アクションでは、{% data variables.product.prodname_dotcom %} OIDC プロバイダーから JWT を受け取り、Azure からアクセス トークンを要求します。 詳細については、[`azure/login`](https://github.com/Azure/login) のドキュメントを参照してください。
+
+次の例では、OIDC ID トークンを Azure と交換してアクセス トークンを受け取ります。これを使用すると、クラウド リソースにアクセスできます。
+
+{% raw %}
 ```yaml{:copy}
-permissions:
-  id-token: write
-```
-
-You may need to specify additional permissions here, depending on your workflow's requirements.
-
-### Requesting the access token
-
-The [`azure/login`](https://github.com/Azure/login) action receives a JWT from the {% data variables.product.prodname_dotcom %} OIDC provider, and then requests an access token from Azure. For more information, see the [`azure/login`](https://github.com/Azure/login) documentation.
-
-The following example exchanges an OIDC ID token with Azure to receive an access token, which can then be used to access cloud resources.
-
-```yaml{:copy}
-name: Run Azure Login with OpenID Connect
+name: Run Azure Login with OIDC
 on: [push]
 
 permissions:
       id-token: write
-
+      contents: read
 jobs: 
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-
-    - name: Installing CLI-beta for OpenID Connect
-      run: |
-        cd ../..
-        CWD="$(pwd)"
-        python3 -m venv oidc-venv
-        . oidc-venv/bin/activate
-        echo "activated environment"
-        python3 -m pip install -q --upgrade pip
-        echo "started installing cli beta"
-        pip install -q --extra-index-url https://azcliprod.blob.core.windows.net/beta/simple/ azure-cli
-        echo "***************installed cli beta*******************"
-        echo "$CWD/oidc-venv/bin" >> $GITHUB_PATH
-
-    - name: 'Az CLI login'
-      uses: azure/login@v1.4.0
-      with:
-        client-id: {% raw %}${{ secrets.AZURE_CLIENTID }}{% endraw %}
-        tenant-id: {% raw %}${{ secrets.AZURE_TENANTID }}{% endraw %}
-        subscription-id: {% raw %}${{ secrets.AZURE_SUBSCRIPTIONID }}{% endraw %}
+      - name: 'Az CLI login'
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+  
+      - name: 'Run az commands'
+        run: |
+          az account show
+          az group list
 ```
- 
+ {% endraw %}

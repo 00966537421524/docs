@@ -1,6 +1,6 @@
 ---
 title: GitHub Enterprise Cloud のトライアルを設定する
-intro: '{% data variables.product.prodname_ghe_cloud %} のトライアルは無料でできます。'
+intro: '{% data variables.product.prodname_ghe_cloud %} を無料で試すことができます。'
 redirect_from:
   - /articles/setting-up-a-trial-of-github-enterprise-cloud
   - /github/getting-started-with-github/setting-up-a-trial-of-github-enterprise-cloud
@@ -12,54 +12,74 @@ versions:
 topics:
   - Accounts
 shortTitle: Enterprise Cloud trial
+ms.openlocfilehash: 13cb43b5dfd4a9e207a9a1cca090b223c56f4678
+ms.sourcegitcommit: 47bd0e48c7dba1dde49baff60bc1eddc91ab10c5
+ms.translationtype: HT
+ms.contentlocale: ja-JP
+ms.lasthandoff: 09/05/2022
+ms.locfileid: '147389955'
 ---
-
 {% data reusables.enterprise.ghec-cta-button %}
 
 
-## {% data variables.product.prodname_ghe_cloud %}について
+## {% data variables.product.prodname_ghe_cloud %} について
 
-{% data reusables.organizations.about-organizations %}
+{% data variables.product.prodname_ghe_cloud %} は、{% data variables.product.prodname_dotcom_the_website %} で共同作業を行う大企業またはチーム向けのプランです。 {% data reusables.enterprise.about-github-for-enterprises %}
 
-You can use organizations for free with {% data variables.product.prodname_free_team %}, which includes limited features. For additional features, such as SAML single sign-on (SSO), access control for {% data variables.product.prodname_pages %}, and included {% data variables.product.prodname_actions %} minutes, you can upgrade to {% data variables.product.prodname_ghe_cloud %}. For a detailed list of the features available with {% data variables.product.prodname_ghe_cloud %}, see our [Pricing](https://github.com/pricing) page.
+{% data reusables.organizations.about-organizations %} アカウントの詳細については、「[{% data variables.product.prodname_dotcom %} アカウントの種類](/get-started/learning-about-github/types-of-github-accounts)」を参照してください。
 
-{% data reusables.saml.saml-accounts %} 詳細は「<a href="/organizations/managing-saml-single-sign-on-for-your-organization/about-identity-and-access-management-with-saml-single-sign-on" class="dotcom-only">SAML シングルサインオンを使うアイデンティティおよびアクセス管理について</a>」を参照してください。
+限られた機能を含む {% data variables.product.prodname_free_team %} を使用して、組織を無料で使用できます。 SAML シングル サインオン (SSO)、{% data variables.product.prodname_pages %} のアクセス制御、含まれる {% data variables.product.prodname_actions %} 分などの追加機能が必要な場合は、{% data variables.product.prodname_ghe_cloud %} にアップグレードできます。 {% data variables.product.prodname_ghe_cloud %} で使用できる機能の詳細な一覧については、[価格](https://github.com/pricing)に関するページを参照してください。
+
+{% data variables.product.prodname_ghe_cloud %} の試用版を設定して、新規または既存の組織アカウントでこれらの追加機能を評価できます。
+
+{% data variables.product.prodname_ghe_server %} のトライアルも利用できます。 詳細については、「[{% data variables.product.prodname_ghe_server %} の試用版を設定する](/articles/setting-up-a-trial-of-github-enterprise-server)」を参照してください。
 
 {% data reusables.products.which-product-to-use %}
 
-## {% data variables.product.prodname_ghe_cloud %} のトライアルについて
+## {% data variables.product.prodname_ghe_cloud %} の試用版について
 
-You can set up a 14-day trial to evaluate {% data variables.product.prodname_ghe_cloud %}. 支払方法が必要な {% data variables.product.prodname_marketplace %} アプリを Organization に追加しない限り、トライアル期間中に支払方法を指定する必要はありません。 詳しい情報については、「<a href="/articles/about-billing-for-github-marketplace/" class="dotcom-only">{% data variables.product.prodname_marketplace %}の支払いについて</a>」を参照してください。
+{% data variables.product.prodname_ghe_cloud %} を評価するための 30 日間の試用版を設定できます。 支払方法が必要な {% data variables.product.prodname_marketplace %} アプリを Organization に追加しない限り、トライアル期間中に支払方法を指定する必要はありません。 詳細については、「[{% data variables.product.prodname_marketplace %} の請求について](/enterprise-cloud@latest/articles/about-billing-for-github-marketplace/)」を参照してください。
 
 トライアルには50シートが含まれています。 {% data variables.product.prodname_ghe_cloud %} を評価するためにより多くのシートが必要な場合は、{% data variables.contact.contact_enterprise_sales %} にお問い合わせください。 トライアルの終了時に、別のシート数を選択できます。
 
-{% data variables.product.prodname_ghe_server %} のトライアルも利用できます。 詳しい情報については、「[{% data variables.product.prodname_ghe_server %} のトライアルを設定する](/articles/setting-up-a-trial-of-github-enterprise-server)」を参照してください。
+{% data reusables.saml.saml-accounts %}
+
+詳細については、{% ifversion not ghec %}{% data variables.product.prodname_ghe_cloud %} ドキュメントの{% else %}「[SAML シングル サインオンによる ID とアクセスの管理について](/enterprise-cloud@latest/organizations/managing-saml-single-sign-on-for-your-organization/about-identity-and-access-management-with-saml-single-sign-on)」を参照してください。{% endif %}
+
+{% data variables.product.prodname_emus %} は、{% data variables.product.prodname_ghe_cloud %} の無料試用版の一部ではありません。 {% data variables.product.prodname_emus %} に関心がある場合は、[{% data variables.product.prodname_dotcom %} の営業チーム](https://enterprise.github.com/contact)にお問い合わせください。
 
 ## {% data variables.product.prodname_ghe_cloud %} のトライアルを設定する
 
-Before you can try {% data variables.product.prodname_ghe_cloud %}, you must be signed into a user account. If you don't already have a user account on {% data variables.product.prodname_dotcom_the_website %}, you must create one. 詳しい情報については、「<a href="/articles/signing-up-for-a-new-github-account" class="dotcom-only">新しい {% data variables.product.prodname_dotcom %} アカウントにサインアップする</a>」を参照してください。
+{% data variables.product.prodname_ghe_cloud %} を試す前に、個人アカウントにサインインする必要があります。 {% data variables.product.prodname_dotcom_the_website %} の個人アカウントをまだ持っていない場合、作成する必要があります。 詳細については、「[新しい {% data variables.product.prodname_dotcom %} アカウントにサインアップする](/free-pro-team@latest/articles/signing-up-for-a-new-github-account)」を参照してください。
 
-1. Navigate to [{% data variables.product.prodname_dotcom %} for enterprises](https://github.com/enterprise).
-1. Click **Start a free trial**. !["Start a free trial" button](/assets/images/help/organizations/start-a-free-trial-button.png)
-1. Click **Enterprise Cloud**. !["Enterprise Cloud" button](/assets/images/help/organizations/enterprise-cloud-trial-option.png)
-1. Follow the prompts to configure your trial.
+1. [エンタープライズの {% data variables.product.prodname_dotcom %}](https://github.com/enterprise) に移動します。
+1. **[無料試用版を開始する]** をクリックします。
+   ![[無料試用版を開始する] ボタン](/assets/images/help/organizations/start-a-free-trial-button.png)
+1. **[Enterprise Cloud]** をクリックします。
+   ![[Enterprise Cloud] ボタン](/assets/images/help/organizations/enterprise-cloud-trial-option.png)
+1. プロンプトに従って試用版を構成します。
 
 ## {% data variables.product.prodname_ghe_cloud %} に触れる
 
-トライアルを設定したら、[エンタープライズオンボーディングガイド](https://resources.github.com/enterprise-onboarding/)に従って {% data variables.product.prodname_ghe_cloud %} を試してみることができます。
+試用版の設定後、Organization の [概要] タブで提案されているタスクに従い、{% data variables.product.prodname_ghe_cloud %} をいろいろ試すことができます。 以前にタスクを閉じていた場合、ページの上部にある **[提案されたタスクを始める]** をクリックしてそのタスクにもう一度アクセスできます。
+
+![[提案されたタスクを始める] ボタン](/assets/images/help/organizations/suggested-tasks-button.png)
+
+{% data reusables.docs.you-can-read-docs-for-your-product %}
 
 {% data reusables.products.product-roadmap %}
 
 ## トライアルを終了する
 
-トライアル期間中はいつでも {% data variables.product.prodname_enterprise %} を購入するか、{% data variables.product.prodname_team %} にダウングレードできます。
+{% data variables.product.prodname_enterprise %} は、試用期間中いつでも購入できます。 {% data variables.product.prodname_enterprise %} を購入すると試用期間が終了し、50 シートの上限が削除され、支払いが開始されます。
 
-トライアル期間の終了までに {% data variables.product.prodname_enterprise %} または {% data variables.product.prodname_team %} を購入しない場合、Organization は {% data variables.product.prodname_free_team %} にダウングレードされ、これらのプライベートリポジトリから公開された {% data variables.product.prodname_pages %} サイトを含む有料の製品にのみ含まれる高度なツールや機能にアクセスできなくなります。 アップグレードする予定がない場合は、高度な機能へのアクセスを失わないように、トライアル期間の終了前にリポジトリを公開してください。 詳細は「[リポジトリの可視性を設定する](/articles/setting-repository-visibility)」を参照してください。
+{% data variables.product.prodname_enterprise %} を購入しない場合、試用期間が終了すると、組織はダウングレードされます。 試用版に既存の組織を使用した場合、試用版の前に使用していた製品に組織がダウングレードされます。 試用版用に新しい組織を作成した場合、組織は {% data variables.product.prodname_free_team %} にダウングレードされます。 
 
-Organization の {% data variables.product.prodname_free_team %} にダウングレードすると、トライアル期間中に設定した SAML 設定も無効になります。 {% data variables.product.prodname_enterprise %} または {% data variables.product.prodname_team %} を購入すると、Organization 内のユーザーが認証できるように SAML 設定が再度有効になります。
+組織は、プライベート リポジトリの {% data variables.product.prodname_pages %} などの高度な機能など、新しい製品に含まれていない機能にアクセスできなくなります。 アップグレードする予定がない場合は、高度な機能へのアクセスを失わないように、試用期間の終了前にリポジトリを公開してください。 詳細については、「[リポジトリの可視性を設定する](/articles/setting-repository-visibility)」を参照してください。
 
-{% data reusables.profile.access_org %}
-{% data reusables.profile.org_settings %}
-{% data reusables.organizations.billing_plans %}
-5. [{% data variables.product.prodname_ghe_cloud %} Free Trial] の下で、[**Buy Enterprise**] または [**Downgrade to Team**] をクリックします。 ![[Buy Enterprise and Downgrade to Team] ボタン](/assets/images/help/organizations/finish-trial-buttons.png)
-6. プロンプトに従ってお支払い方法を入力し、[**Submit**] をクリックします。
+ダウングレードすると、試用期間中に構成された SAML 設定も無効になります。 その後 {% data variables.product.prodname_enterprise %} を購入すると、組織内のユーザーが認証できるように SAML 設定が再度有効になります。
+
+{% data reusables.profile.access_org %} {% data reusables.profile.org_settings %} {% data reusables.organizations.billing_plans %}
+5. [{% data variables.product.prodname_ghe_cloud %} 無料試用版] で、 **[エンタープライズの購入]** または **[チームにダウングレード]** をクリックします。
+  ![[エンタープライズの購入] ボタンと [チームにダウングレード] ボタン](/assets/images/help/organizations/finish-trial-buttons.png)
+6. プロンプトに従って支払い方法を入力し、 **[送信]** をクリックします。

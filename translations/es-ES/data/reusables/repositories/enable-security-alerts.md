@@ -1,4 +1,10 @@
-{% ifversion ghes or ghae-issue-4864 %}
-Los propietarios de empresas deben habilitar
-las alertas del {% data variables.product.prodname_dependabot %} para las dependencias vulnerables para {% data variables.product.product_location %} antes de que puedas utilizar esta característica. Para obtener más información, consulta la sección "[Habilitar la gráfica de dependencias y las {% data variables.product.prodname_dependabot_alerts %} en tu cuenta empresarial](/admin/configuration/managing-connections-between-your-enterprise-accounts/enabling-the-dependency-graph-and-dependabot-alerts-on-your-enterprise-account)".
+---
+ms.openlocfilehash: 6151a441ef782d82bde352a9761dbd19b239447c
+ms.sourcegitcommit: 47bd0e48c7dba1dde49baff60bc1eddc91ab10c5
+ms.translationtype: HT
+ms.contentlocale: es-ES
+ms.lasthandoff: 09/05/2022
+ms.locfileid: "146455705"
+---
+{% ifversion ghes or ghae %} Los propietarios de empresa deben habilitar {% data variables.product.prodname_dependabot_alerts %} para {% data variables.product.product_location %} antes de poder usar esta característica. Para obtener más información, consulte "[Habilitación de {% data variables.product.prodname_dependabot %} para la empresa](/admin/configuration/configuring-github-connect/enabling-dependabot-for-your-enterprise)".
 {% endif %}

@@ -3,7 +3,7 @@ title: Administrar los usuarios en tu empresa
 intro: Puedes auditar la actividad de los usuarios y administrar sus configuraciones de usuario.
 redirect_from:
   - /github/setting-up-and-managing-your-enterprise/managing-users-in-your-enterprise
-  - /enterprise/admin/guides/user-management/enabling-avatars-and-identicons/
+  - /enterprise/admin/guides/user-management/enabling-avatars-and-identicons
   - /enterprise/admin/user-management/basic-account-settings
   - /enterprise/admin/user-management/user-security
   - /enterprise/admin/user-management/managing-users-in-your-enterprise
@@ -24,14 +24,23 @@ children:
   - /promoting-or-demoting-a-site-administrator
   - /managing-support-entitlements-for-your-enterprise
   - /viewing-people-in-your-enterprise
+  - /exporting-membership-information-for-your-enterprise
   - /viewing-and-managing-a-users-saml-access-to-your-enterprise
   - /auditing-users-across-your-enterprise
+  - /impersonating-a-user
+  - /removing-a-member-from-your-enterprise
   - /managing-dormant-users
   - /suspending-and-unsuspending-users
   - /placing-a-legal-hold-on-a-user-or-organization
   - /auditing-ssh-keys
   - /customizing-user-messages-for-your-enterprise
   - /rebuilding-contributions-data
-shortTitle: Administrar usuarios
+shortTitle: Manage users
+ms.openlocfilehash: 9ec6d7dc6822e71ff72542dd6b67ded031a1c44d
+ms.sourcegitcommit: ac00e2afa6160341c5b258d73539869720b395a4
+ms.translationtype: HT
+ms.contentlocale: es-ES
+ms.lasthandoff: 09/09/2022
+ms.locfileid: '147878516'
 ---
 

@@ -1,6 +1,13 @@
-{% ifversion fpt or ghec %}{% data variables.product.prodname_code_scanning_capc %}は、Organizationが所有する{% data variables.product.prodname_GH_advanced_security %}が有効化されたすべてのパブリック及びプライベートリポジトリで利用できます。
-{%- elsif ghes > 3.0 %}{% data variables.product.prodname_code_scanning_capc %}は、Organizationが所有するリポジトリで{% data variables.product.prodname_GH_advanced_security %}が有効化されていれば利用できます。
+{%- ifversion fpt %}
+{% data variables.product.prodname_code_scanning_capc %} is available for all public repositories on {% data variables.product.prodname_dotcom_the_website %}. {% data variables.product.prodname_code_scanning_capc %} is also available for private repositories owned by organizations that use {% data variables.product.prodname_ghe_cloud %} and have a license for {% data variables.product.prodname_GH_advanced_security %}.
+
+{%- elsif ghec %}
+{% data variables.product.prodname_code_scanning_capc %} is available for all public repositories on {% data variables.product.prodname_dotcom_the_website %}. To use {% data variables.product.prodname_code_scanning %} in a private repository owned by an organization, you must have a license for {% data variables.product.prodname_GH_advanced_security %}.
+
+{%- elsif ghes %}
+{% data variables.product.prodname_code_scanning_capc %} is available for organization-owned repositories in {% data variables.product.product_name %}. This feature requires a license for {% data variables.product.prodname_GH_advanced_security %}.
+
 {%- elsif ghae %}
-{% data variables.product.prodname_code_scanning_capc %}は、ベータリリースの間は無料の{% data variables.product.prodname_GH_advanced_security %}の一部として利用できます。
-{%- else %}
-{% data variables.product.prodname_code_scanning_capc %}は、{% data variables.product.prodname_GH_advanced_security %}のライセンスを持っているなら利用できます。{% endif %} {% data reusables.advanced-security.more-info-ghas %}
+{% data variables.product.prodname_code_scanning_capc %} is available for organization-owned repositories in {% data variables.product.product_name %}. This is a {% data variables.product.prodname_GH_advanced_security %} feature (free during the beta release).
+
+{%- endif %} {% data reusables.advanced-security.more-info-ghas %}

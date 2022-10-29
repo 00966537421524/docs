@@ -11,25 +11,27 @@ versions:
   ghes: '*'
   ghae: '*'
   ghec: '*'
-shortTitle: 非快进错误
+shortTitle: Non-fast-forward error
+ms.openlocfilehash: 59e1957bf2376462c1267527b1bc29ed9de49db9
+ms.sourcegitcommit: 47bd0e48c7dba1dde49baff60bc1eddc91ab10c5
+ms.translationtype: HT
+ms.contentlocale: zh-CN
+ms.lasthandoff: 09/05/2022
+ms.locfileid: '145109492'
 ---
-
 如果其他人已推送与您相同的分支，Git 将无法推送您的更改：
 
 ```shell
-$ git push origin master
+$ git push origin main
 > To https://{% data variables.command_line.codeblock %}/<em>USERNAME</em>/<em>REPOSITORY</em>.git
->  ! [rejected]        master -> master（非快进）
-> 错误：无法推送某些 ref 至 'https://{% data variables.command_line.codeblock %}/<em>USERNAME</em>/<em>REPOSITORY</em>.git'
-> 为防止丢失历史记录，非快进更新已被拒绝
-> 再次推送前合并远程更改（例如： ‘git pull’）。 [rejected]        main -> main (non-fast-forward)
+>  ! [rejected]        main -> main (non-fast-forward)
 > error: failed to push some refs to 'https://{% data variables.command_line.codeblock %}/<em>USERNAME</em>/<em>REPOSITORY</em>.git'
 > To prevent you from losing history, non-fast-forward updates were rejected
-> Merge the remote changes (e.g. 'git pull') before pushing again.  请参阅
-> “git 推送帮助”部分的“快进说明”以了解详细信息。
+> Merge the remote changes (e.g. 'git pull') before pushing again.  See the
+> 'Note about fast-forwards' section of 'git push --help' for details.
 ```
 
-通过[获取和合并](/github/getting-started-with-github/getting-changes-from-a-remote-repository)远程分支上所做更改与本地所做更改，您可以解决此问题：
+可以通过[提取和合并](/github/getting-started-with-github/getting-changes-from-a-remote-repository)远程分支上所做的更改以及本地所做的更改来解决此问题：
 
 ```shell
 $ git fetch origin
@@ -38,7 +40,7 @@ $ git merge origin <em>YOUR_BRANCH_NAME</em>
 # Merges updates made online with your local work
 ```
 
-或者，可以只是使用 `git pull` 一次性执行两个命令：
+或者，只需使用 `git pull` 一次执行这两个命令：
 
 ```shell
 $ git pull origin <em>YOUR_BRANCH_NAME</em>

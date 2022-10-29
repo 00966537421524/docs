@@ -1,8 +1,8 @@
 ---
 title: Mantener segura tu organización
-intro: 'Los propietarios de la organización tienen varias funciones que los ayudan a mantener seguros los proyectos y los datos. Si eres el propietario de una organización, deberás revisar frecuentemente las bitácoras de auditoría de la misma{% ifversion not ghae %}, los estados de 2FA de los miembros,{% endif %} y la configuración de las aplicaciones para garantizar que no haya ocurrido ningún tipo de actividad maliciosa o no autorizada.'
+intro: 'Puedes fortalecer la seguridad de tu organización si administras los ajustes de segurdad,{% ifversion not ghae %} requiriendo una autenticación bifactorial (2FA){% endif %} y revisando la actividad e integraciones dentro de tu organización.'
 redirect_from:
-  - /articles/preventing-unauthorized-access-to-organization-information/
+  - /articles/preventing-unauthorized-access-to-organization-information
   - /articles/keeping-your-organization-secure
   - /github/setting-up-and-managing-organizations-and-teams/keeping-your-organization-secure
 versions:
@@ -14,14 +14,14 @@ topics:
   - Organizations
   - Teams
 children:
-  - /viewing-whether-users-in-your-organization-have-2fa-enabled
-  - /preparing-to-require-two-factor-authentication-in-your-organization
-  - /requiring-two-factor-authentication-in-your-organization
-  - /managing-security-and-analysis-settings-for-your-organization
-  - /managing-allowed-ip-addresses-for-your-organization
-  - /restricting-email-notifications-for-your-organization
-  - /reviewing-the-audit-log-for-your-organization
-  - /reviewing-your-organizations-installed-integrations
-shortTitle: Seguridad organizacional
+  - /managing-two-factor-authentication-for-your-organization
+  - /managing-security-settings-for-your-organization
+shortTitle: Organization security
+ms.openlocfilehash: 21d2d6e6ee641dd1be2441c4ba00baf172bedb2d
+ms.sourcegitcommit: 47bd0e48c7dba1dde49baff60bc1eddc91ab10c5
+ms.translationtype: HT
+ms.contentlocale: es-ES
+ms.lasthandoff: 09/05/2022
+ms.locfileid: '145135150'
 ---
 

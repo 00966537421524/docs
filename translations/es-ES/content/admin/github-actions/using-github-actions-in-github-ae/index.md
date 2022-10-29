@@ -4,8 +4,13 @@ intro: 'Aprende cómo configurar las {% data variables.product.prodname_actions 
 versions:
   ghae: '*'
 children:
-  - /getting-started-with-github-actions-for-github-ae
   - /using-actions-in-github-ae
-shortTitle: Utilizar las acciones en GitHub AE
+shortTitle: Use Actions in GitHub AE
+ms.openlocfilehash: ad3e900295b688fef4c4df7fae89595b9d9f4c4f
+ms.sourcegitcommit: fcf3546b7cc208155fb8acdf68b81be28afc3d2d
+ms.translationtype: HT
+ms.contentlocale: es-ES
+ms.lasthandoff: 09/10/2022
+ms.locfileid: '145116673'
 ---
 

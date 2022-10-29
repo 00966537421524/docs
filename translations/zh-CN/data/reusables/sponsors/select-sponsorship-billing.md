@@ -1,1 +1,1 @@
-4. 在“Billing information（帐单信息）”下，查看您的付款详细信息。 Optionally, to change the payment details for your entire account on {% data variables.product.product_location %}, click **Edit**. 然后，按照提示填写付款表单。
+4. Under "Billing information", review your payment details. Optionally, to change the payment details for your entire account on {% data variables.location.product_location %}, click **Edit**. Then, follow the prompts to complete the payment form.

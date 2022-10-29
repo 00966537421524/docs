@@ -12,23 +12,28 @@ versions:
   ghae: '*'
   ghec: '*'
 shortTitle: Set your username
+ms.openlocfilehash: c713f21fdf91269764dd97f15770e7996bf9f4f0
+ms.sourcegitcommit: fcf3546b7cc208155fb8acdf68b81be28afc3d2d
+ms.translationtype: HT
+ms.contentlocale: ja-JP
+ms.lasthandoff: 09/10/2022
+ms.locfileid: '145131272'
 ---
-
-## About Git usernames
+## Git ユーザー名について
 `git config` コマンドを使って、Git コミットと関連付けられている名前を変更できます。 設定した新しい名前は、コマンドラインから {% data variables.product.product_name %} にプッシュするこれからのコミットに表示されます。 本名を非公開にしておきたい場合、Git ユーザ名としてどのテキストでも使うことができます。
 
-`git config` を使って、Git コミットに関連付けられる名前を変更すると、新しい名前は以降のコミットにだけ影響し、これまでのコミットに使った名前は変更されません。
+`git config` を使った、Git コミットに関連付けられる名前の変更は、以降のコミットにだけ影響します。これまでのコミットに使った名前は変更されません。
 
-## コンピュータにある*すべての*リポジトリ用に Git ユーザ名を設定する
+## コンピューターにある *すべての* リポジトリ用に Git ユーザー名を設定する
 
 {% data reusables.command_line.open_the_multi_os_terminal %}
 
-2. {% data reusables.user_settings.set_your_git_username %}
+2. {% data reusables.user-settings.set_your_git_username %}
    ```shell
    $ git config --global user.name "<em>Mona Lisa</em>"
    ```
 
-3. {% data reusables.user_settings.confirm_git_username_correct %}
+3. {% data reusables.user-settings.confirm_git_username_correct %}
    ```shell
    $ git config --global user.name
    > Mona Lisa
@@ -40,18 +45,18 @@ shortTitle: Set your username
 
 2. 現在のワーキングディレクトリをGitコミットと関連付けた名前を設定したいローカルリポジトリに変更します。
 
-3. {% data reusables.user_settings.set_your_git_username %}
+3. {% data reusables.user-settings.set_your_git_username %}
    ```shell
    $ git config user.name "<em>Mona Lisa</em>"
    ```
 
-3. {% data reusables.user_settings.confirm_git_username_correct %}
+3. {% data reusables.user-settings.confirm_git_username_correct %}
    ```shell
    $ git config user.name
    > Mona Lisa
    ```
 
-## 参考リンク
+## 参考資料
 
-- [コミットメールアドレスを設定する](/articles/setting-your-commit-email-address)
-- [_Pro Git_ ブックの "Git Configuration"](https://git-scm.com/book/en/Customizing-Git-Git-Configuration)
+- 「[コミット メール アドレスを設定する](/articles/setting-your-commit-email-address)」
+- [_Pro Git_ ブックの「Git の構成」](https://git-scm.com/book/en/Customizing-Git-Git-Configuration)

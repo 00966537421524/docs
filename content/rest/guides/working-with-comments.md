@@ -2,7 +2,7 @@
 title: Working with comments
 intro: 'Using the REST API, you can access and manage comments in your pull requests, issues, or commits.'
 redirect_from:
-  - /guides/working-with-comments/
+  - /guides/working-with-comments
   - /v3/guides/working-with-comments
 versions:
   fpt: '*'
@@ -32,7 +32,7 @@ Request is just an Issue with code, it makes sense to use the Issues API to
 create comments on a Pull Request.
 
 We'll demonstrate fetching Pull Request comments by creating a Ruby script using
-[Octokit.rb][octokit.rb]. You'll also want to create a [personal access token][personal token].
+[Octokit.rb][octokit.rb]. You'll also want to create a [{% data variables.product.pat_generic %}][personal token].
 
 The following code should help you get started accessing comments from a Pull Request
 using Octokit.rb:
@@ -126,4 +126,4 @@ on the entire commit.
 [personal token]: /articles/creating-an-access-token-for-command-line-use
 [octokit.rb]: https://github.com/octokit/octokit.rb
 [PR Review API]: /rest/reference/pulls#comments
-[commit comment API]: /rest/reference/repos#get-a-commit-comment
+[commit comment API]: /rest/reference/commits#get-a-commit-comment

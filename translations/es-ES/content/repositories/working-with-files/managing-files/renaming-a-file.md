@@ -1,5 +1,5 @@
 ---
-title: Renombrar un archivo
+title: cambiar el nombre de un archivo
 intro: 'Puedes renombrar cualquier archivo en tu repositorio directamente en {% data variables.product.product_name %} o utilizando la línea de comandos.'
 redirect_from:
   - /articles/renaming-a-file
@@ -15,44 +15,47 @@ versions:
   ghec: '*'
 topics:
   - Repositories
+ms.openlocfilehash: 826c9c45ee8cace0d3e81c78fc010ac4c76f9ab1
+ms.sourcegitcommit: fcf3546b7cc208155fb8acdf68b81be28afc3d2d
+ms.translationtype: HT
+ms.contentlocale: es-ES
+ms.lasthandoff: 09/10/2022
+ms.locfileid: '145136548'
 ---
-
 ## Renombrar un archivo en {% data variables.product.product_name %}
 
-El renombrar un archivo también te da la oportunidad de [mover el archivo a una ubicación nueva](/articles/moving-a-file-to-a-new-location)
+Al cambiar el nombre de un archivo también puede [mover el archivo a una nueva ubicación](/articles/moving-a-file-to-a-new-location).
 
 {% tip %}
 
-**Tips**:
+**Sugerencias**:
 
-- Si intentas renombrar un archivo de un repositorio al que no tienes acceso, bifurcaremos el proyecto para tu cuenta de usuario y te ayudaremos a enviar [una solicitud de extracción](/articles/about-pull-requests) al repositorio original después de que confirmes tu cambio.
-- Los nombres de los archivos creados a través de la interfaz web solo pueden contener caracteres alfanuméricos y guiones (`-`). Para utilizar otros caracteres, crea y confirma los archivos de forma local y luego súbelos al repositorio.
-- Algunos archivos, como las imágenes, requieren que los renombres desde la línea de comando. Para obtener más información, consulta "[Renombrar un archivo usando la línea de comando](/articles/renaming-a-file-using-the-command-line)".
+- Si intentas cambiar el nombre de un archivo en un repositorio al que no tienes acceso, bifurcaremos el proyecto a su cuenta personal y te ayudaremos a enviar [una solicitud de incorporación de cambios](/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests) al repositorio original después de confirmar el cambio.
+- Los nombres de archivo creados desde la interfaz web solo pueden contener caracteres alfanuméricos y guiones (`-`). Para utilizar otros caracteres, crea y confirma los archivos de forma local y luego súbelos al repositorio.
+- Algunos archivos, como las imágenes, requieren que los renombres desde la línea de comando. Para más información, vea "[Cambio del nombre de un archivo mediante la línea de comandos](/articles/renaming-a-file-using-the-command-line)".
 
 {% endtip %}
 
 1. En tu repositorio, busca el archivo que quieres renombrar.
-2. En la esquina superior derecha de la vista del archivo, haz clic en {% octicon "pencil" aria-label="The edit icon" %} para abrir el editor de archivos. ![Icono Edit file (Editar archivo)](/assets/images/help/repository/edit-file-icon.png)
-3. En el campo de nombre del archivo, cambia el nombre del archivo con el nombre de archivo nuevo que quieras. También puedes actualizar los contenidos de tu archivo en el mismo momento. ![Editar el nombre del archivo](/assets/images/help/repository/changing-file-name.png)
-{% data reusables.files.write_commit_message %}
-{% data reusables.files.choose_commit_branch %}
-{% data reusables.files.propose_file_change %}
+2. En la esquina superior derecha de la vista del archivo, haga clic en {% octicon "pencil" aria-label="The edit icon" %} para abrir el editor de archivos.
+![Icono Editar archivo](/assets/images/help/repository/edit-file-icon.png)
+3. En el campo de nombre del archivo, cambia el nombre del archivo con el nombre de archivo nuevo que quieras. También puedes actualizar los contenidos de tu archivo en el mismo momento.
+![Edición de un nombre de archivo](/assets/images/help/repository/changing-file-name.png) {% data reusables.files.write_commit_message %} {% data reusables.files.choose_commit_branch %} {% data reusables.files.propose_file_change %}
 
-## Renombrar un archivo usando la línea de comando
+## Renombrar un archivo usando la línea de comando 
 
 Puedes usar la línea de comando para renombrar cualquier archivo de tu repositorio.
 
-Muchos archivos se pueden [renombrar directamente en {% data variables.product.product_name %}](/articles/renaming-a-file), pero algunos, como las imágenes, requieren que los renombres desde la línea de comando.
+Muchos archivos se pueden [cambiar de nombre directamente en {% data variables.product.product_name %}](/articles/renaming-a-file), pero otros, como las imágenes, es necesario cambiarlos de nombre desde la línea de comandos.
 
 {% data reusables.command_line.manipulating_file_prereqs %}
 
-{% data reusables.command_line.open_the_multi_os_terminal %}
-{% data reusables.command_line.switching_directories_procedural %}
+{% data reusables.command_line.open_the_multi_os_terminal %} {% data reusables.command_line.switching_directories_procedural %}
 3. Renombra el archivo, especificando el nombre de archivo antiguo y el nombre de archivo nuevo que le quieres asignar. Esto preparará tu cambio para la confirmación.
   ```shell
   $ git mv <em>old_filename</em> <em>new_filename</em>
   ```
-4. Utiliza `git status` para comprobar los nombres de archivo antiguo y nuevo.
+4. Use `git status` para comprobar los nombres de archivo antiguos y nuevos.
   ```shell
   $ git status
   > # On branch <em>your-branch</em>

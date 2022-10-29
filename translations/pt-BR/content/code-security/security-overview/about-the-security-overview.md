@@ -1,128 +1,83 @@
 ---
-title: Sobre a visão geral de segurança
-intro: 'Você pode visualizar, filtrar e classificar alertas de segurança para repositórios pertencentes à sua organização ou equipe em um só lugar: a página de Visão Geral de Segurança.'
-product: '{% data reusables.gated-features.security-center %}'
+title: About the security overview
+intro: 'You can view, filter, and sort security alerts for repositories owned by your organization or team in one place: the Security Overview page.'
+permissions: '{% data reusables.security-overview.permissions %}'
+product: '{% data reusables.gated-features.security-overview %}'
 redirect_from:
   - /code-security/security-overview/exploring-security-alerts
 versions:
   fpt: '*'
-  ghae: issue-4554
-  ghes: '>3.1'
+  ghae: '*'
+  ghes: '*'
   ghec: '*'
 type: how_to
 topics:
   - Security overview
   - Advanced Security
   - Alerts
+  - Dependabot
+  - Dependencies
   - Organizations
   - Teams
-shortTitle: Sobre a visão geral de segurança
+shortTitle: About security overview
 ---
 
-{% data reusables.security-center.beta %}
+{% ifversion ghes < 3.5 or ghae %}
+{% data reusables.security-overview.beta %}
+{% endif %}
 
-## Sobre a visão geral de segurança
+## About the security overview
 
-Você pode usar a visão geral de segurança para uma visão de alto nível do status de segurança da sua organização ou para identificar repositórios problemáticos que exigem intervenção. A nível da organização, a visão geral de segurança exibe informações de segurança agregadas e específicas para repositórios pertencentes à sua organização. No nível da equipe, a visão geral de segurança exibe informações de segurança específicas para repositórios para os quais a equipe tem privilégios de administrador. Para obter mais informações, consulte "[Managing team access to an organization repository](/organizations/managing-access-to-your-organizations-repositories/managing-team-access-to-an-organization-repository)."
+{% ifversion ghes or ghec or ghae %}You{% elsif fpt %}Organizations that use {% data variables.product.prodname_ghe_cloud %}{% endif %} can use the security overview for a high-level view of the security status of {% ifversion ghes or ghec or ghae %}your  {% elsif fpt %}their{% endif %} organization or to identify problematic repositories that require intervention. {% ifversion ghes or ghec or ghae %}You {% elsif fpt %}These organizations{% endif %} can view aggregate or repository-specific security information in the security overview. {% ifversion ghes or ghec or ghae %}You {% elsif fpt %} Organizations that use {% data variables.product.prodname_ghe_cloud %}{% endif %} can also use the security overview to see which security features are enabled for {% ifversion ghes or ghec or ghae %}your {% elsif fpt %}their {% endif %} repositories and to configure any available security features that are not currently in use. {% ifversion fpt %}For more information, see [the {% data variables.product.prodname_ghe_cloud %} documentation](/enterprise-cloud@latest/code-security/security-overview/about-the-security-overview).{% endif %}
 
-The security overview indicates whether {% ifversion fpt or ghes > 3.1 or ghec %}security{% endif %}{% ifversion ghae-next %}{% data variables.product.prodname_GH_advanced_security %}{% endif %} features are enabled for repositories owned by your organization and consolidates alerts for each feature.{% ifversion fpt or ghes > 3.1 or ghec %} Security features include {% data variables.product.prodname_GH_advanced_security %} features, such as {% data variables.product.prodname_code_scanning %} and {% data variables.product.prodname_secret_scanning %}, as well as {% data variables.product.prodname_dependabot_alerts %}.{% endif %} For more information about {% data variables.product.prodname_GH_advanced_security %} features, see "[About {% data variables.product.prodname_GH_advanced_security %}](/get-started/learning-about-github/about-github-advanced-security)."{% ifversion fpt or ghes > 3.1 or ghec %} For more information about {% data variables.product.prodname_dependabot_alerts %}, see "[About alerts for vulnerable dependencies](/code-security/supply-chain-security/managing-vulnerabilities-in-your-projects-dependencies/about-alerts-for-vulnerable-dependencies#dependabot-alerts-for-vulnerable-dependencies)."{% endif %}
+{% ifversion ghec or ghes or ghae %}
+The security overview indicates whether {% ifversion fpt or ghes or ghec %}security{% endif %}{% ifversion ghae %}{% data variables.product.prodname_GH_advanced_security %}{% endif %} features are enabled for repositories owned by your organization and consolidates alerts for each feature.{% ifversion fpt or ghes or ghec %} Security features include {% data variables.product.prodname_GH_advanced_security %} features, such as {% data variables.product.prodname_code_scanning %} and {% data variables.product.prodname_secret_scanning %}, as well as {% data variables.product.prodname_dependabot_alerts %}.{% endif %} For more information about {% data variables.product.prodname_GH_advanced_security %} features, see "[About {% data variables.product.prodname_GH_advanced_security %}](/get-started/learning-about-github/about-github-advanced-security)."{% ifversion fpt or ghes or ghec %} For more information about {% data variables.product.prodname_dependabot_alerts %}, see "[About {% data variables.product.prodname_dependabot_alerts %}](/code-security/supply-chain-security/managing-vulnerabilities-in-your-projects-dependencies/about-alerts-for-vulnerable-dependencies#dependabot-alerts-for-vulnerable-dependencies)."{% endif %}
 
-Para obter mais informações sobre como proteger seu código nos níveis do repositório e da organização, consulte "[Protegendo seu repositório](/code-security/getting-started/securing-your-repository)" e "[Protegendo sua organização](/code-security/getting-started/securing-your-organization)".
+For more information about securing your code at the repository and organization levels, see "[Securing your repository](/code-security/getting-started/securing-your-repository)" and "[Securing your organization](/code-security/getting-started/securing-your-organization)."
 
-No resumo da segurança, é possível visualizar, ordenar e filtrar alertas para entender os riscos de segurança na sua organização e nos repositórios específicos. Você pode aplicar vários filtros para concentrar-se em áreas de interesse. Por exemplo, você pode identificar repositórios privados que têm um número elevado de {% data variables.product.prodname_dependabot_alerts %} ou repositórios que não têm alertas {% data variables.product.prodname_code_scanning %}.
+The application security team at your company can use the security overview for both broad and specific analyses of your organization's security status. For example, they can use the overview page to monitor adoption of features by your organization or by a specific team as you rollout {% data variables.product.prodname_GH_advanced_security %} to your enterprise, or to review all alerts of a specific type and severity level across all repositories in your organization.
 
-![A visão geral de segurança de uma organização](/assets/images/help/organizations/security-overview.png)
+### About filtering and sorting alerts
 
-Para cada repositório na visão de segurança, você verá ícones para cada tipo de recurso de segurança e quantos alertas existem de cada tipo. Se um recurso de segurança não estiver habilitado para um repositório, o ícone para esse recurso será cinza.
+In the security overview, you can view, sort, and filter alerts to understand the security risks in your organization and in specific repositories. The security summary is highly interactive, allowing you to investigate specific categories of information, based on qualifiers like alert risk level, alert type, and feature enablement. You can also apply multiple filters to focus on narrower areas of interest. For example, you can identify private repositories that have a high number of {% data variables.product.prodname_dependabot_alerts %} or repositories that have no {% data variables.product.prodname_code_scanning %} alerts. For more information, see "[Filtering alerts in the security overview](/code-security/security-overview/filtering-alerts-in-the-security-overview)."
 
-![Ícones na visão geral de segurança](/assets/images/help/organizations/security-overview-icons.png)
+{% ifversion security-overview-views %}
 
-| Ícone                                                         | Significado                                                                                                                                                                                                                           |
-| ------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| {% octicon "code-square" aria-label="Code scanning alerts" %} | Alertas de {% data variables.product.prodname_code_scanning_capc %}. Para obter mais informações, consulte "[Sobre {% data variables.product.prodname_code_scanning %}](/code-security/secure-coding/about-code-scanning)         |
-| {% octicon "key" aria-label="Secret scanning alerts" %}       | Alertas de {% data variables.product.prodname_secret_scanning_caps %}. Para obter mais informações, consulte "[Sobre {% data variables.product.prodname_secret_scanning %}](/code-security/secret-security/about-secret-scanning) |
-| {% octicon "hubot" aria-label="Dependabot alerts" %}          | {% data variables.product.prodname_dependabot_alerts %}. Para obter mais informações, consulte "[Sobre alertas para dependências vulneráveis](/code-security/supply-chain-security/about-alerts-for-vulnerable-dependencies)"       |
-| {% octicon "check" aria-label="Check" %}                      | O recurso de segurança está habilitado, mas não envia alertas neste repositório.                                                                                                                                                      |
-| {% octicon "x" aria-label="x" %}                              | O recurso de segurança não é compatível com este repositório.                                                                                                                                                                         |
+In the security overview, there are dedicated views for each type of security alert, such as Dependabot, code scanning, and secret scanning alerts. You can use these views to limit your analysis to a specific set of alerts, and narrow the results further with a range of filters specific to each view. For example, in the secret scanning alert view, you can use the `Secret type` filter to view only secret scanning alerts for a specific secret, like a GitHub {% data variables.product.pat_generic %}. At the repository level, you can use the security overview to assess the specific repository's current security status, and configure any additional security features not yet in use on the repository.
 
-Por padrão, os repositórios arquivados são excluídos da visão geral de segurança de uma organização. É possível aplicar filtros para visualizar repositórios arquivados na visão geral de segurança. Para obter mais informações, consulte "[Filtrar a lista de alertas](#filtering-the-list-of-alerts)".
+{% endif %}
 
-A visão geral de segurança exibe alertas ativos criados por funcionalidades de segurança. Se não houver alertas na visão geral de segurança de um repositório, as vulnerabilidades de segurança não detectadas ou erros de código ainda poderão existir.
+![The security overview for an organization](/assets/images/help/organizations/security-overview.png)
 
-## Visualizar a visão geral de segurança de uma organização
+For each repository in the security overview, you will see icons for each type of security feature and how many alerts there are of each type. If a security feature is not enabled for a repository, the icon for that feature will be grayed out. In addition, a risk score is calculated for each repository based on its code scanning, Dependabot and secret scanning alerts. This score is in beta and should be used with caution. Its algorithm and approach is subject to change.
 
-Os proprietários da organização podem ver a visão geral de segurança para uma organização.
+![Icons in the security overview](/assets/images/help/organizations/security-overview-icons.png)
 
-{% data reusables.organizations.navigate-to-org %}
-{% data reusables.organizations.security-overview %}
-1. Para visualizar informações agregadas sobre tipos de alertas, clique em **Mostrar mais**. ![Botão mostrar mais](/assets/images/help/organizations/security-overview-show-more-button.png)
-{% data reusables.organizations.filter-security-overview %}
+| Icon | Meaning |
+| -------- | -------- |
+| {% octicon "code-square" aria-label="Code scanning alerts" %} | {% data variables.product.prodname_code_scanning_capc %} alerts. For more information, see "[About {% data variables.product.prodname_code_scanning %}](/code-security/secure-coding/about-code-scanning)." |
+| {% octicon "key" aria-label="Secret scanning alerts" %} | {% data variables.product.prodname_secret_scanning_caps %} alerts. For more information, see "[About {% data variables.product.prodname_secret_scanning %}](/code-security/secret-security/about-secret-scanning)." |
+| {% octicon "hubot" aria-label="Dependabot alerts" %} | {% data variables.product.prodname_dependabot_alerts %}. For more information, see "[About {% data variables.product.prodname_dependabot_alerts %}](/code-security/supply-chain-security/about-alerts-for-vulnerable-dependencies)." |
+| {% octicon "check" aria-label="Check" %} | The security feature is enabled, but does not raise alerts in this repository. |
+| {% octicon "x" aria-label="x" %} | The security feature is not supported in this repository. |
 
-## Visualizar a visão geral de segurança de uma equipe
+The security overview displays active alerts raised by security features. If there are no alerts in the security overview for a repository, undetected security vulnerabilities or code errors may still exist.
 
-Os integrantes de uma equipe podem visualizar a visão geral de segurança dos repositórios para os quais a equipe tem privilégios de administrador.
+### About the organization-level security overview
 
-{% data reusables.profile.access_org %}
-{% data reusables.user_settings.access_org %}
-{% data reusables.organizations.specific_team %}
-{% data reusables.organizations.team-security-overview %}
-{% data reusables.organizations.filter-security-overview %}
+At the organization-level, the security overview displays aggregate and repository-specific security information for repositories owned by your organization. You can filter information by security features at the organization-level.
 
-## Filtrar a lista de alertas
+{% ifversion ghec or ghes > 3.4 or ghae > 3.4 %}
+### About the enterprise-level security overview
+At the enterprise-level, the security overview displays aggregate and repository-specific security information for your enterprise. You can view repositories owned by your enterprise that have security alerts, view all security alerts, or security feature-specific alerts from across your enterprise.
 
-### Filtrar por nível de risco para repositórios
+Organization owners and security managers for organizations in your enterprise also have limited access to the enterprise-level security overview. They can only view repositories and alerts for the organizations that they have full access to.
 
-O nível de risco para um repositório é determinado pelo número e gravidade dos alertas de funcionalidades de segurança. Se uma ou mais funcionalidades de segurança não estiverem habilitadas para um repositório, o repositório terá um nível de risco desconhecido. Se um repositório não tiver riscos detectados por funcionalidades de segurança, o repositório terá um nível claro de risco.
+{% elsif fpt %}
+### About the enterprise-level security overview
+At the enterprise-level, the security overview displays aggregate and repository-specific information for an enterprise. For more information, see "[About the enterprise-level security overview](/enterprise-cloud@latest/code-security/security-overview/about-the-security-overview#about-the-enterprise-level-security-overview)" in the {% data variables.product.prodname_ghe_cloud %} documentation.
+{% endif %}
 
-| Qualifier      | Descrição                                                         |
-| -------------- | ----------------------------------------------------------------- |
-| `risk:high`    | Exibe repositórios que estão em alto risco.                       |
-| `risk:medium`  | Exibe repositórios que estão em risco médio.                      |
-| `risk:low`     | Exibe repositórios que estão em risco baixo.                      |
-| `risk:unknown` | Exibir repositórios que estão com um nível de risco desconhecido. |
-| `risk:clear`   | Exibe repositórios que não tem um nível de risco identificado.    |
-
-### Filtrar por número de alertas
-
-| Qualifier                 | Descrição                                                                                                                                                             |
-| ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| <code>code-scanning-alerts:<em>n</em></code> | Exibe repositórios que têm *n* alertas de {% data variables.product.prodname_code_scanning %}. Este qualificador pode usar os operadores &gt e &lt de comparação.   |
-| <code>secret-scanning-alerts:<em>n</em></code> | Exibe repositórios que têm *n* alertas de {% data variables.product.prodname_secret_scanning %}. Este qualificador pode usar os operadores &gt e &lt de comparação. |
-| <code>dependabot-alerts:<em>n</em></code> | Exibir repositórios que têm *n* {% data variables.product.prodname_dependabot_alerts %}. Este qualificador pode usar os operadores &gt e &lt de comparação.         |
-
-### Filtrar se as funcionalidades de segurança estão habilitadas
-
-| Qualifier                       | Descrição                                                                                            |
-| ------------------------------- | ---------------------------------------------------------------------------------------------------- |
-| `enabled:code-scanning`         | Exibe repositórios com {% data variables.product.prodname_code_scanning %} habilitado.             |
-| `not-enabled:code-scanning`     | Exibe repositórios que não têm {% data variables.product.prodname_code_scanning %} habilitado.     |
-| `enabled:secret-scanning`       | Exibe repositórios com {% data variables.product.prodname_secret_scanning %} habilitado.           |
-| `not-enabled:secret-scanning`   | Exibe repositórios com {% data variables.product.prodname_secret_scanning %} habilitado.           |
-| `enabled:dependabot-alerts`     | Exibe repositórios com {% data variables.product.prodname_dependabot_alerts %} habilitado.         |
-| `not-enabled:dependabot-alerts` | Exibe repositórios que não têm {% data variables.product.prodname_dependabot_alerts %} habilitado. |
-
-### Filtrar por tipo de repositório
-
-| Qualifier | Description | | -------- | -------- |{% ifversion fpt or ghes > 3.1 or ghec %} | `is:public` | Display public repositories. |{% endif %} | `is:internal` | Exibe repositórios internos. | | `is:private` | Exibe repositórios privados. | | `archived:true` | Exibe repositórios arquivados. |
-
-### Filtrar por equipe
-
-| Qualifier                 | Descrição                                                                         |
-| ------------------------- | --------------------------------------------------------------------------------- |
-| <code>team:<em>TEAM-NAME</em></code> | Exibe os repositórios para os quais *TEAM-NAME* tem privilégios de administrador. |
-
-### Filtrar por tópico
-
-| Qualifier                 | Descrição                                                    |
-| ------------------------- | ------------------------------------------------------------ |
-| <code>topic:<em>TOPIC-NAME</em></code> | Exibe repositórios que são classificados com o *TOPIC-NAME*. |
-
-### Classificar a lista de alertas
-
-| Qualifier                     | Descrição                                                                                                                                |
-| ----------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| `sort:risk`                   | Classifica os repositórios na visão geral de segurança por risco.                                                                        |
-| `sort:repos`                  | Classifica alfabeticamente pelo nome os repositórios na sua visão geral de segurança.                                                    |
-| `sort:code-scanning-alerts`   | Classifica os repositórios na visão geral de segurança por número de alertas de {% data variables.product.prodname_code_scanning %}.   |
-| `sort:secret-scanning-alerts` | Classifica os repositórios na visão geral de segurança por número de alertas de {% data variables.product.prodname_secret_scanning %}. |
-| `sort:dependabot-alerts`      | Classifica os repositórios na sua visão geral de segurança por número de {% data variables.product.prodname_dependabot_alerts %}.      |
+### About the team-level security overview
+At the team-level, the security overview displays repository-specific security information for repositories that the team has admin privileges for. For more information, see "[Managing team access to an organization repository](/organizations/managing-access-to-your-organizations-repositories/managing-team-access-to-an-organization-repository)."
+{% endif %}

@@ -1,8 +1,8 @@
 ---
 title: Sobre merges de subárvore do Git
 redirect_from:
-  - /articles/working-with-subtree-merge/
-  - /subtree-merge/
+  - /articles/working-with-subtree-merge
+  - /subtree-merge
   - /articles/about-git-subtree-merges
   - /github/using-git/about-git-subtree-merges
   - /github/getting-started-with-github/about-git-subtree-merges
@@ -13,18 +13,23 @@ versions:
   ghes: '*'
   ghae: '*'
   ghec: '*'
+ms.openlocfilehash: cd553d4193f3e4ad5de54abc218df623b1d53276
+ms.sourcegitcommit: 96bbb6b8f3c9172209d80cb1502017ace3019807
+ms.translationtype: HT
+ms.contentlocale: pt-BR
+ms.lasthandoff: 09/10/2022
+ms.locfileid: '147880025'
 ---
-
 ## Sobre merges de subárvore
 
 Normalmente, um merge de subárvore é usado para conter um repositório dentro de outro repositório. O "sub-repositório" é armazenado em uma pasta do repositório principal.
 
 A melhor maneira de explicar merges de subárvore é mostrar com exemplo. O que faremos:
 
-- Criar um repositório vazio chamado `test` que represente nosso projeto
-- Fazer merge de outro repositório nele como uma subárvore chamada `Spoon-Knife`.
-- O projeto `test` usará esse subprojeto como se ele fosse parte do mesmo repositório.
-- Fazer fetch de atualizações em `Spoon-Knife` em nosso projeto `test`.
+- Criar um repositório vazio chamado `test` que representa o projeto
+- Mesclar outro repositório nele como uma subárvore chamada `Spoon-Knife`.
+- O projeto `test` usará esse subprojeto como se ele fizesse parte do mesmo repositório.
+- Efetuar fetch das atualizações de `Spoon-Knife` para o projeto `test`.
 
 ## Configurar o repositório vazio para um merge de subárvore
 
@@ -53,7 +58,7 @@ A melhor maneira de explicar merges de subárvore é mostrar com exemplo. O que 
 
 1. Adicione uma nova URL remota apontando para o projeto separado em que estávamos interessados.
   ```shell
-  $ git remote add -f spoon-knife git@github.com:octocat/Spoon-Knife.git
+  $ git remote add -f spoon-knife https://github.com/octocat/Spoon-Knife.git
   > Updating spoon-knife
   > warning: no common commits
   > remote: Counting objects: 1732, done.
@@ -61,10 +66,10 @@ A melhor maneira de explicar merges de subárvore é mostrar com exemplo. O que 
   > remote: Total 1732 (delta 1086), reused 1558 (delta 967)
   > Receiving objects: 100% (1732/1732), 528.19 KiB | 621 KiB/s, done.
   > Resolving deltas: 100% (1086/1086), done.
-  > From git://github.com/octocat/Spoon-Knife
+  > From https://github.com/octocat/Spoon-Knife
   >  * [new branch]      main     -> Spoon-Knife/main
   ```
-2. Faça merge do projeto `Spoon-Knife` no projeto Git local. Isso não muda qualquer um de seus arquivos localmente, mas prepara o Git para a próxima etapa.
+2. Mesclar o projeto `Spoon-Knife` no projeto local do Git. Isso não muda qualquer um de seus arquivos localmente, mas prepara o Git para a próxima etapa.
 
   Se você estiver usando o Git 2.9 ou superior:
   ```shell
@@ -77,7 +82,7 @@ A melhor maneira de explicar merges de subárvore é mostrar com exemplo. O que 
   $ git merge -s ours --no-commit spoon-knife/main
   > Automatic merge went well; stopped before committing as requested
   ```
-3. Crie um diretório chamado **spoon-knife** e copie o histórico do projeto `Spoon-Knife` do Git nele.
+3. Crie um diretório chamado **spoon-knife** e copie o histórico do Git do projeto `Spoon-Knife` para ele.
   ```shell
   $ git read-tree --prefix=spoon-knife/ -u spoon-knife/main
   ```
@@ -91,7 +96,7 @@ Embora tenhamos adicionado apenas um subprojeto, qualquer número de subprojetos
 
 {% tip %}
 
-**Dica**: se, futuramente, você criar um clone do repositório, os remotes adicionados não serão criados para você. Será preciso adicioná-los novamente usando [o comando `git remote add`](/github/getting-started-with-github/managing-remote-repositories).
+**Dica**: se você criar um clone do repositório no futuro, os repositórios remotos adicionados não serão criados para você. Você precisará adicioná-los novamente usando [o comando `git remote add`](/github/getting-started-with-github/managing-remote-repositories).
 
 {% endtip %}
 
@@ -109,7 +114,7 @@ Para o exemplo acima, o comando seria:
 $ git pull -s subtree spoon-knife main
 ```
 
-## Leia mais
+## Leitura adicional
 
 - [O capítulo "Mesclagem avançada" do livro _Pro Git_](https://git-scm.com/book/en/v2/Git-Tools-Advanced-Merging)
-- "[Como usar a estratégia de merge de subárvore](https://www.kernel.org/pub/software/scm/git/docs/howto/using-merge-subtree.html)"
+- "[Como usar a estratégia de mesclagem de subárvores](https://www.kernel.org/pub/software/scm/git/docs/howto/using-merge-subtree.html)"

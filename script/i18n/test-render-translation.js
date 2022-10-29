@@ -28,9 +28,9 @@ async function main() {
   const contextByLanguage = {}
   for (const lang in languages) {
     const langObj = languages[lang]
-    const [crowdinLangCode] = langObj.dir === '' ? 'en' : langObj.dir.split('/').slice(1)
-    if (!crowdinLangCode) continue
-    contextByLanguage[crowdinLangCode] = {
+    const [langCode] = langObj.dir === '' ? 'en' : langObj.dir.split('/').slice(1)
+    if (!langCode) continue
+    contextByLanguage[langCode] = {
       site: siteData[langObj.code].site,
       currentLanguage: langObj.code,
       currentVersion: 'free-pro-team@latest',
@@ -67,7 +67,7 @@ async function main() {
       // test the content
       await renderContent.liquid.parseAndRender(content, context)
       // test each translatable frontmatter property
-      for (const key in translatableFm) {
+      for (const key of translatableFm) {
         await renderContent.liquid.parseAndRender(data[key], context)
       }
     } catch (err) {
@@ -94,7 +94,9 @@ async function loadAndPatchSiteData(filesWithKnownIssues = {}) {
 
         // Reset the file
         console.warn(`resetting file "${relPath}" due to loadSiteData error: ${error.toString()}`)
-        await exec(`script/i18n/reset-translated-file.js --prefer-main ${relPath}`)
+        await exec(
+          `script/i18n/reset-translated-file.js --prefer-main ${relPath} --reason="loadSiteData error"`
+        )
 
         // Try to load the site data again
         return loadAndPatchSiteData(filesWithKnownIssues)

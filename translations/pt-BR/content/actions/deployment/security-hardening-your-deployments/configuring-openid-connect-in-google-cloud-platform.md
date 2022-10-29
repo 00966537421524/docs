@@ -1,25 +1,29 @@
 ---
-title: Configuring OpenID Connect in Google Cloud Platform
+title: Configurando OpenID Connect na Google Cloud Platform
 shortTitle: Configuring OpenID Connect in Google Cloud Platform
-intro: Use OpenID Connect within your workflows to authenticate with Google Cloud Platform.
+intro: Use OpenID Connect nos seus fluxos de trabalho para efetuar a autenticação com a Google Cloud Platform.
 miniTocMaxHeadingLevel: 3
 versions:
   fpt: '*'
-  ghae: issue-4856
   ghec: '*'
+  ghes: '>=3.5'
 type: tutorial
 topics:
   - Security
+ms.openlocfilehash: f8b2c63d442fb5dc5758a6f33bb9db5c2a49c9cc
+ms.sourcegitcommit: fcf3546b7cc208155fb8acdf68b81be28afc3d2d
+ms.translationtype: HT
+ms.contentlocale: pt-BR
+ms.lasthandoff: 09/10/2022
+ms.locfileid: '145085288'
 ---
+{% data reusables.actions.enterprise-beta %} {% data reusables.actions.enterprise-github-hosted-runners %}
 
-{% data reusables.actions.enterprise-beta %}
-{% data reusables.actions.enterprise-github-hosted-runners %}
+## Visão geral
 
-## Visão Geral
+O OpenID Connect (OIDC) permite que seus fluxos de trabalho de {% data variables.product.prodname_actions %} acessem os recursos na Google Cloud Platform (GCP), sem precisar armazenar as credenciais do GCP como segredos de {% data variables.product.prodname_dotcom %} de longa duração. 
 
-OpenID Connect (OIDC) allows your {% data variables.product.prodname_actions %} workflows to access resources in Google Cloud Platform (GCP), without needing to store the GCP credentials as long-lived {% data variables.product.prodname_dotcom %} secrets.
-
-This guide gives an overview of how to configure GCP to trust {% data variables.product.prodname_dotcom %}'s OIDC as a federated identity, and includes a workflow example for the [`google-github-actions/auth`](https://github.com/google-github-actions/auth) action that uses tokens to authenticate to GCP and access resources.
+Este guia fornece uma visão geral de como configurar o GCP para confiar no OIDC do {% data variables.product.prodname_dotcom %} como uma identidade federada e inclui um exemplo de fluxo de trabalho para a ação [`google-github-actions/auth`](https://github.com/google-github-actions/auth) que usa tokens para se autenticar no GCP e acessar recursos.
 
 ## Pré-requisitos
 
@@ -27,49 +31,43 @@ This guide gives an overview of how to configure GCP to trust {% data variables.
 
 {% data reusables.actions.oidc-security-notice %}
 
-## Adding a Google Cloud Workload Identity Provider
+## Adicionando um provedor de identidade de carga do Google Cloud
 
-To configure the OIDC identity provider in GCP, you will need to perform the following configuration. For instructions on making these changes, refer to [the GCP documentation](https://github.com/google-github-actions/auth).
+Para configurar o provedor de identidade OIDC no GCP, você deverá definir a configuração a seguir. Para obter instruções sobre como fazer essas alterações, veja [a documentação do GCP](https://github.com/google-github-actions/auth).
 
-1. Create a new identity pool.
-2. Configure the mapping and add conditions.
-3. Connect the new pool to a service account.
+1. Crie um novo conjunto de identidades.
+2. Configure o mapeamento e adicione condições.
+3. Conecte o novo grupo a uma conta de serviço. 
 
-Additional guidance for configuring the identity provider:
+Orientação adicional para a configuração do provedor de identidade:
 
-- For security hardening, make sure you've reviewed ["Configuring the OIDC trust with the cloud"](/actions/deployment/security-hardening-your-deployments/about-security-hardening-with-openid-connect#configuring-the-oidc-trust-with-the-cloud). For an example, see ["Configuring the subject in your cloud provider"](/actions/deployment/security-hardening-your-deployments/about-security-hardening-with-openid-connect#configuring-the-subject-in-your-cloud-provider).
-- For the service account to be available for configuration, it needs to be assigned to the `roles/iam.workloadIdentityUser` role. For more information, see [the GCP documentation](https://cloud.google.com/iam/docs/workload-identity-federation?_ga=2.114275588.-285296507.1634918453#conditions).
-- The Issuer URL to use: `https://token.actions.githubusercontent.com`
+- Para reforçar a segurança, leia ["Como configurar a relação de confiança do OIDC com a nuvem"](/actions/deployment/security-hardening-your-deployments/about-security-hardening-with-openid-connect#configuring-the-oidc-trust-with-the-cloud). Para ver um exemplo, confira ["Como configurar a entidade no seu provedor de nuvem"](/actions/deployment/security-hardening-your-deployments/about-security-hardening-with-openid-connect#configuring-the-subject-in-your-cloud-provider).
+- Para que a conta de serviço esteja disponível para configuração, ela precisa ser atribuída à função `roles/iam.workloadIdentityUser`. Para obter mais informações, confira [a documentação do GCP](https://cloud.google.com/iam/docs/workload-identity-federation?_ga=2.114275588.-285296507.1634918453#conditions).
+- A URL do Emissor a ser usada: {% ifversion ghes %}`https://HOSTNAME/_services/token`{% else %}`https://token.actions.githubusercontent.com`{% endif %}
 
 ## Atualizar o seu fluxo de trabalho de {% data variables.product.prodname_actions %}
 
-To update your workflows for OIDC, you will need to make two changes to your YAML:
-1. Add permissions settings for the token.
-2. Use the [`google-github-actions/auth`](https://github.com/google-github-actions/auth) action to exchange the OIDC token (JWT) for a cloud access token.
+Para atualizar seus fluxos de trabalho para o OIDC, você deverá fazer duas alterações no seu YAML:
+1. Adicionar configurações de permissões para o token.
+2. Use a ação [`google-github-actions/auth`](https://github.com/google-github-actions/auth) para trocar o token OIDC (JWT) por um token de acesso à nuvem.
 
-### Adding permissions settings
+### Adicionando configurações de permissões
 
-The workflow will require a `permissions` setting with a defined [`id-token`](/actions/security-guides/automatic-token-authentication#permissions-for-the-github_token) value. If you only need to fetch an OIDC token for a single job, then this permission can be set within that job. Por exemplo:
+ {% data reusables.actions.oidc-permissions-token %}
 
-```yaml{:copy}
-permissions:
-  id-token: write
-```
+### Solicitando o token de acesso
 
-You may need to specify additional permissions here, depending on your workflow's requirements.
+A ação `google-github-actions/auth` recebe um JWT do provedor OIDC do {% data variables.product.prodname_dotcom %} e solicita um token de acesso da sua instância do GCP. Para obter mais informações, confira a [documentação](https://github.com/google-github-actions/auth) do GCP.
 
-### Requesting the access token
+Este exemplo contém um trabalho chamado `Get_OIDC_ID_token` que usa ações para solicitar uma lista de serviços do GCP.
 
-The `google-github-actions/auth` action receives a JWT from the {% data variables.product.prodname_dotcom %} OIDC provider, and then requests an access token from GCP. For more information, see the GCP [documentation](https://github.com/google-github-actions/auth).
+- `<example-workload-identity-provider>`: substitua isso pelo caminho para o provedor de identidade no GCP. Por exemplo, `projects/<example-project-id>/locations/global/workloadIdentityPools/<name-of-pool/providers/<name-of-provider>`
+- `<example-service-account>`: substitua isso pelo nome da sua conta de serviço no GCP.
+- `<project-id>`: substitua isso pela ID do projeto do GCP.
 
-This example has a job called `Get_OIDC_ID_token` that uses actions to request a list of services from GCP.
+Essa ação troca um token OIDC do {% data variables.product.prodname_dotcom %} por um token de acesso do Google Cloud usando a [Federação de Identidade de Carga de Trabalho](https://cloud.google.com/iam/docs/workload-identity-federation).
 
-- `<example-workload-identity-provider>`: Replace this with the path to your identity provider in GCP. For example, `projects/<example-project-id>/locations/global/workloadIdentityPools/<name-of-pool/providers/<name-of-provider>`
-- `<example-service-account>`: Replace this with the name of your service account in GCP.
-- `<project-id>`: Replace this with the ID of your GCP project.
-
-This action exchanges a {% data variables.product.prodname_dotcom %} OIDC token for a Google Cloud access token, using [Workload Identity Federation](https://cloud.google.com/iam/docs/workload-identity-federation).
-
+{% raw %}
 ```yaml{:copy}
 name: List services in GCP
 on:
@@ -95,5 +93,6 @@ jobs:
       name: 'gcloud'
       run: |-
         gcloud auth login --brief --cred-file="${{ steps.auth.outputs.credentials_file_path }}"
-        gcloud config list
+        gcloud services list
 ```
+{% endraw %}

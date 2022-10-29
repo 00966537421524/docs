@@ -1,12 +1,12 @@
 ---
 title: Configuring OpenID Connect in cloud providers
-shortTitle: Configuring OpenID Connect in cloud providers
+shortTitle: OpenID Connect in cloud providers
 intro: Use OpenID Connect within your workflows to authenticate with cloud providers.
 miniTocMaxHeadingLevel: 3
 versions:
   fpt: '*'
-  ghae: issue-4856
   ghec: '*'
+  ghes: '>=3.5'
 type: tutorial
 topics:
   - Security
@@ -15,19 +15,19 @@ topics:
 {% data reusables.actions.enterprise-beta %}
 {% data reusables.actions.enterprise-github-hosted-runners %}
 
-## 概览
+## Overview
 
 OpenID Connect (OIDC) allows your {% data variables.product.prodname_actions %} workflows to access resources in your cloud provider, without having to store any credentials as long-lived {% data variables.product.prodname_dotcom %} secrets.
 
 To use OIDC, you will first need to configure your cloud provider to trust {% data variables.product.prodname_dotcom %}'s OIDC as a federated identity, and must then update your workflows to authenticate using tokens.
 
-## 基本要求
+## Prerequisites
 
 {% data reusables.actions.oidc-link-to-intro %}
 
 {% data reusables.actions.oidc-security-notice %}
 
-## 更新 {% data variables.product.prodname_actions %} 工作流程
+## Updating your {% data variables.product.prodname_actions %} workflow
 
 To update your workflows for OIDC, you will need to make two changes to your YAML:
 1. Add permissions settings for the token.
@@ -37,14 +37,7 @@ If your cloud provider doesn't yet offer an official action, you can update your
 
 ### Adding permissions settings
 
-The workflow will require a `permissions` setting with a defined [`id-token`](/actions/security-guides/automatic-token-authentication#permissions-for-the-github_token) value. If you only need to fetch an OIDC token for a single job, then this permission can be set within that job. 例如：
-
-```yaml{:copy}
-permissions:
-  id-token: write
-```
-
-You may need to specify additional permissions here, depending on your workflow's requirements.
+ {% data reusables.actions.oidc-permissions-token %}
 
 ### Using official actions
 
@@ -75,13 +68,13 @@ jobs:
     - name: Install OIDC Client from Core Package
       run: npm install @actions/core@1.6.0 @actions/http-client
     - name: Get Id Token
-      uses: actions/github-script@v4
+      uses: {% data reusables.actions.action-github-script %}
       id: idtoken
       with:
         script: |
           const coredemo = require('@actions/core')
-          let id_token = await coredemo.getIDToken()   
-          coredemo.setOutput('id_token', id_token)  
+          let id_token = await coredemo.getIDToken()
+          coredemo.setOutput('id_token', id_token)
 ```
 
 ### Requesting the JWT using environment variables
@@ -90,14 +83,14 @@ The following example demonstrates how to use enviroment variables to request a 
 
 For your deployment job, you will need to define the token settings, using `actions/github-script` with the `core` toolkit. For more information, see "[Adding actions toolkit packages](/actions/creating-actions/creating-a-javascript-action#adding-actions-toolkit-packages)."
 
-例如：
+For example:
 
 ```yaml
 jobs:
   job:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/github-script@v4
+    - uses: {% data reusables.actions.action-github-script %}
       id: script
       timeout-minutes: 10
       with:
@@ -109,7 +102,7 @@ jobs:
           core.setOutput('IDTOKENURL', runtimeUrl.trim())
 ```
 
-You can then use `curl` to retrieve a JWT from the {% data variables.product.prodname_dotcom %} OIDC provider. 例如：
+You can then use `curl` to retrieve a JWT from the {% data variables.product.prodname_dotcom %} OIDC provider. For example:
 
 ```yaml
     - run: |
@@ -122,7 +115,11 @@ You can then use `curl` to retrieve a JWT from the {% data variables.product.pro
             fi
         }
         jwtd $IDTOKEN
+{%- ifversion actions-save-state-set-output-envs %}
+        echo "idToken=${IDTOKEN}" >> $GITHUB_OUTPUT
+{%- else %}
         echo "::set-output name=idToken::${IDTOKEN}"
+{%- endif %}
       id: tokenid
 ```
 
@@ -136,4 +133,5 @@ The steps for exchanging the OIDC token for an access token will vary for each c
 
 ### Accessing resources in your cloud provider
 
-Once you've obtained the access token, you can use specific cloud actions or scripts to authenticate to the cloud provider and deploy to its resources. These steps could differ for each cloud provider. In addition, the default expiration time of this access token could vary between each cloud and can be configurable at the cloud provider's side.
+Once you've obtained the access token, you can use specific cloud actions or scripts to authenticate to the cloud provider and deploy to its resources. These steps could differ for each cloud provider.
+In addition, the default expiration time of this access token could vary between each cloud and can be configurable at the cloud provider's side.

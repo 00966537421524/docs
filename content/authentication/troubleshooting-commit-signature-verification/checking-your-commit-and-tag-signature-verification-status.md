@@ -2,7 +2,7 @@
 title: Checking your commit and tag signature verification status
 intro: 'You can check the verification status of your commit and tag signatures on {% data variables.product.product_name %}.'
 redirect_from:
-  - /articles/checking-your-gpg-commit-and-tag-signature-verification-status/
+  - /articles/checking-your-gpg-commit-and-tag-signature-verification-status
   - /articles/checking-your-commit-and-tag-signature-verification-status
   - /github/authenticating-to-github/checking-your-commit-and-tag-signature-verification-status
   - /github/authenticating-to-github/troubleshooting-commit-signature-verification/checking-your-commit-and-tag-signature-verification-status
@@ -23,7 +23,12 @@ shortTitle: Check verification status
 3. Next to your commit's abbreviated commit hash, there is a box that shows whether your commit signature is verified{% ifversion fpt or ghec %}, partially verified,{% endif %} or unverified.
 ![Signed commit](/assets/images/help/commits/gpg-signed-commit-verified-without-details.png)
 4. To view more detailed information about the commit signature, click **Verified**{% ifversion fpt or ghec %}, **Partially verified**,{% endif %} or **Unverified**.
-![Verified signed commit](/assets/images/help/commits/gpg-signed-commit_verified_details.png)
+  GPG signed commits will show the ID of the key that was used.
+  ![Verified GPG signed commit](/assets/images/help/commits/gpg-signed-commit_verified_details.png)
+{% ifversion ssh-commit-verification %}
+  SSH signed commits will show the signature of the public key that was used.
+  ![Verified SSH signed commit](/assets/images/help/commits/ssh-signed-commit-verified-details.png)
+{% endif %}
 
 ## Checking your tag signature verification status
 

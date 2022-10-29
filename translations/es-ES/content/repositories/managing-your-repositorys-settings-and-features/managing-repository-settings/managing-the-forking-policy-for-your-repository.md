@@ -1,6 +1,6 @@
 ---
 title: Administrar la política de ramificación para tu repositorio
-intro: 'Puedes permitir o prevenir la ramificación de un repositorio privado {% ifversion fpt or ghae or ghes or ghec %} o interno {% endif %} en específico que sea propiedad de una organización.'
+intro: 'Puedes permitir o evitar la bifurcación de un repositorio privado específico{% ifversion ghae or ghes or ghec %} o interno{% endif %} propiedad de una organización.'
 redirect_from:
   - /articles/allowing-people-to-fork-a-private-repository-owned-by-your-organization
   - /github/administering-a-repository/allowing-people-to-fork-a-private-repository-owned-by-your-organization
@@ -14,18 +14,21 @@ versions:
   ghec: '*'
 topics:
   - Repositories
-shortTitle: Administrar la política de bifurcación
+shortTitle: Manage the forking policy
+ms.openlocfilehash: 18355227ad40567de3824f3cc286763cd081e153
+ms.sourcegitcommit: fcf3546b7cc208155fb8acdf68b81be28afc3d2d
+ms.translationtype: HT
+ms.contentlocale: es-ES
+ms.lasthandoff: 09/10/2022
+ms.locfileid: '145136698'
 ---
+Un propietario de la organización debe permitir bifurcaciones de repositorios privados{% ifversion ghae or ghes or ghec %} e internos{% endif %} en el nivel de organización para poder permitir o denegar bifurcaciones para un repositorio específico. Para más información, vea "[Administración de la directiva de bifurcación para la organización](/organizations/managing-organization-settings/managing-the-forking-policy-for-your-organization)".
 
-El propietario de la organización debe permitir que las ramificaciones de repositorios privados {% ifversion fpt or ghae or ghes or ghec %} e internos {% endif %} a nivel organizacional antes de que puedas permitir o impedir las ramificaciones de un repositorio específico. Para obtener más información, consulta "[Administrar la política de ramificación para tu organización](/organizations/managing-organization-settings/managing-the-forking-policy-for-your-organization)."
+{% data reusables.repositories.navigate-to-repo %} {% data reusables.repositories.sidebar-settings %}
+3. En "Características", seleccione **Permitir bifurcación**.
+  ![Casilla para permitir o impedir la bifurcación de un repositorio privado](/assets/images/help/repository/allow-forking-specific-org-repo.png)
 
-{% data reusables.organizations.internal-repos-enterprise %}
+## Información adicional
 
-{% data reusables.repositories.navigate-to-repo %}
-{% data reusables.repositories.sidebar-settings %}
-3. En "Features" (Características), selecciona **Allow forking** (Permitir bifurcación). ![Casilla de verificación para permitir o prohibir la bifurcación de un repositorio privado](/assets/images/help/repository/allow-forking-specific-org-repo.png)
-
-## Leer más
-
-- "[Acerca de las bifurcaciones](/articles/about-forks)"
-- "[Repository roles for an organization](/organizations/managing-access-to-your-organizations-repositories/repository-roles-for-an-organization)"
+- "[Acerca de las bifurcaciones](/pull-requests/collaborating-with-pull-requests/working-with-forks/about-forks)"
+- "[Roles de repositorio para una organización](/organizations/managing-access-to-your-organizations-repositories/repository-roles-for-an-organization)"

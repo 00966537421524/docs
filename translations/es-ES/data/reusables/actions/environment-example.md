@@ -1,6 +1,14 @@
-You can specify an environment for each job in your workflow. To do so, add a `jobs.<job_id>.environment` key followed by the name of the environment.
+---
+ms.openlocfilehash: 4795fdc557dbb103d64f7b97d0fa58f445434bca
+ms.sourcegitcommit: fb047f9450b41b24afc43d9512a5db2a2b750a2a
+ms.translationtype: HT
+ms.contentlocale: es-ES
+ms.lasthandoff: 09/11/2022
+ms.locfileid: "145114417"
+---
+Puedes especificar un ambiente para cada job de tu flujo de trabajo. Para ello, agregue una clave `jobs.<job_id>.environment` seguida del nombre del entorno.
 
-For example, this workflow will use an environment called `production`.
+Por ejemplo, en este flujo de trabajo se utilizará un entorno llamado `production`.
 
 ```yaml
 name: Deployment
@@ -19,9 +27,9 @@ jobs:
         # ...deployment-specific steps
 ```
 
-When the above workflow runs, the `deployment` job will be subject to any rules configured for the `production` environment. For example, if the environment requires reviewers, the job will pause until one of the reviewers approves the job.
+Cuando se ejecute el flujo de trabajo anterior, el trabajo `deployment` estará sujeto a las reglas configuradas para el entorno `production`. Por ejemplo, si el ambiente requiere revisores, el job se pausará hasta que uno de ellos lo apruebe.
 
-You can also specify a URL for the environment. La URL especificada aparecerá en la página de despliegues del repositorio (a la cual se puede acceder haciendo clic en **Ambientes** en la página principal de tu repositorio) y en la gráfica de visualización de la ejecución del flujo de trabajo. Si una solicitud de cambios activó el flujo de trabajo, la URL también se muestra como un botón de **Ver despliegue** en la línea de tiempo de esta.
+También puedes especificar una URL para el ambiente. La URL especificada aparecerá en la página de implementaciones del repositorio (a la que se accede al hacer clic en **Environments** (Entornos) en la página principal del repositorio) y en el gráfico de visualización de la ejecución del flujo de trabajo. Si una solicitud de incorporación de cambios ha desencadenado el flujo de trabajo, la URL también se muestra como un botón **View deployment** (Ver implementación) en la escala de tiempo de la solicitud de incorporación de cambios.
 
 ```yaml
 name: Deployment

@@ -17,12 +17,17 @@ topics:
   - API
   - Enterprise
   - Migration
-shortTitle: Exportar datos desde GitHub.com
+shortTitle: Export data from GitHub.com
+ms.openlocfilehash: 07c74c41312fe5818390bba206072bf95e5bc00c
+ms.sourcegitcommit: 478f2931167988096ae6478a257f492ecaa11794
+ms.translationtype: HT
+ms.contentlocale: es-ES
+ms.lasthandoff: 09/09/2022
+ms.locfileid: '147717873'
 ---
-
 ## Preparar la orgnanización origen en {% data variables.product.prodname_dotcom %}
 
-1. Asegúrate de tener [permisos de propietario](/articles/permission-levels-for-an-organization/) en los repositorios de la organización de origen.
+1. Asegúrese de que tiene [permisos de propietario](/articles/permission-levels-for-an-organization/) en los repositorios de la organización de origen.
 
 2. {% data reusables.enterprise_migrations.token-generation %} en {% data variables.product.prodname_dotcom_the_website %}.
 
@@ -32,61 +37,62 @@ shortTitle: Exportar datos desde GitHub.com
 
 {% data reusables.enterprise_migrations.fork-persistence %}
 
-Para exportar datos del repositorio desde {% data variables.product.prodname_dotcom_the_website %}, usa la <a href="/rest/reference/migrations" class="dotcom-only">API de Migraciones</a>.
+Para exportar datos de repositorio desde {% data variables.product.prodname_dotcom_the_website %}, use [Migrations API](/free-pro-team@latest/rest/migrations).
 
-La API de Migraciones se encuentra actualmente en un período de previsualización, lo que significa que los puntos finales y los parámetros pueden cambiar en el futuro. Para acceder a la API de Migraciones, debes proporcionar un [tipo de medio](/rest/overview/media-types) personalizado en el encabezado `Accept` (Aceptar): `application/vnd.github.wyandotte-preview+json`. Los ejemplos a continuación incluyen el tipo de medio personalizado.
-
+La API de Migraciones se encuentra actualmente en un período de previsualización, lo que significa que los puntos finales y los parámetros pueden cambiar en el futuro.
 ## Generar un archivo de migración
 
 {% data reusables.enterprise_migrations.locking-repositories %}
 
-1. Notifica a los miembros de tu organización que harás una migración. La exportación puede durar varios minutos, en función de la cantidad de repositorios que se exporten. La migración completa, incluida la importación, puede durar varias horas. Por lo tanto, te recomendamos que hagas una prueba para determinar cuánto tiempo tomará el proceso completo. Para obtener más información, consulta "[Acerca de las migraciones](/enterprise/admin/migrations/about-migrations#types-of-migrations)".
+1. Notifica a los miembros de tu organización que harás una migración. La exportación puede durar varios minutos, en función de la cantidad de repositorios que se exporten. La migración completa, incluida la importación, puede durar varias horas. Por lo tanto, te recomendamos que hagas una prueba para determinar cuánto tiempo tomará el proceso completo. Para más información, vea "[Acerca de las migraciones](/enterprise/admin/migrations/about-migrations#types-of-migrations)".
 
-2. Inicia una migración enviando una solicitud de `POST` a <a href="/rest/reference/migrations#start-an-organization-migration" class="dotcom-only">la terminal de migración</a>. Necesitarás:
+2. Para iniciar una migración, envíe una solicitud `POST` al [punto de conexión de migración](/free-pro-team@latest/rest/migrations#start-an-organization-migration). Necesitará:
     * Tu token de acceso para autenticación.
-    * Una [lista de los repositorios](/rest/reference/repos#list-organization-repositories) que deseas migrar:
+    * Una [lista de los repositorios](/free-pro-team@latest/rest/repos#list-organization-repositories) que quiere migrar:
       ```shell
-      curl -H "Autorización: token <em>GITHUB_ACCESS_TOKEN</em>" -X POST \
-      -H "Aceptar: application/vnd.github.wyandotte-preview+json" \
+      curl -H "Authorization: Bearer <em>GITHUB_ACCESS_TOKEN</em>" \
+      -X POST \
+      -H "Accept: application/vnd.github+json" \
       -d'{"lock_repositories":true,"repositories":["<em>orgname</em>/<em>reponame</em>", "<em>orgname</em>/<em>reponame</em>"]}' \
       https://api.github.com/orgs/<em>orgname</em>/migrations
       ```
-    *  Si deseas bloquear los repositorios antes de migrarlos, asegúrate de que `lock_repositories`esté establecido en `true` (true). Esto es altamente recomendable.
-    * Puedes excluir archivos adjuntos pasando `exclude_attachments: true` al punto final. {% data reusables.enterprise_migrations.exclude-file-attachments %} El tamaño final del archivo debe ser inferior a 20 GB.
+    *  Si quiere bloquear los repositorios antes de migrarlos, asegúrese de que `lock_repositories` está establecido en `true`. Esto es altamente recomendable.
+    * Puede excluir los datos adjuntos de archivo si pasa `exclude_attachments: true` al punto de conexión. {% data reusables.enterprise_migrations.exclude-file-attachments %} El tamaño final del archivo debe ser inferior a 20 GB.
 
-  Esta solicitud devuelve un `id` único que representa tu migración. Lo necesitarás para solicitudes posteriores a la API de Migraciones.
+  Esta solicitud devuelve un valor `id` único que representa la migración. Lo necesitarás para solicitudes posteriores a la API de Migraciones.
 
-3. Envía una solicitud de `GET` al <a href="/rest/reference/migrations#get-an-organization-migration-status" class="dotcom-only"> punto final del estado de la migración</a> para extraer el estado de una migración. Necesitarás:
+3. Envíe una solicitud `GET` al [punto de conexión de estado de migración](/free-pro-team@latest/rest/migrations#get-an-organization-migration-status) para capturar el estado de una migración. Necesitará:
     * Tu token de acceso para autenticación.
-    * El `id` único de la migración:
+    * Valor `id` único de la migración:
       ```shell
-      curl -H "Autorización: token <em>GITHUB_ACCESS_TOKEN</em>" \
-      -H "Aceptar: application/vnd.github.wyandotte-preview+json" \
+      curl -H "Authorization: Bearer <em>GITHUB_ACCESS_TOKEN</em>" \
+      -H "Accept: application/vnd.github+json" \
       https://api.github.com/orgs/<em>orgname</em>/migrations/<em>id</em>
       ```
 
   Una migración puede estar en uno de los siguientes estados:
-    * `pending` (pendiente), lo que significa que la migración aún no se ha iniciado.
-    * `exporting` (exportando), lo que significa que la migración está en curso.
-    * `exported` (exportada), lo que significa que la migración finalizó correctamente.
-    * `failed` (fallida), lo que significa que la migración falló.
+    * `pending`, que significa que la migración todavía no se ha iniciado.
+    * `exporting`, que significa que la migración está en curso.
+    * `exported`, que significa que la migración ha finalizado correctamente.
+    * `failed`, que significa que se ha producido un error en la migración.
 
-4. Una vez que se haya exportado tu migración, descarga el archivo de migración enviando una solicitud de `GET` al <a href="/rest/reference/migrations#download-an-organization-migration-archive" class="dotcom-only">punto final de descarga de migración</a>. Necesitarás:
+4. Una vez que se exporte la migración, descargue el archivo de migración mediante el envío de una solicitud `GET` al [punto de conexión de descarga de migración](/free-pro-team@latest/rest/migrations#download-an-organization-migration-archive). Necesitará:
     * Tu token de acceso para autenticación.
-    * El `id` único de la migración:
+    * Valor `id` único de la migración:
       ```shell
-      curl -H "Aceptar: application/vnd.github.wyandotte-preview+json" \
-      -u <em>GITHUB_USERNAME</em>:<em>GITHUB_ACCESS_TOKEN</em> \
+      curl -H "Authorization: Bearer <em>GITHUB_ACCESS_TOKEN</em>" \
+      -H "Accept: application/vnd.github+json" \
       -L -o migration_archive.tar.gz \
       https://api.github.com/orgs/<em>orgname</em>/migrations/<em>id</em>/archive
       ```
 
-5. El archivo de migración se elimina automáticamente después de siete días. Si prefieres eliminarlo antes, puedes enviar una solicitud `DELETE` al <a href="/rest/reference/migrations#delete-an-organization-migration-archive" class="dotcom-only">punto final de eliminación del archivo de migración</a>. Necesitarás:
+5. El archivo de migración se elimina automáticamente después de siete días. Si prefiere eliminarla antes, puede enviar una solicitud `DELETE` al [punto de conexión de eliminación del archivo de migración](/free-pro-team@latest/rest/migrations#delete-an-organization-migration-archive). Necesitará:
     * Tu token de acceso para autenticación.
-    * El `id` único de la migración:
+    * Valor `id` único de la migración:
       ```shell
-      curl -H "Autorización: token <em>GITHUB_ACCESS_TOKEN</em>" -X DELETE \
-      -H "Aceptar: application/vnd.github.wyandotte-preview+json" \
+      curl -H "Authorization: Bearer <em>GITHUB_ACCESS_TOKEN</em>" \
+      -X DELETE \
+      -H "Accept: application/vnd.github+json" \
       https://api.github.com/orgs/<em>orgname</em>/migrations/<em>id</em>/archive
       ```
 {% data reusables.enterprise_migrations.ready-to-import-migrations %}

@@ -1,29 +1,33 @@
 ---
-title: SAMLシングルサインオンで利用するために個人アクセストークンを認可する
-intro: SAMLシングルサインオン (SSO) を使う Organization で個人アクセストークンを使うためには、まずそのキーを認可しなければなりません。
+title: Authorizing a personal access token for use with SAML single sign-on
+intro: 'To use a {% data variables.product.pat_v1 %} with an organization that uses SAML single sign-on (SSO), you must first authorize the token.'
 redirect_from:
-  - /articles/authorizing-a-personal-access-token-for-use-with-a-saml-single-sign-on-organization/
+  - /articles/authorizing-a-personal-access-token-for-use-with-a-saml-single-sign-on-organization
   - /articles/authorizing-a-personal-access-token-for-use-with-saml-single-sign-on
   - /github/authenticating-to-github/authorizing-a-personal-access-token-for-use-with-saml-single-sign-on
   - /github/authenticating-to-github/authenticating-with-saml-single-sign-on/authorizing-a-personal-access-token-for-use-with-saml-single-sign-on
 versions:
-  fpt: '*'
   ghec: '*'
 topics:
   - SSO
-shortTitle: PAT with SAML
+shortTitle: '{% data variables.product.pat_generic_caps %} with SAML'
 ---
+You must authorize your {% data variables.product.pat_v1 %} after creation before the token can access an organization that uses SAML single sign-on (SSO). For more information about creating a new {% data variables.product.pat_v1 %}, see "[Creating a {% data variables.product.pat_generic %}](/github/authenticating-to-github/creating-a-personal-access-token)."{% ifversion pat-v2 %} {% data variables.product.pat_v2_caps %}s are authorized during token creation, before access to the organization is granted.{% endif %}
 
-既存の個人アクセストークンを認可することも、[新しい個人アクセストークンを作成](/github/authenticating-to-github/creating-a-personal-access-token)して認可することもできます。
+{% data reusables.saml.must-authorize-linked-identity %}
 
-{% data reusables.user_settings.access_settings %}
-{% data reusables.user_settings.developer_settings %}
-{% data reusables.user_settings.personal_access_tokens %}
-3. 認可したいトークンの隣の [**Enable SSO**] (SSO を有効化) または [**Disable SSO**] (SSOを無効化) をクリックします。 ![SSO トークン認可ボタン](/assets/images/help/settings/sso-allowlist-button.png)
-4. アクセストークンを認可する Organization を見つけます。
-4. [**Authorize**] をクリックします。 ![トークン認可ボタン](/assets/images/help/settings/token-authorize-button.png)
+{% data reusables.saml.authorized-creds-info %}
 
-## 参考リンク
+{% data reusables.user-settings.access_settings %}
+{% data reusables.user-settings.developer_settings %}
+{% data reusables.user-settings.personal_access_tokens %}
+3. Next to the token you'd like to authorize, click **Configure SSO**. {% data reusables.saml.authenticate-with-saml-at-least-once %}
 
-- [個人アクセストークンを作成する](/github/authenticating-to-github/creating-a-personal-access-token)
-- [SAML シングルサインオンでの認証について](/articles/about-authentication-with-saml-single-sign-on)
+   ![Screenshot of the dropdown menu to configure SSO for a {% data variables.product.pat_v1 %}](/assets/images/help/settings/sso-allowlist-button.png)
+4. To the right of the organization you'd like to authorize the token for, click **Authorize**.
+   ![Token authorize button](/assets/images/help/settings/token-authorize-button.png)
+
+## Further reading
+
+- "[Creating a {% data variables.product.pat_generic %}](/github/authenticating-to-github/creating-a-personal-access-token)"
+- "[About authentication with SAML single sign-on](/articles/about-authentication-with-saml-single-sign-on)"

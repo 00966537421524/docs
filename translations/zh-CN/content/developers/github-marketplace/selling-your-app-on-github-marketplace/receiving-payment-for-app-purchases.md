@@ -2,10 +2,10 @@
 title: 接收应用程序购买的付款
 intro: '在每个月末，您将收到您的 {% data variables.product.prodname_marketplace %} 上架产品的付款。'
 redirect_from:
-  - /apps/adding-integrations/managing-pricing-and-payments-for-a-github-marketplace-listing/receiving-payment-for-a-github-marketplace-listing/
-  - /apps/marketplace/managing-pricing-and-payments-for-a-github-marketplace-listing/receiving-payment-for-a-github-marketplace-listing/
-  - /apps/marketplace/pricing-payments-and-free-trials/receiving-payment-for-a-github-marketplace-listing/
-  - /apps/marketplace/selling-your-app/receiving-payment-for-github-marketplace-listings/
+  - /apps/adding-integrations/managing-pricing-and-payments-for-a-github-marketplace-listing/receiving-payment-for-a-github-marketplace-listing
+  - /apps/marketplace/managing-pricing-and-payments-for-a-github-marketplace-listing/receiving-payment-for-a-github-marketplace-listing
+  - /apps/marketplace/pricing-payments-and-free-trials/receiving-payment-for-a-github-marketplace-listing
+  - /apps/marketplace/selling-your-app/receiving-payment-for-github-marketplace-listings
   - /marketplace/selling-your-app/receiving-payment-for-github-marketplace-listings
   - /developers/github-marketplace/receiving-payment-for-app-purchases
 versions:
@@ -13,9 +13,14 @@ versions:
   ghec: '*'
 topics:
   - Marketplace
-shortTitle: 接收付款
+shortTitle: Receive payment
+ms.openlocfilehash: 324ef8bceaa92c55f102603885799dde7e892795
+ms.sourcegitcommit: 1309b46201604c190c63bfee47dce559003899bf
+ms.translationtype: HT
+ms.contentlocale: zh-CN
+ms.lasthandoff: 09/10/2022
+ms.locfileid: '145084953'
 ---
-
 为含有付费计划的应用程序创建 {% data variables.product.prodname_marketplace %} 上架信息并得到批准后，您需要向 {% data variables.product.product_name %} 提供付款详细信息以完成财务手续。
 
 一旦您当月的收入达到最低 500 美元，您将收到 {% data variables.product.company_short %} 的电子付款。 此金额为 Marketplace 交易的收入减去 {% data variables.product.company_short %} 为顾及运营成本而收取的金额。
@@ -24,6 +29,6 @@ shortTitle: 接收付款
 
 {% note %}
 
-**注：**有关当前定价和付款条款的详细信息，请参阅“[{% data variables.product.prodname_marketplace %} 开发者协议](/free-pro-team@latest/github/site-policy/github-marketplace-developer-agreement)”。
+注意：有关当前定价和付款条款的详细信息，请参阅“[{% data variables.product.prodname_marketplace %} 开发人员协议](/free-pro-team@latest/github/site-policy/github-marketplace-developer-agreement)”。
 
 {% endnote %}

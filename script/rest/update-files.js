@@ -8,18 +8,18 @@
 
 import { stat, readFile, writeFile, readdir } from 'fs/promises'
 import path from 'path'
-import program from 'commander'
+import { program } from 'commander'
 import { execSync } from 'child_process'
 import mkdirp from 'mkdirp'
 import rimraf from 'rimraf'
-import getOperations from './utils/get-operations.js'
 import yaml from 'js-yaml'
 
-const tempDocsDir = path.join(process.cwd(), 'openapiTmp')
-const githubRepoDir = path.join(process.cwd(), '../github')
-const dereferencedPath = path.join(process.cwd(), 'lib/rest/static/dereferenced')
-const decoratedPath = path.join(process.cwd(), 'lib/rest/static/decorated')
-const openApiReleasesDir = `${githubRepoDir}/app/api/description/config/releases`
+import { decorate } from './utils/decorator.js'
+
+const TEMP_DOCS_DIR = path.join(process.cwd(), 'openapiTmp')
+const DEREFERENCED_DIR = path.join(process.cwd(), 'lib/rest/static/dereferenced')
+const GITHUB_REP_DIR = path.join(process.cwd(), '../github')
+const OPEN_API_RELEASES_DIR = path.join(GITHUB_REP_DIR, '/app/api/description/config/releases')
 
 program
   .description('Generate dereferenced OpenAPI and decorated schema files.')
@@ -37,169 +37,94 @@ program
 
 const { decorateOnly, versions, includeUnpublished, includeDeprecated } = program.opts()
 
-// Check that the github/github repo exists. If the files are only being
-// decorated, the github/github repo isn't needed.
-if (!decorateOnly) {
-  try {
-    await stat(githubRepoDir)
-  } catch (error) {
-    console.log(
-      `🛑 The ${githubRepoDir} does not exist. Make sure you have a local, bootstrapped checkout of github/github at the same level as your github/docs-internal repo before running this script.`
-    )
-    process.exit(1)
-  }
-}
-
-// When the input parameter type is decorate-only, use the local
-// `github/docs-internal` repo to generate a list of schema files.
-// Otherwise, use the `github/github` list of config files
-const referenceSchemaDirectory = decorateOnly ? dereferencedPath : openApiReleasesDir
-// A full list of unpublished, deprecated, and active schemas
-const allSchemas = await getOpenApiSchemas(referenceSchemaDirectory)
-
-await validateInputParameters(allSchemas)
-
-// Format the command supplied to the bundle script in `github/github`
-const commandParameters = await getCommandParameters()
-// Get the list of schemas for this bundle, depending on options
-const schemas = await getSchemas(allSchemas)
+await validateInputParameters()
 
 main()
 
 async function main() {
+  // When the input parameter type is decorate-only, use the
+  // `github/docs-internal` repo to generate a list of schema files.
+  // Otherwise, use the `github/github` list of config files
+  const schemas = decorateOnly ? await readdir(DEREFERENCED_DIR) : await getSchemas()
+
   // Generate the dereferenced OpenAPI schema files
   if (!decorateOnly) {
-    await getDereferencedFiles()
+    await getBundledFiles(schemas)
   }
   // Decorate the dereferenced files in a format ingestible by docs.github.com
-  await decorate()
+  await decorate(schemas)
 
   console.log(
-    '\n🏁 The static REST API files are now up-to-date with your local `github/github` checkout. To revert uncommitted changes, run `git checkout lib/rest/static/*.\n\n'
+    '\n🏁 The static REST API files are now up-to-date with your local `github/github` checkout. To revert uncommitted changes, run `git checkout lib/rest/static/*`.\n\n'
   )
 }
 
-async function getDereferencedFiles() {
+async function getBundledFiles(schemas) {
   // Get the github/github repo branch name and pull latest
-  const githubBranch = execSync('git rev-parse --abbrev-ref HEAD', { cwd: githubRepoDir })
+  const githubBranch = execSync('git rev-parse --abbrev-ref HEAD', { cwd: GITHUB_REP_DIR })
     .toString()
     .trim()
 
   // Only pull master branch because development mode branches are assumed
   // to be up-to-date during active work.
   if (githubBranch === 'master') {
-    execSync('git pull', { cwd: githubRepoDir })
+    execSync('git pull', { cwd: GITHUB_REP_DIR })
   }
 
   // Create a tmp directory to store schema files generated from github/github
-  rimraf.sync(tempDocsDir)
-  await mkdirp(tempDocsDir)
+  rimraf.sync(TEMP_DOCS_DIR)
+  await mkdirp(TEMP_DOCS_DIR)
 
   console.log(
     `\n🏃‍♀️🏃🏃‍♀️Running \`bin/openapi bundle\` in branch '${githubBranch}' of your github/github checkout to generate the dereferenced OpenAPI schema files.\n`
   )
+  // Format the command supplied to the bundle script in `github/github`
+  const bundlerOptions = await getBundlerOptions()
+
   try {
-    console.log(`bundle -o ${tempDocsDir} ${commandParameters}`)
+    console.log(`bundle -o ${TEMP_DOCS_DIR} ${bundlerOptions}`)
     execSync(
-      `${path.join(githubRepoDir, 'bin/openapi')} bundle -o ${tempDocsDir} ${commandParameters}`,
+      `${path.join(GITHUB_REP_DIR, 'bin/openapi')} bundle -o ${TEMP_DOCS_DIR} ${bundlerOptions}`,
       { stdio: 'inherit' }
     )
   } catch (error) {
     console.error(error)
-    console.log(
-      '🛑 Whoops! It looks like the `bin/openapi bundle` command failed to run in your `github/github` repository checkout. To troubleshoot, ensure that your OpenAPI schema YAML is formatted correctly. A CI test runs on your `github/github` PR that flags malformed YAML. You can check the PR diff view for comments left by the openapi CI test to find and fix any formatting errors.'
-    )
-    process.exit(1)
+    const errorMsg =
+      '🛑 Whoops! It looks like the `bin/openapi bundle` command failed to run in your `github/github` repository checkout.\n\n✅ Troubleshooting:\n - Make sure you have a codespace with a checkout of `github/github` at the same level as your `github/docs-internal` repo before running this script. See this documentation for details: https://thehub.github.com/epd/engineering/products-and-services/public-apis/rest/openapi/openapi-in-the-docs/#previewing-changes-in-the-docs.\n - Ensure that your OpenAPI schema YAML is formatted correctly. A CI test runs on your `github/github` PR that flags malformed YAML. You can check the PR diff view for comments left by the OpenAPI CI test to find and fix any formatting errors.\n\n'
+    throw new Error(errorMsg)
   }
 
-  execSync(`find ${tempDocsDir} -type f -name "*deref.json" -exec mv '{}' ${dereferencedPath} ';'`)
+  execSync(
+    `find ${TEMP_DOCS_DIR} -type f -name "*deref.json" -exec mv '{}' ${DEREFERENCED_DIR} ';'`
+  )
 
-  rimraf.sync(tempDocsDir)
+  rimraf.sync(TEMP_DOCS_DIR)
 
-  // When running in development mode (locally), the the info.version
+  // When running in development mode, the the info.version
   // property in the dereferenced schema is replaced with the branch
   // name of the `github/github` checkout. A CI test
   // checks the version and fails if it's not a semantic version.
   for (const filename of schemas) {
-    const schema = JSON.parse(await readFile(path.join(dereferencedPath, filename)))
+    const schema = JSON.parse(await readFile(path.join(DEREFERENCED_DIR, filename)))
 
     schema.info.version = `${githubBranch} !!DEVELOPMENT MODE - DO NOT MERGE!!`
-    await writeFile(path.join(dereferencedPath, filename), JSON.stringify(schema, null, 2))
+    await writeFile(path.join(DEREFERENCED_DIR, filename), JSON.stringify(schema, null, 2))
   }
 }
 
-async function decorate() {
-  console.log('\n🎄 Decorating the OpenAPI schema files in lib/rest/static/dereferenced.\n')
-  const dereferencedSchemas = {}
-  for (const filename of schemas) {
-    const schema = JSON.parse(await readFile(path.join(dereferencedPath, filename)))
-    const key = filename.replace('.deref.json', '')
-    dereferencedSchemas[key] = schema
-  }
-
-  for (const [schemaName, schema] of Object.entries(dereferencedSchemas)) {
-    try {
-      // munge OpenAPI definitions object in an array of operations objects
-      const operations = await getOperations(schema)
-
-      // process each operation, asynchronously rendering markdown and stuff
-      await Promise.all(operations.map((operation) => operation.process()))
-
-      const filename = path.join(decoratedPath, `${schemaName}.json`).replace('.deref', '')
-      // write processed operations to disk
-      await writeFile(filename, JSON.stringify(operations, null, 2))
-
-      console.log('Wrote', path.relative(process.cwd(), filename))
-    } catch (error) {
-      console.error(error)
-      console.log(
-        "🐛 Whoops! It looks like the decorator script wasn't able to parse the dereferenced schema. A recent change may not yet be supported by the decorator. Please reach out in the #docs-engineering slack channel for help."
-      )
-      process.exit(1)
-    }
-  }
-}
-
-async function validateInputParameters(schemas) {
-  // The `--versions` and `--decorate-only` options cannot be used
-  // with the `--include-deprecated` or `--include-unpublished` options
-  const numberOfOptions = Object.keys(program.opts()).length
-
-  if (numberOfOptions > 1 && (decorateOnly || versions)) {
-    console.log(
-      `🛑 You cannot use the versions and decorate-only options with any other options.\nThe decorate-only switch will decorate all dereferenced schemas files in the docs-internal repo.\nThis script doesn't support generating individual deprecated or unpublished schemas.\nPlease reach out to #docs-engineering if this is a use case that you need.`
-    )
-    process.exit(1)
-  }
-
-  // Validate individual versions provided
-  if (versions) {
-    versions.forEach((version) => {
-      if (
-        schemas.deprecated.includes(`${version}.deref.json`) ||
-        schemas.unpublished.includes(`${version}.deref.json`)
-      ) {
-        console.log(
-          `🛑 This script doesn't support generating individual deprecated or unpublished schemas. Please reach out to #docs-engineering if this is a use case that you need.`
-        )
-        process.exit(1)
-      } else if (!schemas.currentReleases.includes(`${version}.deref.json`)) {
-        console.log(`🛑 The version (${version}) you specified is not valid.`)
-        process.exit(1)
-      }
-    })
-  }
-}
-
-async function getOpenApiSchemas(directory) {
-  const openAPIConfigs = await readdir(directory)
+// Gets the full list of unpublished, deprecated, and active schemas
+// from the github/github repo
+async function getSchemas() {
+  const openAPIConfigs = await readdir(OPEN_API_RELEASES_DIR)
   const unpublished = []
   const deprecated = []
   const currentReleases = []
 
+  // The file content in the `github/github` repo is YAML before it is
+  // bundled into JSON.
   for (const file of openAPIConfigs) {
     const newFileName = `${path.basename(file, 'yaml')}deref.json`
-    const content = await readFile(path.join(directory, file), 'utf8')
+    const content = await readFile(path.join(OPEN_API_RELEASES_DIR, file), 'utf8')
     const yamlContent = yaml.load(content)
     if (!yamlContent.published) {
       unpublished.push(newFileName)
@@ -212,10 +137,22 @@ async function getOpenApiSchemas(directory) {
     }
   }
 
-  return { currentReleases, unpublished, deprecated }
+  const allSchemas = { currentReleases, unpublished, deprecated }
+  if (versions) {
+    await validateVersionsOptions(allSchemas)
+    return versions.map((elem) => `${elem}.deref.json`)
+  }
+  const schemas = allSchemas.currentReleases
+  if (includeUnpublished) {
+    schemas.push(...allSchemas.unpublished)
+  }
+  if (includeDeprecated) {
+    schemas.push(...allSchemas.deprecated)
+  }
+  return schemas
 }
 
-async function getCommandParameters() {
+async function getBundlerOptions() {
   let includeParams = []
 
   if (versions) {
@@ -231,20 +168,38 @@ async function getCommandParameters() {
   return includeParams.join(' ')
 }
 
-async function getSchemas(allSchemas) {
-  if (decorateOnly) {
-    const files = await readdir(dereferencedPath)
-    return files
-  } else if (versions) {
-    return versions.map((elem) => `${elem}.deref.json`)
-  } else {
-    const schemas = allSchemas.currentReleases
-    if (includeUnpublished) {
-      schemas.push(...allSchemas.unpublished)
-    }
-    if (includeDeprecated) {
-      schemas.push(...allSchemas.deprecated)
-    }
-    return schemas
+async function validateInputParameters() {
+  // The `--versions` and `--decorate-only` options cannot be used
+  // with the `--include-deprecated` or `--include-unpublished` options
+  const numberOfOptions = Object.keys(program.opts()).length
+  if (numberOfOptions > 1 && (decorateOnly || versions)) {
+    const errorMsg = `🛑 You cannot use the versions and decorate-only options with any other options.\nThe decorate-only switch will decorate all dereferenced schemas files in the docs-internal repo.\nThis script doesn't support generating individual deprecated or unpublished schemas.\nPlease reach out to #docs-engineering if this is a use case that you need.`
+    throw new Error(errorMsg)
   }
+
+  // Check that the github/github repo exists. If the files are only being
+  // decorated, the github/github repo isn't needed.
+  if (!decorateOnly) {
+    try {
+      await stat(GITHUB_REP_DIR)
+    } catch (error) {
+      const errorMsg = `🛑 The ${GITHUB_REP_DIR} does not exist. Make sure you have a codespace with a checkout of \`github/github\` at the same level as your \`github/docs-internal \`repo before running this script. See this documentation for details: https://thehub.github.com/epd/engineering/products-and-services/public-apis/rest/openapi/openapi-in-the-docs/#previewing-changes-in-the-docs.`
+      throw new Error(errorMsg)
+    }
+  }
+}
+
+async function validateVersionsOptions(schemas) {
+  // Validate individual versions provided
+  versions.forEach((version) => {
+    if (
+      schemas.deprecated.includes(`${version}.deref.json`) ||
+      schemas.unpublished.includes(`${version}.deref.json`)
+    ) {
+      const errorMsg = `🛑 This script doesn't support generating individual deprecated or unpublished schemas. Please reach out to #docs-engineering if this is a use case that you need.`
+      throw new Error(errorMsg)
+    } else if (!schemas.currentReleases.includes(`${version}.deref.json`)) {
+      throw new Error(`🛑 The version (${version}) you specified is not valid.`)
+    }
+  })
 }
