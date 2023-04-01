@@ -1,109 +1,108 @@
 import { useRouter } from 'next/router'
+import { ArrowRightIcon, InfoIcon } from '@primer/octicons-react'
 import cx from 'classnames'
-import { Dropdown, Details, Box, Text, useDetails } from '@primer/components'
-import { ArrowRightIcon, ChevronDownIcon } from '@primer/octicons-react'
 
-import { Link } from 'components/Link'
 import { useMainContext } from 'components/context/MainContext'
-import { useVersion } from 'components/hooks/useVersion'
+import { DEFAULT_VERSION, useVersion } from 'components/hooks/useVersion'
 import { useTranslation } from 'components/hooks/useTranslation'
+import { Picker } from 'components/ui/Picker'
+
+import styles from './VersionPicker.module.scss'
 
 type Props = {
-  variant?: 'inline' | 'compact'
+  mediumOrLower?: boolean
 }
-export const VersionPicker = ({ variant }: Props) => {
+
+export const VersionPicker = ({ mediumOrLower }: Props) => {
   const router = useRouter()
   const { currentVersion } = useVersion()
   const { allVersions, page, enterpriseServerVersions } = useMainContext()
-  const { getDetailsProps, setOpen } = useDetails({ closeOnOutsideClick: true })
-  const { t } = useTranslation('pages')
+  const { t } = useTranslation(['pages', 'picker'])
+  const isSearchResultsPage = router.route === '/search' || router.route === '/[versionId]/search'
 
-  if (page.permalinks && page.permalinks.length <= 1) {
+  if (page.permalinks && page.permalinks.length < 1) {
     return null
   }
 
+  const allLinks = (page.permalinks || []).map((permalink) => ({
+    text: allVersions[permalink.pageVersion].versionTitle,
+    selected: currentVersion === permalink.pageVersion,
+    href:
+      isSearchResultsPage && typeof router.query.query === 'string'
+        ? permalink.href + `?${new URLSearchParams({ query: router.query.query })}`
+        : permalink.href,
+    extra: {
+      arrow: false,
+      info: false,
+    },
+    divider: false,
+  }))
+
+  const hasEnterpriseVersions = (page.permalinks || []).some((permalink) =>
+    permalink.pageVersion.startsWith('enterprise-server')
+  )
+
+  allLinks.push({
+    text: '',
+    selected: false,
+    href: ``,
+    extra: {
+      arrow: false,
+      info: false,
+    },
+    divider: true,
+  })
+
+  if (hasEnterpriseVersions) {
+    allLinks.push({
+      text: t('all_enterprise_releases'),
+      selected: false,
+      href: `/${router.locale}/${enterpriseServerVersions[0]}/admin/all-releases`,
+      extra: {
+        arrow: true,
+        info: false,
+      },
+      divider: false,
+    })
+  }
+
+  if (allLinks) {
+    const currentVersionPathSegment = currentVersion === DEFAULT_VERSION ? '' : `/${currentVersion}`
+
+    allLinks.push({
+      text: t('about_versions'),
+      selected: false,
+      href: `/${router.locale}${currentVersionPathSegment}/get-started/learning-about-github/about-versions-of-github-docs`,
+      extra: {
+        arrow: false,
+        info: true,
+      },
+      divider: false,
+    })
+  }
+
   return (
-    <>
-      <div>
-        <Details
-          {...getDetailsProps()}
-          className={cx(
-            'position-relative details-reset',
-            variant === 'inline' ? 'd-block' : 'd-inline-block'
-          )}
-          data-testid="article-version-picker"
-        >
-          <summary
-            className="d-block btn btn-invisible color-fg-default"
-            aria-haspopup="true"
-            aria-label="Toggle version list"
-          >
-            {variant === 'inline' ? (
-              <div className="d-flex flex-items-center flex-justify-between">
-                <Text>{allVersions[currentVersion].versionTitle}</Text>
-                <ChevronDownIcon size={24} className="arrow ml-md-1" />
-              </div>
-            ) : (
-              <>
-                <Text>{allVersions[currentVersion].versionTitle}</Text>
-                <Dropdown.Caret />
-              </>
-            )}
-          </summary>
-          {variant === 'inline' ? (
-            <Box py="2">
-              {(page.permalinks || []).map((permalink) => {
-                return (
-                  <Dropdown.Item key={permalink.href} onClick={() => setOpen(false)}>
-                    <Link href={permalink.href}>{permalink.pageVersionTitle}</Link>
-                  </Dropdown.Item>
-                )
-              })}
-              <Box mt={1}>
-                <Link
-                  onClick={() => {
-                    setOpen(false)
-                  }}
-                  href={`/${router.locale}/${enterpriseServerVersions[0]}/admin/all-releases`}
-                  className="f6 no-underline color-fg-muted pl-3 pr-2 no-wrap"
-                >
-                  {t('all_enterprise_releases')}{' '}
-                  <ArrowRightIcon verticalAlign="middle" size={15} className="mr-2" />
-                </Link>
-              </Box>
-            </Box>
-          ) : (
-            <Dropdown.Menu direction="sw" style={{ width: 'unset' }}>
-              {(page.permalinks || []).map((permalink) => {
-                return (
-                  <Dropdown.Item key={permalink.href} onClick={() => setOpen(false)}>
-                    <Link href={permalink.href}>{permalink.pageVersionTitle}</Link>
-                  </Dropdown.Item>
-                )
-              })}
-              <Box
-                borderColor="border.default"
-                borderTopWidth={1}
-                borderTopStyle="solid"
-                mt={2}
-                pt={2}
-                pb={1}
-              >
-                <Link
-                  onClick={() => {
-                    setOpen(false)
-                  }}
-                  href={`/${router.locale}/${enterpriseServerVersions[0]}/admin/all-releases`}
-                  className="f6 no-underline color-fg-muted pl-3 pr-2 no-wrap"
-                >
-                  {t('all_enterprise_releases')}{' '}
-                  <ArrowRightIcon verticalAlign="middle" size={15} className="mr-2" />
-                </Link>
-              </Box>
-            </Dropdown.Menu>
-          )}
-        </Details>
-      </div>
-    </>
+    <div data-testid="version-picker">
+      <Picker
+        defaultText={t('version_picker_default_text')}
+        items={allLinks}
+        alignment="start"
+        pickerLabel="Version"
+        dataTestId="field"
+        buttonBorder={mediumOrLower}
+        ariaLabel={`Select GitHub product version: current version is ${currentVersion}`}
+        renderItem={(item) => {
+          return (
+            <div data-testid="version-picker-item" className={cx(styles.itemsWidth)}>
+              {item.text}
+              {item.extra?.arrow && (
+                <ArrowRightIcon verticalAlign="middle" size={15} className="ml-1" />
+              )}
+              {item.extra?.info && <InfoIcon verticalAlign="middle" size={15} className="ml-1" />}
+            </div>
+          )
+        }}
+      />
+    </div>
   )
 }

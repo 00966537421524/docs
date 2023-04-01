@@ -18,10 +18,9 @@ shortTitle: Packaging with GitHub Actions
 
 {% data reusables.actions.enterprise-beta %}
 {% data reusables.actions.enterprise-github-hosted-runners %}
-{% data reusables.actions.ae-beta %}
 
 {% data reusables.package_registry.about-packaging-and-actions %}
 
 ## Further reading
 
-- "[Publishing Node.js packages](/actions/automating-your-workflow-with-github-actions/publishing-nodejs-packages)"
+- "[AUTOTITLE](/actions/publishing-packages/publishing-nodejs-packages)"

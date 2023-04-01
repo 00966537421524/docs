@@ -98,15 +98,6 @@ describe('renderContent', () => {
     expect(output).toBe('')
   })
 
-  test('encodes entities', async () => {
-    const template = '<beep></beep>'
-    const context = {}
-    const output = await renderContent(template, context, {
-      encodeEntities: true,
-    })
-    expect(output).toBe('&lt;p&gt;&lt;beep&gt;&lt;/beep&gt;&lt;/p&gt;')
-  })
-
   test('does not render newlines around links in tables', async () => {
     const template = nl(`
 | Keyboard shortcut | Description
@@ -186,14 +177,72 @@ describe('renderContent', () => {
   })
 
   test('does syntax highlighting', async () => {
-    const template = nl(`
+    let template = nl(`
 \`\`\`js
 const example = true
 \`\`\`\`
     `)
-    const html = await renderContent(template)
-    const $ = cheerio.load(html, { xmlMode: true })
+    let html = await renderContent(template)
+    let $ = cheerio.load(html, { xmlMode: true })
     expect($.html().includes('<pre><code class="hljs language-js">')).toBeTruthy()
+    expect($.html().includes('<span class="hljs-keyword">const</span>')).toBeTruthy()
+
+    template = nl(`
+\`\`\`erb
+<% @articles.each do |article| %>
+\`\`\`\`
+    `)
+    html = await renderContent(template)
+    $ = cheerio.load(html, { xmlMode: true })
+    expect($.html().includes('<pre><code class="hljs language-erb">')).toBeTruthy()
+    expect($.html().includes('<span class="hljs-variable">@articles</span>')).toBeTruthy()
+
+    template = nl(`
+\`\`\`http
+POST / HTTP/2
+\`\`\`\`
+    `)
+    html = await renderContent(template)
+    $ = cheerio.load(html, { xmlMode: true })
+    expect($.html().includes('<pre><code class="hljs language-http">')).toBeTruthy()
+    expect($.html().includes('<span class="hljs-keyword">POST</span>')).toBeTruthy()
+
+    template = nl(`
+\`\`\`groovy
+plugins {
+  ...
+  id 'maven-publish'
+}
+\`\`\`\`
+    `)
+    html = await renderContent(template)
+    $ = cheerio.load(html, { xmlMode: true })
+    expect($.html().includes('<pre><code class="hljs language-groovy">')).toBeTruthy()
+    expect(
+      $.html().includes('<span class="hljs-string">&apos;maven-publish&apos;</span>')
+    ).toBeTruthy()
+
+    template = nl(`
+\`\`\`Dockerfile
+FROM alpine:3.10
+\`\`\`\`
+    `)
+    html = await renderContent(template)
+    $ = cheerio.load(html, { xmlMode: true })
+    expect($.html().includes('<pre><code class="hljs language-Dockerfile">')).toBeTruthy()
+    expect($.html().includes('<span class="hljs-keyword">FROM</span>')).toBeTruthy()
+
+    template = nl(`
+\`\`\`Powershell
+$resourceGroupName = "octocat-testgroup"
+\`\`\`\`
+    `)
+    html = await renderContent(template)
+    $ = cheerio.load(html, { xmlMode: true })
+    expect($.html().includes('<pre><code class="hljs language-Powershell">')).toBeTruthy()
+    expect(
+      $.html().includes('<span class="hljs-variable">&#x24;resourceGroupName</span>')
+    ).toBeTruthy()
   })
 
   test('does not autoguess code block language', async () => {
