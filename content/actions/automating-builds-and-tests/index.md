@@ -5,7 +5,6 @@ intro: 'You can automatically build and test your projects with {% data variable
 versions:
   fpt: '*'
   ghes: '*'
-  ghae: '*'
   ghec: '*'
 redirect_from:
   - /actions/building-and-testing-code-with-continuous-integration
@@ -14,13 +13,15 @@ redirect_from:
   - /actions/language-and-framework-guides/github-actions-for-java
   - /actions/language-and-framework-guides/github-actions-for-javascript-and-typescript
   - /actions/language-and-framework-guides/github-actions-for-python
+  - /actions/guides/building-and-testing-nodejs-or-python
+  - /actions/automating-builds-and-tests/building-and-testing-nodejs-or-python
 children:
   - /about-continuous-integration
+  - /building-and-testing-go
   - /building-and-testing-java-with-ant
   - /building-and-testing-java-with-gradle
   - /building-and-testing-java-with-maven
   - /building-and-testing-net
-  - /building-and-testing-nodejs-or-python
   - /building-and-testing-nodejs
   - /building-and-testing-powershell
   - /building-and-testing-python
@@ -29,4 +30,3 @@ children:
   - /building-and-testing-xamarin-applications
 ---
 
-{% data reusables.actions.ae-beta %}

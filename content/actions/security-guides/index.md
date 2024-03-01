@@ -5,12 +5,10 @@ intro: 'Security hardening and good practices for {% data variables.product.prod
 versions:
   fpt: '*'
   ghes: '*'
-  ghae: '*'
   ghec: '*'
 children:
   - /security-hardening-for-github-actions
-  - /encrypted-secrets
+  - /using-secrets-in-github-actions
   - /automatic-token-authentication
 ---
 
-{% data reusables.actions.ae-beta %}

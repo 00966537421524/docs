@@ -1,11 +1,10 @@
 ---
 title: Managing issues and pull requests
-shortTitle: Managing issues and pull requests
+shortTitle: Manage issues and pull requests
 intro: 'You can automatically manage your issues and pull requests using {% data variables.product.prodname_actions %} workflows.'
 versions:
   fpt: '*'
   ghes: '*'
-  ghae: '*'
   ghec: '*'
 children:
   - /using-github-actions-for-project-management
@@ -17,4 +16,3 @@ children:
   - /scheduling-issue-creation
 ---
 
-{% data reusables.actions.ae-beta %}
